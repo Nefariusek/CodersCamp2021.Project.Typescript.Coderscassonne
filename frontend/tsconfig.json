@@ -2,7 +2,7 @@
   "compilerOptions": {
     "target": "es2019",
     "lib": ["dom", "dom.iterable", "esnext"],
-    "types": ["@types/jest", "jest", "node", "@types/testing-library__jest-dom"],
+    "types": ["@types/jest", "jest", "@types/testing-library__jest-dom"],
     "allowJs": true,
     "skipLibCheck": true,
     "esModuleInterop": true,
@@ -24,5 +24,5 @@
     "noUnusedLocals": true,
     "noUnusedParameters": true
   },
-  "include": ["./src"]
+  "include": ["src/**/*"]
 }

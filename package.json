@@ -6,7 +6,7 @@
   "scripts": {
     "prepare": "husky install",
     "pre-commit": "lint-staged",
-    "test": "cd frontend && npm run test && cd ../backend && npm run test"
+    "test": "cd frontend && npm run test"
   },
   "repository": {
     "type": "git",

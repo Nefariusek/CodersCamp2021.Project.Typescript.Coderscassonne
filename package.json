@@ -1,0 +1,30 @@
+{
+  "name": "coderscamp2021.project.typescript.coderscassonne",
+  "version": "1.0.0",
+  "description": "CodersCamp2021 Typescript project",
+  "main": "index.js",
+  "scripts": {
+    "prepare": "husky install",
+    "pre-commit": "lint-staged",
+    "test": "cd frontend && npm run test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Nefariusek/CodersCamp2021.Project.Typescript.Coderscassonne.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Nefariusek/CodersCamp2021.Project.Typescript.Coderscassonne/issues"
+  },
+  "devDependencies": {
+    "husky": "^7.0.4",
+    "lint-staged": "^12.3.7",
+    "prettier": "^2.6.1"
+  },
+  "lint-staged": {
+    "**/*.{js,jsx,ts,tsx,json,css,scss,md}": [
+      "prettier --write"
+    ]
+  }
+}

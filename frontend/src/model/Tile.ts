@@ -1,19 +1,36 @@
 import Locations from '../constants/locations';
 
+type Edges = {
+  bottom: Locations;
+  left: Locations;
+  right: Locations;
+  top: Locations;
+};
 class Tile {
-  edgeLeft: Locations;
+  public edges: Edges;
 
-  edgeRight: Locations;
+  constructor(edges: Edges) {
+    this.edges = edges;
+  }
 
-  edgeTop: Locations;
+  rotateLeft() {
+    let prevEdges = { ...this.edges };
+    this.edges = {
+      bottom: prevEdges.left,
+      left: prevEdges.top,
+      right: prevEdges.bottom,
+      top: prevEdges.right,
+    };
+  }
 
-  edgeBottom: Locations;
-
-  constructor(edgeLeft: Locations, edgeRight: Locations, edgeTop: Locations, edgeBottom: Locations) {
-    this.edgeLeft = edgeLeft;
-    this.edgeRight = edgeRight;
-    this.edgeTop = edgeTop;
-    this.edgeBottom = edgeBottom;
+  rotateRight() {
+    let prevEdges = { ...this.edges };
+    this.edges = {
+      bottom: prevEdges.right,
+      left: prevEdges.bottom,
+      right: prevEdges.top,
+      top: prevEdges.left,
+    };
   }
 }
 

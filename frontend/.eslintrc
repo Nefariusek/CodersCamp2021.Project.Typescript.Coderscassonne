@@ -17,7 +17,7 @@
     "ecmaVersion": "latest",
     "sourceType": "module",
     "ecmaFeatures": { "jsx": true },
-    "project": "./tsconfig.eslint.json"
+    "project": "./frontend/tsconfig.eslint.json"
   },
   "settings": {
     "react": { "version": "detect" },

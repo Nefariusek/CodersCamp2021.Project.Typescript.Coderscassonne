@@ -6,11 +6,18 @@ type Edges = {
   right: Locations;
   top: Locations;
 };
+
+class Player {
+  //TODO: import Player model
+}
 class Tile {
   public edges: Edges;
-
-  constructor(edges: Edges) {
+  public placedBy: Player;
+  public placementTurn: number;
+  constructor(edges: Edges, player: Player, placementTurn: number) {
     this.edges = edges;
+    this.placedBy = player;
+    this.placementTurn = placementTurn;
   }
 
   rotateLeft() {

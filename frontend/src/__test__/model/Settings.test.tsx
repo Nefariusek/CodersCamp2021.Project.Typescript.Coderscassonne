@@ -1,11 +1,13 @@
 import Settings from '../../model/Settings';
 
-const number = 64;
+const number = 32;
+const time = 30;
 
-const settings = new Settings(number, number, number);
+const settings = new Settings(time, number, number, number);
 
 test('Settings class has all the attributes', () => {
-  expect(settings.boardSize).toBe(number);
+  expect(settings.boardSizeX).toBe(number);
+  expect(settings.boardSizeY).toBe(number);
   expect(settings.tileAmount).toBe(number);
-  expect(settings.turnLength).toBe(number);
+  expect(settings.turnLength).toBe(time);
 });

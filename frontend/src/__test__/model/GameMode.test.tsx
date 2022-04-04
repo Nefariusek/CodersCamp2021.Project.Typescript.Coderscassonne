@@ -1,13 +1,15 @@
 import GameMode from '../../model/GameMode';
 
-const number = 64;
-const mode = 'Normal';
+const time = 30;
+const number = 32;
+const mode = 'Classic';
 
-const gameMode = new GameMode(number, number, number, mode);
+const gameMode = new GameMode(time, number, number, number, mode);
 
 test('gameMode class has all the attributes', () => {
-  expect(gameMode.boardSize).toBe(number);
+  expect(gameMode.boardSizeX).toBe(number);
+  expect(gameMode.boardSizeY).toBe(number);
   expect(gameMode.tileAmount).toBe(number);
-  expect(gameMode.turnLength).toBe(number);
+  expect(gameMode.turnLength).toBe(time);
   expect(gameMode.gameMode).toBe(mode);
 });

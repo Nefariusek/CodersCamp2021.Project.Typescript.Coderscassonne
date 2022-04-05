@@ -1,16 +1,22 @@
+/* eslint-disable max-classes-per-file */
 import Locations from '../constants/locations';
+
 class Player {}
 class Tile {}
 
 class Meeple {
-  playerRef: Player;
-  isPlaced: boolean;
-  placedAt: Locations | undefined;
-  tileRef: Tile | undefined;
+  public player: Player;
+
+  public placedAt: Locations | undefined;
+
+  public tile: Tile | undefined;
 
   constructor(player: Player) {
-    this.playerRef = player;
-    this.isPlaced = false;
+    this.player = player;
+  }
+
+  public get isPlaced() {
+    return !(this.tile === undefined);
   }
 }
 

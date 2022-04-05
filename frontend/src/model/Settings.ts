@@ -1,14 +1,14 @@
-type boardSize = 2 | 4 | 8 | 16 | 32 | 64;
-type tileAmount = 16 | 32 | 64 | 128;
-type turnLength = 5 | 10 | 15 | 30 | 60;
+type BoardSize = 2 | 4 | 8 | 16 | 32 | 64;
+type TileAmount = 16 | 32 | 64 | 128;
+type TurnLength = 5 | 10 | 15 | 30 | 60;
 
 class Settings {
-  public turnLength: turnLength;
-  public tileAmount: tileAmount;
-  public boardSizeX: boardSize;
-  public boardSizeY: boardSize;
+  public turnLength: TurnLength;
+  public tileAmount: TileAmount;
+  public boardSizeX: BoardSize;
+  public boardSizeY: BoardSize;
 
-  constructor(turnLength: turnLength, tileAmount: tileAmount, boardSizeX: boardSize, boardSizeY: boardSize) {
+  constructor(turnLength: TurnLength, tileAmount: TileAmount, boardSizeX: BoardSize, boardSizeY: BoardSize) {
     this.turnLength = turnLength;
     this.tileAmount = tileAmount;
     this.boardSizeX = boardSizeX;
@@ -17,4 +17,4 @@ class Settings {
 }
 
 export default Settings;
-export type { boardSize, turnLength, tileAmount };
+export type { BoardSize, TurnLength, TileAmount };

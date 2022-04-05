@@ -1,16 +1,16 @@
-import Settings, { boardSize, tileAmount, turnLength } from './Settings';
+import Settings, { BoardSize, TileAmount, TurnLength } from './Settings';
 
-type mode = 'Classic' | 'Fast' | 'Custom';
+type Mode = 'Classic' | 'Fast' | 'Custom';
 
 class GameMode extends Settings {
-  public gameMode: mode;
+  public gameMode: Mode;
 
   constructor(
-    turnLength: turnLength,
-    tileAmount: tileAmount,
-    boardSizeX: boardSize,
-    boardSizeY: boardSize,
-    gameMode: mode,
+    turnLength: TurnLength,
+    tileAmount: TileAmount,
+    boardSizeX: BoardSize,
+    boardSizeY: BoardSize,
+    gameMode: Mode,
   ) {
     super(turnLength, tileAmount, boardSizeX, boardSizeY);
     this.gameMode = gameMode;

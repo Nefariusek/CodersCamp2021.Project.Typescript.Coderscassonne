@@ -1,10 +1,5 @@
-enum Technologies {
-  HTML = 'HTML',
-  JS = 'JavaScript',
-  TS = 'TypeScript',
-  NODE = 'Node',
-  GITHUB = 'Github',
-}
+import Technologies from '../constants/technologies';
+import { defaultTechnology, defaultPlayersMeepleCount } from '../constants/gameDefaults';
 
 // temporary classes
 class Tile {}
@@ -23,7 +18,7 @@ class Player {
   private placedTiles: Tile[];
   private meepleList: Meeple[];
 
-  constructor(name: string, technology: Technologies = Technologies.HTML) {
+  constructor(name: string, technology: Technologies = defaultTechnology) {
     this.name = name;
     this.technology = technology;
 
@@ -35,7 +30,7 @@ class Player {
     this.placedTiles = [];
     this.meepleList = [];
 
-    for (let i = 0; i < 7; i++) {
+    for (let i = 0; i < defaultPlayersMeepleCount; i++) {
       this.meepleList.push(new Meeple(this));
     }
   }

@@ -1,4 +1,5 @@
 import Locations from '../constants/locations';
+import Player from './Player';
 
 type Edges = {
   bottom: Locations;
@@ -6,22 +7,25 @@ type Edges = {
   right: Locations;
   top: Locations;
 };
-
-class Player {
-  //TODO: import Player model
-}
 class Tile {
   public edges: Edges;
+
   public placedBy: Player;
+
   public placementTurn: number;
+
   constructor(edges: Edges, player: Player, placementTurn: number) {
     this.edges = edges;
     this.placedBy = player;
     this.placementTurn = placementTurn;
   }
 
+  private getCurrentEdges(): Edges {
+    return { ...this.edges };
+  }
+
   public rotateLeft(): void {
-    let prevEdges = { ...this.edges };
+    const prevEdges = this.getCurrentEdges();
     this.edges = {
       bottom: prevEdges.left,
       left: prevEdges.top,
@@ -31,7 +35,7 @@ class Tile {
   }
 
   public rotateRight(): void {
-    let prevEdges = { ...this.edges };
+    const prevEdges = this.getCurrentEdges();
     this.edges = {
       bottom: prevEdges.right,
       left: prevEdges.bottom,

@@ -20,7 +20,7 @@ class Tile {
     this.placementTurn = placementTurn;
   }
 
-  rotateLeft() {
+  public rotateLeft(): void {
     let prevEdges = { ...this.edges };
     this.edges = {
       bottom: prevEdges.left,
@@ -30,7 +30,7 @@ class Tile {
     };
   }
 
-  rotateRight() {
+  public rotateRight(): void {
     let prevEdges = { ...this.edges };
     this.edges = {
       bottom: prevEdges.right,

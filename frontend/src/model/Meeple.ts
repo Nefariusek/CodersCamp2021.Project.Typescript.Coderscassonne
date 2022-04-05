@@ -16,7 +16,7 @@ class Meeple {
   }
 
   public get isPlaced(): boolean {
-    return !(this.tile === undefined);
+    return !!this.tile;
   }
 }
 

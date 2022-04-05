@@ -1,79 +1,80 @@
+import { DEFAULT_PLAYERS_MEEPLE_COUNT, DEFAULT_TECHNOLOGY } from '../constants/gameDefaults';
 import Technologies from '../constants/technologies';
-import { defaultTechnology, defaultPlayersMeepleCount } from '../constants/gameDefaults';
 
 // temporary classes
 class Tile {}
 class Meeple {
   player: Player;
+
   constructor(player: Player) {
     this.player = player;
   }
 }
 // end of temporary classes
-
 class Player {
   public name: string;
-  public technology: Technologies;
-  private score: number;
-  private placedTiles: Tile[];
-  private meepleList: Meeple[];
 
-  constructor(name: string, technology: Technologies = defaultTechnology) {
+  public technology: Technologies;
+
+  private _score: number;
+
+  private _placedTiles: Tile[];
+
+  private _meeples: Meeple[];
+
+  constructor(name: string, technology: Technologies = DEFAULT_TECHNOLOGY) {
     this.name = name;
     this.technology = technology;
+    this._score = 0;
+    this._placedTiles = [];
+    this._meeples = [];
 
-    this.initializePlayerState();
+    this.initializeMeeples();
   }
 
-  initializePlayerState() {
-    this.score = 0;
-    this.placedTiles = [];
-    this.meepleList = [];
-
-    for (let i = 0; i < defaultPlayersMeepleCount; i++) {
-      this.meepleList.push(new Meeple(this));
+  private initializeMeeples(): void {
+    for (let i = 0; i < DEFAULT_PLAYERS_MEEPLE_COUNT; i++) {
+      this._meeples.push(new Meeple(this));
     }
   }
 
-  computeScore(pointsToAdd: number = 0): number {
-    if (pointsToAdd >= 0) {
-      return (this.score += pointsToAdd);
-    } else {
-      console.log('Points to add should not be negative!');
-      return this.score;
-    }
+  public get score(): number {
+    return this._score;
   }
 
-  updatePlacedTiles(tile: Tile): void {
-    this.placedTiles.push(tile);
+  public updateScore(pointsToAdd: number): number {
+    return (this._score += pointsToAdd);
   }
 
-  getPlacedTiles(): Tile[] {
-    return this.placedTiles;
+  public get placedTiles(): Tile[] {
+    return this._placedTiles;
   }
 
-  getMeeple(): Meeple | null {
-    const meepleCount = this.meepleList.length;
-    if (meepleCount > 0) {
-      const meeple = this.meepleList[meepleCount - 1];
-      this.meepleList.pop();
+  public set placeTile(tile: Tile) {
+    this._placedTiles.push(tile);
+  }
+
+  public getMeeple(): Meeple | null {
+    const meeple = this._meeples.pop();
+    if (typeof meeple !== 'undefined') {
       return meeple;
-    } else {
-      return null;
     }
+    return null;
   }
 
-  getMeepleCount(): number {
-    return this.meepleList.length;
+  public getMeepleCount(): number {
+    return this._meeples.length;
   }
 
-  returnMeeple(meeple: Meeple, pointsToAdd: number): void {
-    this.score += pointsToAdd;
-    this.meepleList.push(meeple);
+  public returnMeeple(meeple: Meeple, pointsToAdd: number): void {
+    this.updateScore(pointsToAdd);
+    this._meeples.push(meeple);
   }
 
-  toString(): string {
-    return `${this.name} (${this.technology}) has ${this.score} points, placed ${this.placedTiles.length} tiles, ${this.meepleList.length} meeples left.`;
+  public getPlayerInfo(): string {
+    return `${this.name} (${this.technology}) has ${
+      this.score
+    } points, ${this.getMeepleCount()} meeples left and placed ${this.placedTiles.length} tiles.`;
   }
 }
 

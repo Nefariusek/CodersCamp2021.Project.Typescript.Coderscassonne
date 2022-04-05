@@ -1,4 +1,4 @@
 import Technologies from './technologies';
 
-export const defaultTechnology = Technologies.HTML;
-export const defaultPlayersMeepleCount = 7;
+export const DEFAULT_TECHNOLOGY = Technologies.HTML;
+export const DEFAULT_PLAYERS_MEEPLE_COUNT = 7;

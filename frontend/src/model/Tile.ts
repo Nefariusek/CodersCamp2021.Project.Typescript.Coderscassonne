@@ -1,7 +1,7 @@
 import Locations from '../constants/locations';
 import Player from './Player';
 
-type Edges = {
+export type Edges = {
   bottom: Locations;
   left: Locations;
   right: Locations;

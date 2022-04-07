@@ -13,7 +13,7 @@ const TurnTimer = ({ turnLength }: TurnTimerProps) => {
     if (counter > 0) setTimeout(() => setCounter(counter - 1), 1000);
   }, [counter]);
 
-  return <div className="text-2xl"> Time left: {counter}s </div>;
+  return <div className="text-xl"> Time left: {counter}s </div>;
 };
 
 export default TurnTimer;

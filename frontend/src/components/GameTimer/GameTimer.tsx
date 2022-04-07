@@ -22,10 +22,10 @@ const GameTimer = ({ isTurnTimerVisible = false, turnLength }: GameTimerProps) =
       }
     }, 1000);
     return () => clearInterval(interval);
-  }, [seconds]);
+  }, [seconds, minutes]);
   if (isTurnTimerVisible) {
     return (
-      <div className="text-3xl text-DARKTHEME_LIGHT_GREEN_COLOR">
+      <div className="font-ALMENDRA font-bold text-2xl text-DARKTHEME_LIGHT_GREEN_COLOR p-3">
         <p>
           Game time: {minutes}:{seconds}s
         </p>
@@ -34,7 +34,7 @@ const GameTimer = ({ isTurnTimerVisible = false, turnLength }: GameTimerProps) =
     );
   }
   return (
-    <div className="text-3xl text-DARKTHEME_LIGHT_GREEN_COLOR">
+    <div className="font-ALMENDRA font-bold text-2xl text-DARKTHEME_LIGHT_GREEN_COLOR" p-3>
       <p>Game time: {seconds}s</p>
     </div>
   );

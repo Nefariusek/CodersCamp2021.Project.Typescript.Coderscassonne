@@ -1,6 +1,12 @@
-import Tile from '../model/Tile';
+import Tile, { Edges } from '../model/Tile';
 
-const GameModeParser = (jsonData: JSON): Tile[] => {
+type TileType = {
+  edges: Edges;
+  placedBy: string;
+  placementTurn: number;
+};
+
+const GameModeParser = (jsonData: TileType[]): Tile[] => {
   const tileArray: Tile[] = [];
   jsonData.toString();
   jsonData.forEach((element) => {

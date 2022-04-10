@@ -1,4 +1,5 @@
 import Locations from '../constants/locations';
+import { PREDEFINED_TILES } from '../constants/tiles';
 import Player from './Player';
 
 type Edges = {
@@ -7,6 +8,7 @@ type Edges = {
   right: Locations;
   top: Locations;
 };
+
 class Tile {
   public edges: Edges;
 
@@ -14,10 +16,13 @@ class Tile {
 
   public placementTurn: number;
 
+  private readonly originalEdges: Edges;
+
   constructor(edges: Edges, player: Player, placementTurn: number) {
     this.edges = edges;
     this.placedBy = player;
     this.placementTurn = placementTurn;
+    this.originalEdges = edges;
   }
 
   private getCurrentEdges(): Edges {
@@ -42,6 +47,20 @@ class Tile {
       right: prevEdges.top,
       top: prevEdges.left,
     };
+  }
+
+  public getTileImage(): string | undefined {
+    const foundTile = PREDEFINED_TILES.find(
+      (tile) =>
+        tile.bottom === this.originalEdges.bottom &&
+        tile.right === this.originalEdges.right &&
+        tile.left === this.originalEdges.left &&
+        tile.top === this.originalEdges.top,
+    );
+    if (foundTile) {
+      return foundTile.imageSource;
+    }
+    return undefined;
   }
 }
 

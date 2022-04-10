@@ -22,9 +22,15 @@ const TileContainer = (props: TileInterface): ReactElement => {
   }
   return (
     <div className="relative flex " onClick={currentTileState === TileState.active ? handleActiveTileClick : undefined}>
-      {currentTileState === TileState.idle && <img src={idleImagePath} alt="idle" />}
-      {currentTileState === TileState.active && <img id="active" src={activeImagePath} alt="active" />}
-      {currentTileState === TileState.taken && <img id="taken" src={TileImageSource} alt="taken" />}
+      {currentTileState === TileState.idle && (
+        <img src={idleImagePath} alt="idle" className="hover: cursor-not-allowed" />
+      )}
+      {currentTileState === TileState.active && (
+        <img id="active" src={activeImagePath} alt="active" className="hover: cursor-pointer" />
+      )}
+      {currentTileState === TileState.taken && (
+        <img id="taken" src={TileImageSource} alt="taken" className="hover: cursor-not-allowed" />
+      )}
     </div>
   );
 };

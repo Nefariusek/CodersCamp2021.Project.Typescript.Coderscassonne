@@ -10,9 +10,11 @@ const App: FC = (): ReactElement => {
   const testVar = 'test';
 
   const tile = new Tile(
-    { bottom: Locations.FIELD, left: Locations.CITY, right: Locations.FIELD, top: Locations.CITY },
+    { bottom: Locations.CITY, left: Locations.CITY, right: Locations.CITY, top: Locations.CITY },
+    Locations.CITY,
     new Player(),
     1,
+    true,
   );
   return (
     <div className="flex justify-center">

@@ -12,6 +12,8 @@ type Edges = {
 class Tile {
   public edges: Edges;
 
+  public middle: Locations;
+
   public placedBy: Player;
 
   public placementTurn: number;
@@ -20,8 +22,9 @@ class Tile {
 
   private readonly originalEdges: Edges;
 
-  constructor(edges: Edges, player: Player, placementTurn: number, isSpecial = false) {
+  constructor(edges: Edges, middle: Locations, player: Player, placementTurn: number, isSpecial = false) {
     this.edges = edges;
+    this.middle = middle;
     this.placedBy = player;
     this.placementTurn = placementTurn;
     this.originalEdges = edges;
@@ -55,6 +58,7 @@ class Tile {
   public getTileImage(): string | undefined {
     const foundTile = PREDEFINED_TILES.find(
       (tile) =>
+        tile.middle === this.middle &&
         tile.bottom === this.originalEdges.bottom &&
         tile.right === this.originalEdges.right &&
         tile.left === this.originalEdges.left &&

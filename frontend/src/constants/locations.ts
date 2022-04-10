@@ -4,6 +4,7 @@ enum Locations {
   CITY = 'city',
   GARDEN = 'garden',
   MONASTERY = 'monastery',
+  TAVERN = 'tavern',
 }
 
 export default Locations;

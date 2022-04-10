@@ -19,7 +19,6 @@ const App: FC = (): ReactElement => {
       <h1 className="font-bold text-2xl text-blue-900">{APPLICATION_TITLE}</h1>
       <h1 className="font-bold text-2xl text-blue-900 bg-gray-200 text-red-300">{testVar}</h1>
       <TileContainer tile={tile} />
-      <img src={tile.getTileImage()} alt="ihavenoideawhatimdoing" />
     </div>
   );
 };

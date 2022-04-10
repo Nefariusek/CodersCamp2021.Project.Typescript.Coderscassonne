@@ -1,11 +1,11 @@
 import { MouseEvent, ReactElement, useState } from 'react';
 
+import { TILE_BOARD_BRIGHT_SOURCE, TILE_BOARD_DARK_SOURCE } from '../constants/layoutElements';
 import TileState from '../constants/tileState';
 import Tile from '../model/Tile';
 
-const idleImagePath = '../../public/Elements/Layout/Tile_board_dark.png';
-const activeImagePath = '../../public/Elements/Layout/Tile_board_bright.png';
-
+const idleImagePath = TILE_BOARD_DARK_SOURCE;
+const activeImagePath = TILE_BOARD_BRIGHT_SOURCE;
 interface TileInterface {
   tile: Tile;
 }
@@ -20,9 +20,6 @@ const TileContainer = (props: TileInterface): ReactElement => {
     event.preventDefault();
     setTileState(TileState.taken);
   }
-
-  console.log(currentTileState);
-
   return (
     <div className="relative flex " onClick={currentTileState === TileState.active ? handleActiveTileClick : undefined}>
       {currentTileState === TileState.idle && <img src={idleImagePath} alt="idle" />}

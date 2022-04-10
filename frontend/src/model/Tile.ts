@@ -16,13 +16,16 @@ class Tile {
 
   public placementTurn: number;
 
+  public isSpecial: boolean;
+
   private readonly originalEdges: Edges;
 
-  constructor(edges: Edges, player: Player, placementTurn: number) {
+  constructor(edges: Edges, player: Player, placementTurn: number, isSpecial = false) {
     this.edges = edges;
     this.placedBy = player;
     this.placementTurn = placementTurn;
     this.originalEdges = edges;
+    this.isSpecial = isSpecial;
   }
 
   private getCurrentEdges(): Edges {

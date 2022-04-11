@@ -1,7 +1,7 @@
 enum TileState {
-  'idle',
-  'active',
-  'taken',
+  IDLE = 'idle',
+  ACTIVE = 'active',
+  TAKEN = 'taken',
 }
 
 export default TileState;

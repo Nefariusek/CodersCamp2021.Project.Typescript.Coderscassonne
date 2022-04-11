@@ -1,35 +1,32 @@
 import { MouseEvent, ReactElement, useState } from 'react';
 
-import { TILE_BOARD_BRIGHT_SOURCE, TILE_BOARD_DARK_SOURCE } from '../constants/layoutElements';
+import { ACTIVE_TILE_SOURCE, IDLE_TILE_SOURCE } from '../constants/layoutElements';
 import TileState from '../constants/tileState';
 import Tile from '../model/Tile';
 
-const idleImagePath = TILE_BOARD_DARK_SOURCE;
-const activeImagePath = TILE_BOARD_BRIGHT_SOURCE;
 interface TileInterface {
   tile: Tile;
 }
 
 const TileContainer = (props: TileInterface): ReactElement => {
   const { tile } = props;
-  const TileImageSource = tile.getTileImage();
 
-  const [currentTileState, setTileState] = useState<TileState>(TileState.active);
+  const [currentTileState, setTileState] = useState<TileState>(TileState.ACTIVE);
 
   function handleActiveTileClick(event: MouseEvent<HTMLImageElement>): void {
     event.preventDefault();
-    setTileState(TileState.taken);
+    setTileState(TileState.TAKEN);
   }
   return (
-    <div className="relative flex " onClick={currentTileState === TileState.active ? handleActiveTileClick : undefined}>
-      {currentTileState === TileState.idle && (
-        <img src={idleImagePath} alt="idle" className="hover: cursor-not-allowed" />
+    <div className="relative flex " onClick={currentTileState === TileState.ACTIVE ? handleActiveTileClick : undefined}>
+      {currentTileState === TileState.IDLE && (
+        <img src={IDLE_TILE_SOURCE} alt="idle" className="hover: cursor-not-allowed" />
       )}
-      {currentTileState === TileState.active && (
-        <img id="active" src={activeImagePath} alt="active" className="hover: cursor-pointer" />
+      {currentTileState === TileState.ACTIVE && (
+        <img id="active" src={ACTIVE_TILE_SOURCE} alt="active" className="hover: cursor-pointer" />
       )}
-      {currentTileState === TileState.taken && (
-        <img id="taken" src={TileImageSource} alt="taken" className="hover: cursor-not-allowed" />
+      {currentTileState === TileState.TAKEN && (
+        <img id="taken" src={tile.getTileImage()} alt="taken" className="hover: cursor-not-allowed" />
       )}
     </div>
   );

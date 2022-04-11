@@ -8,9 +8,10 @@ interface GameTimerProps {
   turnLength: TurnLength;
 }
 
-const GameTimer = ({ isTurnTimerVisible = false, turnLength }: GameTimerProps) => {
+const GameTimer = (props: GameTimerProps) => {
   const [seconds, setSeconds] = useState(0);
   const [minutes, setMinutes] = useState(0);
+  const { isTurnTimerVisible, turnLength } = props;
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -23,19 +24,13 @@ const GameTimer = ({ isTurnTimerVisible = false, turnLength }: GameTimerProps) =
     }, 1000);
     return () => clearInterval(interval);
   }, [seconds, minutes]);
-  if (isTurnTimerVisible) {
-    return (
-      <div className="font-ALMENDRA font-bold text-2xl text-DARKTHEME_LIGHT_GREEN_COLOR p-3">
-        <p>
-          Game time: {minutes}:{seconds}s
-        </p>
-        <TurnTimer turnLength={turnLength} />
-      </div>
-    );
-  }
+
   return (
-    <div className="font-ALMENDRA font-bold text-2xl text-DARKTHEME_LIGHT_GREEN_COLOR" p-3>
-      <p>Game time: {seconds}s</p>
+    <div className="font-ALMENDRA font-bold text-2xl text-DARKTHEME_LIGHT_GREEN_COLOR p-3">
+      <p>
+        Game time: {minutes}:{seconds}s
+      </p>
+      {isTurnTimerVisible && <TurnTimer turnLength={turnLength} />}
     </div>
   );
 };

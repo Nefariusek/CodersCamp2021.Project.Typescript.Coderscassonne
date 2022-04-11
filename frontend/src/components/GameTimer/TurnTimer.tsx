@@ -10,8 +10,11 @@ const TurnTimer = ({ turnLength }: TurnTimerProps) => {
   const [counter, setCounter] = useState<number>(turnLength);
 
   useEffect(() => {
-    if (counter > 0) setTimeout(() => setCounter(counter - 1), 1000);
-  }, [counter]);
+    if (counter === 0) {
+      console.log("Time's up!");
+      setCounter(turnLength);
+    } else setTimeout(() => setCounter(counter - 1), 1000);
+  }, [counter, turnLength]);
 
   return <div className="text-xl"> Time left: {counter}s </div>;
 };

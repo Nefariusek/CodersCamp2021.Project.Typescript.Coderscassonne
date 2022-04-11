@@ -16,6 +16,4 @@ test('One tile has all the attributes', () => {
   expect(tile.edges.left).toBe('field');
   expect(tile.edges.right).toBe('field');
   expect(tile.edges.top).toBe('field');
-  expect(tile.placedBy).toBe('player1');
-  expect(tile.placementTurn).toBe(10);
 });

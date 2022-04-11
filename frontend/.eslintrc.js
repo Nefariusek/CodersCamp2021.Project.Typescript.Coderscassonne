@@ -67,6 +67,10 @@ module.exports = {
     'import/prefer-default-export': 'off',
     'linebreak-style': 'off',
     'object-curly-newline': 'off',
+    'operator-linebreak': 'off',
+    'implicit-arrow-linebreak': 'off',
+    'jsx-a11y/click-events-have-key-events': 'off',
+    'max-len': 'off',
   },
   overrides: [
     {

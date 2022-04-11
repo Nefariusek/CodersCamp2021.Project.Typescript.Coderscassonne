@@ -8,8 +8,8 @@ export const JSONData = [
       right: Locations.FIELD,
       top: Locations.FIELD,
     },
-    placedBy: 'player1',
-    placementTurn: 10,
+    isSpecial: false,
+    middle: Locations.FIELD,
   },
   {
     edges: {
@@ -18,8 +18,8 @@ export const JSONData = [
       right: Locations.CITY,
       top: Locations.ROAD,
     },
-    placedBy: 'player2',
-    placementTurn: 11,
+    isSpecial: false,
+    middle: Locations.CITY,
   },
   {
     edges: {
@@ -28,7 +28,7 @@ export const JSONData = [
       right: Locations.ROAD,
       top: Locations.ROAD,
     },
-    placedBy: 'player3',
-    placementTurn: 12,
+    isSpecial: false,
+    middle: Locations.CITY,
   },
 ];

@@ -1,17 +1,18 @@
+import Locations from '../constants/locations';
 import Tile, { Edges } from '../model/Tile';
 
 type TileType = {
   edges: Edges;
-  placedBy: string;
-  placementTurn: number;
+  middle: Locations;
+  isSpecial: boolean;
 };
 
 const GameModeParser = (jsonData: TileType[]): Tile[] => {
   const tileArray: Tile[] = [];
   jsonData.toString();
   jsonData.forEach((element) => {
-    const { edges, placedBy, placementTurn } = element;
-    const tile = new Tile(edges, placedBy, placementTurn);
+    const { edges, middle, isSpecial } = element;
+    const tile = new Tile(edges, middle, isSpecial);
     tileArray.push(tile);
   });
   return tileArray;

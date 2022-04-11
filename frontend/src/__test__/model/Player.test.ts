@@ -1,22 +1,23 @@
 import { DEFAULT_PLAYERS_MEEPLE_COUNT, DEFAULT_TECHNOLOGY } from '../../constants/gameDefaults';
+import Locations from '../../constants/locations';
+import Meeple from '../../model/Meeple';
 import Player from '../../model/Player';
-
-// temporary classes
-class Tile {}
-class Meeple {
-  player: Player;
-
-  constructor(player: Player) {
-    this.player = player;
-  }
-}
-// end of temporary classes
+import Tile from '../../model/Tile';
 
 describe('Player model', () => {
   const testName = 'Adam';
   const testPlayer = new Player(testName);
-  const testTile = new Tile();
   const testMeeple = new Meeple(testPlayer);
+  const testTile = new Tile(
+    {
+      bottom: Locations.CITY,
+      left: Locations.FIELD,
+      right: Locations.MONASTERY,
+      top: Locations.ROAD,
+    },
+    Locations.TAVERN,
+    false,
+  );
   const testPointsToAdd = 2;
   const testPointsToAddAfterReturnMeeple = 12;
 

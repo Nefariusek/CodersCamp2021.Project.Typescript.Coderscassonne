@@ -1,16 +1,8 @@
 import { DEFAULT_PLAYERS_MEEPLE_COUNT, DEFAULT_TECHNOLOGY } from '../constants/gameDefaults';
 import Technologies from '../constants/technologies';
+import Meeple from './Meeple';
+import type Tile from './Tile';
 
-// temporary classes
-class Tile {}
-class Meeple {
-  player: Player;
-
-  constructor(player: Player) {
-    this.player = player;
-  }
-}
-// end of temporary classes
 class Player {
   public name: string;
 

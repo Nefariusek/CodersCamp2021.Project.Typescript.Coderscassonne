@@ -4,8 +4,11 @@ type TurnLength = 5 | 10 | 15 | 30 | 60;
 
 class Settings {
   public turnLength: TurnLength;
+
   public tileAmount: TileAmount;
+
   public boardSizeX: BoardSize;
+
   public boardSizeY: BoardSize;
 
   constructor(turnLength: TurnLength, tileAmount: TileAmount, boardSizeX: BoardSize, boardSizeY: BoardSize) {
@@ -17,4 +20,4 @@ class Settings {
 }
 
 export default Settings;
-export type { BoardSize, TurnLength, TileAmount };
+export type { BoardSize, TileAmount, TurnLength };

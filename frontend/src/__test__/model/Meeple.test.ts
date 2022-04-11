@@ -1,6 +1,5 @@
 import Meeple from '../../model/Meeple';
-
-class Player {}
+import Player from '../../model/Player';
 
 const player = new Player();
 

@@ -1,5 +1,4 @@
 import Locations from '../../constants/locations';
-import Player from '../../model/Player';
 import Tile from '../../model/Tile';
 
 test('new Tile is created', () => {
@@ -10,15 +9,15 @@ test('new Tile is created', () => {
       right: Locations.MONASTERY,
       top: Locations.ROAD,
     },
-    new Player('Adam'),
-    3,
+    Locations.TAVERN,
+    false,
   );
   expect(newTile.edges.left).toBe(Locations.FIELD);
   expect(newTile.edges.right).toBe(Locations.MONASTERY);
   expect(newTile.edges.top).toBe(Locations.ROAD);
   expect(newTile.edges.bottom).toBe(Locations.CITY);
-  expect(newTile.placedBy).toBeInstanceOf(Player);
-  expect(newTile.placementTurn).toBeGreaterThan(0);
+  expect(newTile.middle).toBe(Locations.TAVERN);
+  expect(newTile.isSpecial).toBeFalsy();
 });
 
 test('Tile is rotated left', () => {
@@ -29,8 +28,8 @@ test('Tile is rotated left', () => {
       right: Locations.MONASTERY,
       top: Locations.ROAD,
     },
-    new Player('Adam'),
-    3,
+    Locations.FIELD,
+    false,
   );
   newTile.rotateLeft();
   expect(newTile.edges.left).toBe(Locations.ROAD);
@@ -47,8 +46,8 @@ test('Tile is rotated right', () => {
       right: Locations.MONASTERY,
       top: Locations.ROAD,
     },
-    new Player('Adam'),
-    3,
+    Locations.FIELD,
+    false,
   );
   newTile.rotateRight();
   expect(newTile.edges.left).toBe(Locations.CITY);

@@ -1,8 +1,7 @@
 import Meeple from '../../model/Meeple';
+import Player from '../../model/Player';
 
-class Player {}
-
-const player = new Player();
+const player = new Player('Adam');
 
 const meeple = new Meeple(player);
 

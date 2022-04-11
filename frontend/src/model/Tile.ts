@@ -53,7 +53,7 @@ class Tile {
     };
   }
 
-  public getTileImage(): string | undefined {
+  public getTileImageSource(): string | undefined {
     const foundTile = PREDEFINED_TILES.find(
       (tile) =>
         tile.middle === this.middle &&

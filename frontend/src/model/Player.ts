@@ -43,7 +43,8 @@ class Player {
   }
 
   public updateScore(pointsToAdd: number): number {
-    return (this._score += pointsToAdd);
+    this._score += pointsToAdd;
+    return this._score;
   }
 
   public get placedTiles(): Tile[] {

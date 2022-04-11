@@ -1,9 +1,9 @@
 import { FC, ReactElement } from 'react';
 
+import DrawPile from './components/DrawPile/DrawPile';
 import TileContainer from './components/TileContainer';
 import { APPLICATION_TITLE } from './constants/labels';
 import Locations from './constants/locations';
-import Player from './model/Player';
 import Tile from './model/Tile';
 
 const App: FC = (): ReactElement => {
@@ -12,8 +12,6 @@ const App: FC = (): ReactElement => {
   const tile = new Tile(
     { bottom: Locations.CITY, left: Locations.CITY, right: Locations.CITY, top: Locations.CITY },
     Locations.CITY,
-    new Player(),
-    1,
     true,
   );
   return (
@@ -21,6 +19,7 @@ const App: FC = (): ReactElement => {
       <h1 className="font-bold text-2xl text-blue-900">{APPLICATION_TITLE}</h1>
       <h1 className="font-bold text-2xl text-blue-900 bg-gray-200 text-red-300">{testVar}</h1>
       <TileContainer tile={tile} />
+      <DrawPile numberOfAvailableTiles={10} />
     </div>
   );
 };

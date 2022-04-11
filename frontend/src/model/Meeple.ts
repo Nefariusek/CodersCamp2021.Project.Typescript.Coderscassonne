@@ -1,8 +1,6 @@
-/* eslint-disable max-classes-per-file */
 import Locations from '../constants/locations';
-
-class Player {}
-class Tile {}
+import Player from './Player';
+import Tile from './Tile';
 
 class Meeple {
   public player: Player;

@@ -2,7 +2,7 @@ import Locations from '../constants/locations';
 import { PREDEFINED_TILES } from '../constants/tiles';
 import Player from './Player';
 
-type Edges = {
+export type Edges = {
   bottom: Locations;
   left: Locations;
   right: Locations;
@@ -22,11 +22,9 @@ class Tile {
 
   private readonly originalEdges: Edges;
 
-  constructor(edges: Edges, middle: Locations, player: Player, placementTurn: number, isSpecial = false) {
+  constructor(edges: Edges, middle: Locations, isSpecial = false) {
     this.edges = edges;
     this.middle = middle;
-    this.placedBy = player;
-    this.placementTurn = placementTurn;
     this.originalEdges = edges;
     this.isSpecial = isSpecial;
   }

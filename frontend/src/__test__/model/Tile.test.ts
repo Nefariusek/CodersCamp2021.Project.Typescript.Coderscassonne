@@ -1,8 +1,6 @@
 import Locations from '../../constants/locations';
 import Tile from '../../model/Tile';
 
-class Player {}
-
 test('new Tile is created', () => {
   const newTile = new Tile(
     {
@@ -12,8 +10,6 @@ test('new Tile is created', () => {
       top: Locations.ROAD,
     },
     Locations.TAVERN,
-    new Player(),
-    3,
     false,
   );
   expect(newTile.edges.left).toBe(Locations.FIELD);
@@ -21,9 +17,7 @@ test('new Tile is created', () => {
   expect(newTile.edges.top).toBe(Locations.ROAD);
   expect(newTile.edges.bottom).toBe(Locations.CITY);
   expect(newTile.middle).toBe(Locations.TAVERN);
-  expect(newTile.placedBy).toBeInstanceOf(Player);
   expect(newTile.isSpecial).toBeFalsy();
-  expect(newTile.placementTurn).toBeGreaterThan(0);
 });
 
 test('Tile is rotated left', () => {
@@ -35,8 +29,6 @@ test('Tile is rotated left', () => {
       top: Locations.ROAD,
     },
     Locations.FIELD,
-    new Player(),
-    3,
     false,
   );
   newTile.rotateLeft();
@@ -55,8 +47,6 @@ test('Tile is rotated right', () => {
       top: Locations.ROAD,
     },
     Locations.FIELD,
-    new Player(),
-    3,
     false,
   );
   newTile.rotateRight();

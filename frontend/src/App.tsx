@@ -1,27 +1,25 @@
 import { FC, ReactElement } from 'react';
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
 
-import DrawPile from './components/DrawPile/DrawPile';
-import TileContainer from './components/TileContainer';
-import { APPLICATION_TITLE } from './constants/labels';
-import Locations from './constants/locations';
-import Tile from './model/Tile';
+import { PATH_TO_GAMEPAGE, PATH_TO_HOMEPAGE, PATH_TO_LANDINGPAGE } from './constants/paths';
+import GamePage from './views/Game';
+import HomePage from './views/HomePage';
+import LandingPage from './views/LandingPage';
 
-const App: FC = (): ReactElement => {
-  const testVar = 'test';
+const paths = [
+  { element: <LandingPage />, url: PATH_TO_LANDINGPAGE },
+  { element: <HomePage />, url: PATH_TO_HOMEPAGE },
+  { element: <GamePage />, url: PATH_TO_GAMEPAGE },
+];
 
-  const tile = new Tile(
-    { bottom: Locations.CITY, left: Locations.CITY, right: Locations.CITY, top: Locations.CITY },
-    Locations.CITY,
-    true,
-  );
-  return (
-    <div className="flex justify-center">
-      <h1 className="font-bold text-2xl text-blue-900">{APPLICATION_TITLE}</h1>
-      <h1 className="font-bold text-2xl text-blue-900 bg-gray-200 text-red-300">{testVar}</h1>
-      <TileContainer tile={tile} />
-      <DrawPile numberOfAvailableTiles={10} />
-    </div>
-  );
-};
+const App: FC = (): ReactElement => (
+  <BrowserRouter>
+    <Routes>
+      {paths.map((path) => (
+        <Route key={path.url} path={path.url} element={path.element} />
+      ))}
+    </Routes>
+  </BrowserRouter>
+);
 
 export default App;

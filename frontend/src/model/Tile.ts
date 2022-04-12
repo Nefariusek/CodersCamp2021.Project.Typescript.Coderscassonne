@@ -1,6 +1,6 @@
 import Locations from '../constants/locations';
 import { PREDEFINED_TILES } from '../constants/tiles';
-import Player from './Player';
+import type Player from './Player';
 
 export type Edges = {
   bottom: Locations;

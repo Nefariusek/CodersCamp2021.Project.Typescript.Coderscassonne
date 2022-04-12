@@ -2,7 +2,6 @@ backgroundColor = #181616;
 
 titleGreen = #38CD2B;
 
-
 title.font {
 font-family: Almendra;
 font-size: 128px;

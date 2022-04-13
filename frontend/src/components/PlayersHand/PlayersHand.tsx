@@ -7,9 +7,9 @@ import ArrowButton from './ArrowButton';
 
 const PlayersHand: FC = (): ReactElement => {
   const tile = new Tile(
-    { bottom: Locations.GARDEN, left: Locations.GARDEN, right: Locations.GARDEN, top: Locations.GARDEN },
-    Locations.GARDEN,
-    true,
+    { bottom: Locations.FIELD, left: Locations.CITY, right: Locations.FIELD, top: Locations.CITY },
+    Locations.CITY,
+    false,
   );
 
   return (

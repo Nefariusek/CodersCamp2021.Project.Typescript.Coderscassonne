@@ -1,23 +1,24 @@
-import { createContext, useState } from 'react';
+import { createContext, useMemo, useState } from 'react';
+
+type DataStoreProviderProps = { children: React.ReactNode };
 
 const DataStoreContext = createContext(null);
 
-export const DataStoreProvider = ({ children }) => {
+export const DataStoreProvider = ({ children }: DataStoreProviderProps) => {
   const [playersData, setPlayersData] = useState(null);
   const [gameSettings, setGameSettings] = useState(null);
 
-  return (
-    <DataStoreContext.Provider
-      value={{
-        playersData,
-        setPlayersData,
-        gameSettings,
-        setGameSettings,
-      }}
-    >
-      {children}
-    </DataStoreContext.Provider>
+  const storeDataWithMemo = useMemo(
+    () => ({
+      gameSettings,
+      playersData,
+      setGameSettings,
+      setPlayersData,
+    }),
+    [gameSettings, playersData, setGameSettings, setPlayersData],
   );
+
+  return <DataStoreContext.Provider value={storeDataWithMemo}>{children}</DataStoreContext.Provider>;
 };
 
 export default DataStoreContext;

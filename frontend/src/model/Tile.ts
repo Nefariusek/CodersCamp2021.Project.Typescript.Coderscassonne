@@ -2,6 +2,8 @@ import Locations from '../constants/locations';
 import { PREDEFINED_TILES } from '../constants/tiles';
 import type Player from './Player';
 
+export type Rotation = 0 | 90 | 180 | 270;
+
 export type Edges = {
   bottom: Locations;
   left: Locations;
@@ -20,6 +22,8 @@ class Tile {
 
   public isSpecial: boolean;
 
+  public rotation: Rotation;
+
   private readonly originalEdges: Edges;
 
   constructor(edges: Edges, middle: Locations, isSpecial = false) {
@@ -27,6 +31,7 @@ class Tile {
     this.middle = middle;
     this.originalEdges = edges;
     this.isSpecial = isSpecial;
+    this.rotation = 0;
   }
 
   private getCurrentEdges(): Edges {
@@ -41,6 +46,24 @@ class Tile {
       right: prevEdges.bottom,
       top: prevEdges.right,
     };
+    switch (this.rotation) {
+      case 0: {
+        this.rotation = 270;
+        break;
+      }
+      case 90: {
+        this.rotation = 0;
+        break;
+      }
+      case 180: {
+        this.rotation = 90;
+        break;
+      }
+      default: {
+        this.rotation = 180;
+        break;
+      }
+    }
   }
 
   public rotateRight(): void {
@@ -51,6 +74,24 @@ class Tile {
       right: prevEdges.top,
       top: prevEdges.left,
     };
+    switch (this.rotation) {
+      case 0: {
+        this.rotation = 90;
+        break;
+      }
+      case 90: {
+        this.rotation = 180;
+        break;
+      }
+      case 180: {
+        this.rotation = 270;
+        break;
+      }
+      default: {
+        this.rotation = 0;
+        break;
+      }
+    }
   }
 
   public getTileImageSource(): string | undefined {

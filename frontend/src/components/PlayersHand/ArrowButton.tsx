@@ -7,7 +7,6 @@ interface ArrowButtonInterface {
 
 const ArrowButton = (props: ArrowButtonInterface) => {
   const { tile, direction } = props;
-  console.log(tile);
 
   return (
     <div>

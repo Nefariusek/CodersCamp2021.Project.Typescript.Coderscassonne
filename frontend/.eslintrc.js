@@ -71,6 +71,7 @@ module.exports = {
     'implicit-arrow-linebreak': 'off',
     'jsx-a11y/click-events-have-key-events': 'off',
     'max-len': 'off',
+    'no-plusplus': ['error', { allowForLoopAfterthoughts: 'true' }],
   },
   overrides: [
     {

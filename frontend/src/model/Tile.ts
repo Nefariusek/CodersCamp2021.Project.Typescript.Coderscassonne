@@ -29,12 +29,12 @@ class Tile {
   private readonly originalEdges: Edges;
 
   constructor(edges: Edges, middle: Locations, isSpecial = false) {
-    makeAutoObservable(this);
     this.edges = edges;
     this.middle = middle;
     this.originalEdges = edges;
     this.isSpecial = isSpecial;
     this.rotation = 0;
+    makeAutoObservable(this);
   }
 
   private getCurrentEdges(): Edges {
@@ -53,7 +53,6 @@ class Tile {
       right: prevEdges.bottom,
       top: prevEdges.right,
     };
-    console.log(this.rotation);
   }
 
   public rotateRight(): void {
@@ -68,7 +67,6 @@ class Tile {
       right: prevEdges.top,
       top: prevEdges.left,
     };
-    console.log(this.rotation);
   }
 
   public getTileImageSource(): string | undefined {

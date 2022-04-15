@@ -17,7 +17,6 @@ const TileContainer = observer((props: TileInterface): ReactElement => {
   function handleActiveTileClick(event: MouseEvent<HTMLImageElement>): void {
     event.preventDefault();
     setTileState(TileState.TAKEN);
-    console.log(tile.rotation);
   }
 
   return (
@@ -40,7 +39,6 @@ const TileContainer = observer((props: TileInterface): ReactElement => {
       ${tile.rotation === 270 ? 'rotate-270' : ''}`}
         />
       )}
-      <p>{tile.rotation}</p>
     </div>
   );
 });

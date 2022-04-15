@@ -20,7 +20,6 @@ const TileContainer = observer((props: TileInterface): ReactElement => {
   }
 
   return (
-    // eslint-disable-next-line jsx-a11y/no-static-element-interactions
     <div className="relative flex " onClick={currentTileState === TileState.ACTIVE ? handleActiveTileClick : undefined}>
       {currentTileState === TileState.IDLE && (
         <img src={IDLE_TILE_SOURCE} alt={TileState.IDLE} className="hover: cursor-not-allowed" />

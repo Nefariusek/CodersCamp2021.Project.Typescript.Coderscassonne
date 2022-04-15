@@ -1,7 +1,8 @@
 import { FC, ReactElement } from 'react';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 
-import { PATH_TO_GAMEPAGE, PATH_TO_HOMEPAGE, PATH_TO_LANDINGPAGE } from './constants/paths';
+import { PATH_TO_CREATE_PLAYERS, PATH_TO_GAMEPAGE, PATH_TO_HOMEPAGE, PATH_TO_LANDINGPAGE } from './constants/paths';
+import CreatePlayersPage from './views/CreatePlayersPage';
 import GamePage from './views/Game';
 import HomePage from './views/HomePage';
 import LandingPage from './views/LandingPage';
@@ -10,6 +11,7 @@ const paths = [
   { element: <LandingPage />, url: PATH_TO_LANDINGPAGE },
   { element: <HomePage />, url: PATH_TO_HOMEPAGE },
   { element: <GamePage />, url: PATH_TO_GAMEPAGE },
+  { element: <CreatePlayersPage />, url: PATH_TO_CREATE_PLAYERS },
 ];
 
 const App: FC = (): ReactElement => (

@@ -2,6 +2,7 @@ import './index.css';
 
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { BrowserRouter } from 'react-router-dom';
 
 import App from './App';
 import reportWebVitals from './reportWebVitals';
@@ -10,7 +11,9 @@ const AppWrapper: React.FC = (): React.ReactElement => <App />;
 
 ReactDOM.render(
   <React.StrictMode>
-    <AppWrapper />
+    <BrowserRouter>
+      <AppWrapper />
+    </BrowserRouter>
   </React.StrictMode>,
   document.getElementById('root'),
 );

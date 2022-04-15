@@ -1,11 +1,9 @@
 import React, { ReactElement } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import Header from '../components/Header';
-import { CASTLE_SOURCE } from '../constants/layoutElements';
 import { PATH_TO_GAMEPAGE, PATH_TO_LANDINGPAGE } from '../constants/paths';
 
-const NavButtons = () => {
+const HomePage: React.FunctionComponent = (): ReactElement => {
   const navigate = useNavigate();
   const views = [
     { name: 'Play game', url: PATH_TO_GAMEPAGE },
@@ -14,7 +12,7 @@ const NavButtons = () => {
     { name: 'Credits', url: PATH_TO_LANDINGPAGE },
   ];
   return (
-    <div className="flex justify-center mt-30 py-20">
+    <div className=" bg-DARKTHEME_BACKGROUND_COLOR flex justify-center mt-30 pt-10">
       <div className="flex flex-col">
         {views.map(({ url, name }) => (
           <button
@@ -32,15 +30,5 @@ const NavButtons = () => {
     </div>
   );
 };
-
-const HomePage: React.FunctionComponent = (): ReactElement => (
-  <div className="absolute h-full w-full bg-DARKTHEME_BACKGROUND_COLOR">
-    <Header />
-    <NavButtons />
-    <div className="flex justify-center mt-4">
-      <img src={CASTLE_SOURCE} alt="castle" />
-    </div>
-  </div>
-);
 
 export default HomePage;

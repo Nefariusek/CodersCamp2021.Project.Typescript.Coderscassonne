@@ -1,3 +1,5 @@
+import { makeAutoObservable } from 'mobx';
+
 import Locations from '../constants/locations';
 import { PREDEFINED_TILES } from '../constants/tiles';
 import type Player from './Player';
@@ -27,6 +29,7 @@ class Tile {
   private readonly originalEdges: Edges;
 
   constructor(edges: Edges, middle: Locations, isSpecial = false) {
+    makeAutoObservable(this);
     this.edges = edges;
     this.middle = middle;
     this.originalEdges = edges;
@@ -39,6 +42,10 @@ class Tile {
   }
 
   public rotateLeft(): void {
+    this.rotation -= 90;
+    if (this.rotation === -90) {
+      this.rotation = 270;
+    }
     const prevEdges = this.getCurrentEdges();
     this.edges = {
       bottom: prevEdges.left,
@@ -46,27 +53,14 @@ class Tile {
       right: prevEdges.bottom,
       top: prevEdges.right,
     };
-    switch (this.rotation) {
-      case 0: {
-        this.rotation = 270;
-        break;
-      }
-      case 90: {
-        this.rotation = 0;
-        break;
-      }
-      case 180: {
-        this.rotation = 90;
-        break;
-      }
-      default: {
-        this.rotation = 180;
-        break;
-      }
-    }
+    console.log(this.rotation);
   }
 
   public rotateRight(): void {
+    this.rotation += 90;
+    if (this.rotation === 360) {
+      this.rotation = 0;
+    }
     const prevEdges = this.getCurrentEdges();
     this.edges = {
       bottom: prevEdges.right,
@@ -74,24 +68,7 @@ class Tile {
       right: prevEdges.top,
       top: prevEdges.left,
     };
-    switch (this.rotation) {
-      case 0: {
-        this.rotation = 90;
-        break;
-      }
-      case 90: {
-        this.rotation = 180;
-        break;
-      }
-      case 180: {
-        this.rotation = 270;
-        break;
-      }
-      default: {
-        this.rotation = 0;
-        break;
-      }
-    }
+    console.log(this.rotation);
   }
 
   public getTileImageSource(): string | undefined {

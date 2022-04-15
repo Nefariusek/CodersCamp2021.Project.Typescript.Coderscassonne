@@ -1,3 +1,5 @@
+import { observer } from 'mobx-react-lite';
+
 import Tile from '../../model/Tile';
 
 interface ArrowButtonInterface {
@@ -5,7 +7,7 @@ interface ArrowButtonInterface {
   direction: 'left' | 'right';
 }
 
-const ArrowButton = (props: ArrowButtonInterface) => {
+const ArrowButton = observer((props: ArrowButtonInterface) => {
   const { tile, direction } = props;
 
   return (
@@ -22,6 +24,6 @@ const ArrowButton = (props: ArrowButtonInterface) => {
       )}
     </div>
   );
-};
+});
 
 export default ArrowButton;

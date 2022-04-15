@@ -1,37 +1,28 @@
+import { observer } from 'mobx-react-lite';
 import { MouseEvent, ReactElement, useState } from 'react';
 
 import { ACTIVE_TILE_SOURCE, IDLE_TILE_SOURCE } from '../constants/layoutElements';
 import TileState from '../constants/tileState';
-import Tile, { Rotation } from '../model/Tile';
-import ArrowButton from './PlayersHand/ArrowButton';
+import Tile from '../model/Tile';
 
-interface TileInterface {
+export interface TileInterface {
   tile: Tile;
 }
 
-const TileContainer = (props: TileInterface): ReactElement => {
+const TileContainer = observer((props: TileInterface): ReactElement => {
   const { tile } = props;
 
   const [currentTileState, setTileState] = useState<TileState>(TileState.ACTIVE);
-  const [tileRotation, setTileRotation] = useState<Rotation>(tile.rotation);
 
   function handleActiveTileClick(event: MouseEvent<HTMLImageElement>): void {
     event.preventDefault();
     setTileState(TileState.TAKEN);
-  }
-
-  function handleTileRotation(event: MouseEvent<HTMLImageElement>): void {
-    event.preventDefault();
-    setTileRotation(tile.rotation);
+    console.log(tile.rotation);
   }
 
   return (
     // eslint-disable-next-line jsx-a11y/no-static-element-interactions
-    <div
-      className="relative flex "
-      onClick={currentTileState === TileState.ACTIVE ? handleActiveTileClick : handleTileRotation}
-    >
-      <ArrowButton tile={tile} direction="right" />
+    <div className="relative flex " onClick={currentTileState === TileState.ACTIVE ? handleActiveTileClick : undefined}>
       {currentTileState === TileState.IDLE && (
         <img src={IDLE_TILE_SOURCE} alt={TileState.IDLE} className="hover: cursor-not-allowed" />
       )}
@@ -44,14 +35,14 @@ const TileContainer = (props: TileInterface): ReactElement => {
           src={tile.getTileImageSource()}
           alt={TileState.TAKEN}
           className={`hover: cursor-not-allowed
-      ${tileRotation === 90 ? 'rotate-90' : ''}
-      ${tileRotation === 180 ? 'rotate-180' : ''}
-      ${tileRotation === 270 ? 'rotate-270' : ''}`}
+      ${tile.rotation === 90 ? 'rotate-90' : ''}
+      ${tile.rotation === 180 ? 'rotate-180' : ''}
+      ${tile.rotation === 270 ? 'rotate-270' : ''}`}
         />
       )}
-      <ArrowButton tile={tile} direction="left" />
+      <p>{tile.rotation}</p>
     </div>
   );
-};
+});
 
 export default TileContainer;

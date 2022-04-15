@@ -4,13 +4,16 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 
 import App from './App';
+import { DataStoreProvider } from './components/DataStoreContext/DataStoreContext';
 import reportWebVitals from './reportWebVitals';
 
 const AppWrapper: React.FC = (): React.ReactElement => <App />;
 
 ReactDOM.render(
   <React.StrictMode>
-    <AppWrapper />
+    <DataStoreProvider>
+      <AppWrapper />
+    </DataStoreProvider>
   </React.StrictMode>,
   document.getElementById('root'),
 );

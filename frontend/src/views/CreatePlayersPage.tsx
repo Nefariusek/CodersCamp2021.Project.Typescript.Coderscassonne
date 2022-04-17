@@ -33,7 +33,11 @@ const CreatePlayersPage = () => {
   return (
     <div className="bg-DARKTHEME_BACKGROUND_COLOR flex items-center justify-center">
       {availableTechnologies.length > 0 && (
-        <CreatePlayer availableTechnologies={availableTechnologies} addPlayer={addPlayer} />
+        <CreatePlayer
+          availableTechnologies={availableTechnologies}
+          playersNames={players.map((player) => player.name)}
+          addPlayer={addPlayer}
+        />
       )}
       {players.length > 0 && <AddedPlayers players={players} save={savePlayers} change={playerChange} />}
     </div>

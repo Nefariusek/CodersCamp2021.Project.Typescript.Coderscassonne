@@ -5,10 +5,11 @@ import Technologies from '../../constants/technologies';
 
 interface CreatePlayerProps {
   availableTechnologies: Technologies[];
+  playersNames: string[];
   addPlayer: (arg0: string, arg1: Technologies) => void;
 }
 
-const CreatePlayer = ({ availableTechnologies, addPlayer }: CreatePlayerProps) => {
+const CreatePlayer = ({ availableTechnologies, playersNames, addPlayer }: CreatePlayerProps) => {
   const [playerName, setPlayerName] = useState('');
   const [playerMeeple, setPlayerMeeple] = useState<Technologies>();
 
@@ -16,6 +17,14 @@ const CreatePlayer = ({ availableTechnologies, addPlayer }: CreatePlayerProps) =
     e.preventDefault();
     if (!playerName) {
       alert('Choose player name!');
+      return;
+    }
+    if (playerName.length < 3 || playerName.length > 12) {
+      alert('Choose name between 3 and 12 characters long!');
+      return;
+    }
+    if (playersNames.includes(playerName)) {
+      alert('Name is taken! Choose different one!');
       return;
     }
     if (!playerMeeple) {

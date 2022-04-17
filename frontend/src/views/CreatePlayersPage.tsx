@@ -1,5 +1,6 @@
 import { useState } from 'react';
 
+import AddedPlayers from '../components/CreatePlayer/AddedPlayers';
 import CreatePlayer from '../components/CreatePlayer/CreatePlayer';
 import Technologies from '../constants/technologies';
 import Player from '../model/Player';
@@ -20,9 +21,21 @@ const CreatePlayersPage = () => {
     setAvailableTechnologies(availableTechnologies.filter((tech) => tech !== technology));
   };
 
+  const playerChange = (i: number) => {
+    [players[i - 1], players[i]] = [players[i], players[i - 1]];
+    setPlayers([...players]);
+  };
+
+  const savePlayers = () => {
+    alert('saved');
+  };
+
   return (
-    <div className="bg-black flex items-center justify-center">
-      <CreatePlayer availableTechnologies={availableTechnologies} addPlayer={addPlayer} />
+    <div className="bg-DARKTHEME_BACKGROUND_COLOR flex items-center justify-center">
+      {availableTechnologies.length > 0 && (
+        <CreatePlayer availableTechnologies={availableTechnologies} addPlayer={addPlayer} />
+      )}
+      {players.length > 0 && <AddedPlayers players={players} save={savePlayers} change={playerChange} />}
     </div>
   );
 };

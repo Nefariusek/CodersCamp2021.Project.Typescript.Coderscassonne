@@ -22,7 +22,6 @@ const CreatePlayer = ({ availableTechnologies, addPlayer }: CreatePlayerProps) =
       alert('Choose meeple!');
       return;
     }
-    console.log(playerName, playerMeeple);
     addPlayer(playerName, playerMeeple);
     setPlayerName('');
     const radio: HTMLInputElement | null = document.querySelector('input[type=radio]:checked');
@@ -34,7 +33,7 @@ const CreatePlayer = ({ availableTechnologies, addPlayer }: CreatePlayerProps) =
 
   return (
     <form
-      className="flex flex-col items-center justify-around w-96 border-4 border-DARKTHEME_LIGHT_GREEN_COLOR"
+      className="flex flex-col items-center justify-between w-96 h-[550px] border-4 border-DARKTHEME_LIGHT_GREEN_COLOR"
       onSubmit={handleSubmit}
     >
       <p className="font-ALMENDRA font-bold text-4xl text-DARKTHEME_LIGHT_GREEN_COLOR p-3 mb-10">Create player</p>
@@ -51,7 +50,7 @@ const CreatePlayer = ({ availableTechnologies, addPlayer }: CreatePlayerProps) =
       <div>
         <div className="flex justify-around w-80">
           {availableTechnologies.map((technology: Technologies) => (
-            <label>
+            <label key={technology}>
               <input
                 className="w-0 h-0 opacity-0  peer"
                 type="radio"

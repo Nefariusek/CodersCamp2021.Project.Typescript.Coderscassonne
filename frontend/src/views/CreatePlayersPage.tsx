@@ -21,7 +21,7 @@ const CreatePlayersPage = () => {
     setAvailableTechnologies(availableTechnologies.filter((tech) => tech !== technology));
   };
 
-  const playerChange = (i: number) => {
+  const changeOrderOfPlayers = (i: number) => {
     [players[i - 1], players[i]] = [players[i], players[i - 1]];
     setPlayers([...players]);
   };
@@ -39,7 +39,7 @@ const CreatePlayersPage = () => {
           addPlayer={addPlayer}
         />
       )}
-      {players.length > 0 && <AddedPlayers players={players} save={savePlayers} change={playerChange} />}
+      {players.length > 0 && <AddedPlayers players={players} save={savePlayers} change={changeOrderOfPlayers} />}
     </div>
   );
 };

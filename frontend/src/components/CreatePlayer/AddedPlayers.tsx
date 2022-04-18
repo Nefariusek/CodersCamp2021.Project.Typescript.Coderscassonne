@@ -6,14 +6,14 @@ interface AddedPlayersProps {
   change: (arg0: number) => void;
 }
 
-interface AddedPlayerProps {
+interface AddedPlayersItemProps {
   player: Player;
   number: number;
   last: boolean;
   change: (arg0: number) => void;
 }
 
-const AddedPlayer = ({ player, number, last, change }: AddedPlayerProps) => {
+const AddedPlayersItem = ({ player, number, last, change }: AddedPlayersItemProps) => {
   const playerImage = `./Elements/Meeple/${player.technology}_meeple.png`;
   return (
     <div className="flex items-center justify-between w-80">
@@ -53,7 +53,13 @@ const AddedPlayers = ({ players, save, change }: AddedPlayersProps) => (
     <p className="font-ALMENDRA font-bold text-4xl text-DARKTHEME_LIGHT_GREEN_COLOR p-3 mb-10">Players</p>
     <div className="flex flex-col items-center justify-around">
       {players.map((player, i) => (
-        <AddedPlayer key={player.name} player={player} number={i + 1} last={i + 1 === players.length} change={change} />
+        <AddedPlayersItem
+          key={player.name}
+          player={player}
+          number={i + 1}
+          last={i + 1 === players.length}
+          change={change}
+        />
       ))}
     </div>
     {players.length > 1 ? (

@@ -2,15 +2,21 @@ import './index.css';
 
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { BrowserRouter } from 'react-router-dom';
 
 import App from './App';
+import { DataStoreProvider } from './components/DataStoreContext/DataStoreContext';
 import reportWebVitals from './reportWebVitals';
 
 const AppWrapper: React.FC = (): React.ReactElement => <App />;
 
 ReactDOM.render(
   <React.StrictMode>
-    <AppWrapper />
+    <BrowserRouter>
+      <DataStoreProvider>
+        <AppWrapper />
+      </DataStoreProvider>
+    </BrowserRouter>
   </React.StrictMode>,
   document.getElementById('root'),
 );

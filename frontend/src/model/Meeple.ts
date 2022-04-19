@@ -1,6 +1,6 @@
 import Locations from '../constants/locations';
-import Player from './Player';
-import Tile from './Tile';
+import type Player from './Player';
+import type Tile from './Tile';
 
 class Meeple {
   public player: Player;

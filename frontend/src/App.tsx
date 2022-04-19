@@ -1,20 +1,31 @@
 import { FC, ReactElement } from 'react';
+import { Route, Routes, useLocation } from 'react-router-dom';
 
-import DrawPile from './components/DrawPile/DrawPile';
-import GameBoard from './components/GameBoard/GameBoard';
-import { APPLICATION_TITLE } from './constants/labels';
+import { AppHeaderSection, Castle } from './components/Layout';
+import { PATH_TO_GAMEPAGE, PATH_TO_HOMEPAGE, PATH_TO_LANDINGPAGE } from './constants/paths';
+import GamePage from './views/Game';
+import HomePage from './views/HomePage';
+import LandingPage from './views/LandingPage';
+
+const paths = [
+  { element: <LandingPage />, url: PATH_TO_LANDINGPAGE },
+  { element: <HomePage />, url: PATH_TO_HOMEPAGE },
+  { element: <GamePage />, url: PATH_TO_GAMEPAGE },
+];
+const pathsWithoutHeader = [PATH_TO_GAMEPAGE];
 
 const App: FC = (): ReactElement => {
-  const testVar = 'test';
-
+  const { pathname } = useLocation();
+  const pageValidation = pathsWithoutHeader.includes(pathname);
   return (
-    <div className="flex justify-center flex-column">
-      <h1 className="font-bold text-2xl text-blue-900">{APPLICATION_TITLE}</h1>
-      <h1 className="font-bold text-2xl text-blue-900 bg-gray-200 text-red-300">{testVar}</h1>
-      <div className="flex flex-row">
-        <GameBoard />
-      </div>
-      <DrawPile numberOfAvailableTiles={10} />
+    <div className="h-screen bg-DARKTHEME_BACKGROUND_COLOR ">
+      {pageValidation ? null : <AppHeaderSection />}
+      <Routes>
+        {paths.map((path) => (
+          <Route key={path.url} path={path.url} element={path.element} />
+        ))}
+      </Routes>
+      {pageValidation ? null : <Castle />}
     </div>
   );
 };

@@ -1,9 +1,9 @@
 enum Technologies {
   HTML = 'HTML',
-  JS = 'JavaScript',
-  TS = 'TypeScript',
+  JS = 'JS',
+  TS = 'TS',
   NODE = 'Node',
-  GITHUB = 'Github',
+  REDUX = 'Redux',
 }
 
 export default Technologies;

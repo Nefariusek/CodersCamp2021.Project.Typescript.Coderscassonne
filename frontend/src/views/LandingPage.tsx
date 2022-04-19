@@ -5,6 +5,7 @@ import PlayersHand from '../components/PlayersHand/PlayersHand';
 import { APPLICATION_TITLE } from '../constants/labels';
 import Locations from '../constants/locations';
 import Tile from '../model/Tile';
+import CustomModePage from './CustomModePage';
 
 const LandingPage: FC = (): ReactElement => {
   const testVar = 'test';
@@ -20,6 +21,7 @@ const LandingPage: FC = (): ReactElement => {
       <h1 className="font-bold text-2xl text-blue-900 bg-gray-200 text-red-300">{testVar}</h1>
       <DrawPile numberOfAvailableTiles={10} />
       <PlayersHand tile={tile} />
+      <CustomModePage />
     </div>
   );
 };

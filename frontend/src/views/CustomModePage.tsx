@@ -12,17 +12,14 @@ const CustomModePage: FC = (): ReactElement => {
   const [tileAmount, setTileAmount] = useState<TileAmount>(32);
   const [turnLength, setTurnLength] = useState<TurnLength>(30);
 
-  const handleAmountOnClick = (e) => {
-    const amountValue: TileAmount = e.target.innerText;
-    setTileAmount(amountValue);
+  const handleAmountOnClick = (e: any) => {
+    setTileAmount(e.currentTarget.innerHTML);
   };
-  const handleSizeOnClick = (e) => {
-    const sizeValue: BoardSize = e.target.innerText;
-    setBoardSize(sizeValue);
+  const handleSizeOnClick = (e: any) => {
+    setBoardSize(e.currentTarget.innerHTML);
   };
-  const handleLengthOnClick = (e) => {
-    const lengthValue: TurnLength = e.target.innerText;
-    setTurnLength(lengthValue);
+  const handleLengthOnClick = (e: any) => {
+    setTurnLength(e.currentTarget.innerHTML);
   };
   const handleGameModeSubmit = () => {
     const gameMode = new GameMode(turnLength, tileAmount, boardSize, boardSize, 'Custom');

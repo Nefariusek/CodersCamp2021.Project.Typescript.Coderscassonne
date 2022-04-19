@@ -1,6 +1,7 @@
 import { FC, ReactElement } from 'react';
-import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import { Route, Routes, useLocation } from 'react-router-dom';
 
+import { AppHeaderSection, Castle } from './components/Layout';
 import { PATH_TO_CREATE_PLAYERS, PATH_TO_GAMEPAGE, PATH_TO_HOMEPAGE, PATH_TO_LANDINGPAGE } from './constants/paths';
 import CreatePlayersPage from './views/CreatePlayersPage';
 import GamePage from './views/Game';
@@ -13,15 +14,22 @@ const paths = [
   { element: <GamePage />, url: PATH_TO_GAMEPAGE },
   { element: <CreatePlayersPage />, url: PATH_TO_CREATE_PLAYERS },
 ];
+const pathsWithoutHeader = [PATH_TO_GAMEPAGE];
 
-const App: FC = (): ReactElement => (
-  <BrowserRouter>
-    <Routes>
-      {paths.map((path) => (
-        <Route key={path.url} path={path.url} element={path.element} />
-      ))}
-    </Routes>
-  </BrowserRouter>
-);
+const App: FC = (): ReactElement => {
+  const { pathname } = useLocation();
+  const pageValidation = pathsWithoutHeader.includes(pathname);
+  return (
+    <div className="h-screen bg-DARKTHEME_BACKGROUND_COLOR ">
+      {pageValidation ? null : <AppHeaderSection />}
+      <Routes>
+        {paths.map((path) => (
+          <Route key={path.url} path={path.url} element={path.element} />
+        ))}
+      </Routes>
+      {pageValidation ? null : <Castle />}
+    </div>
+  );
+};
 
 export default App;

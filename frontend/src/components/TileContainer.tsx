@@ -1,14 +1,15 @@
+import { observer } from 'mobx-react-lite';
 import { MouseEvent, ReactElement, useState } from 'react';
 
 import { ACTIVE_TILE_SOURCE, IDLE_TILE_SOURCE } from '../constants/layoutElements';
 import TileState from '../constants/tileState';
 import Tile from '../model/Tile';
 
-interface TileInterface {
+export interface TileInterface {
   tile: Tile;
 }
 
-const TileContainer = (props: TileInterface): ReactElement => {
+const TileContainer = observer((props: TileInterface): ReactElement => {
   const { tile } = props;
 
   const [currentTileState, setTileState] = useState<TileState>(TileState.ACTIVE);
@@ -17,6 +18,7 @@ const TileContainer = (props: TileInterface): ReactElement => {
     event.preventDefault();
     setTileState(TileState.TAKEN);
   }
+
   return (
     <div className="relative flex " onClick={currentTileState === TileState.ACTIVE ? handleActiveTileClick : undefined}>
       {currentTileState === TileState.IDLE && (
@@ -26,10 +28,18 @@ const TileContainer = (props: TileInterface): ReactElement => {
         <img id="active" src={ACTIVE_TILE_SOURCE} alt={TileState.ACTIVE} className="hover: cursor-pointer" />
       )}
       {currentTileState === TileState.TAKEN && (
-        <img id="taken" src={tile.getTileImageSource()} alt={TileState.TAKEN} className="hover: cursor-not-allowed" />
+        <img
+          id="taken"
+          src={tile.getTileImageSource()}
+          alt={TileState.TAKEN}
+          className={`hover: cursor-not-allowed
+      ${tile.rotation === 90 ? 'rotate-90' : ''}
+      ${tile.rotation === 180 ? 'rotate-180' : ''}
+      ${tile.rotation === 270 ? 'rotate-270' : ''}`}
+        />
       )}
     </div>
   );
-};
+});
 
 export default TileContainer;

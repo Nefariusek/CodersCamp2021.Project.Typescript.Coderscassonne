@@ -1,1 +1,1 @@
-export const APPLICATION_TITLE = 'Coderscassonne';
+export const APPLICATION_TITLE = 'CodersCassonne';

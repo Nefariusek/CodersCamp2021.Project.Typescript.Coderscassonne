@@ -1,4 +1,4 @@
-//import { observer } from 'mobx-react-lite';
+import { observer } from 'mobx-react-lite';
 import { MouseEvent, ReactElement, useState } from 'react';
 
 import { ACTIVE_TILE_SOURCE, IDLE_TILE_SOURCE } from '../../constants/layoutElements';
@@ -14,7 +14,7 @@ export interface TileInterface {
 //TODO: handleClick by invoking callback with parameters (see above), which causes rerender of parent
 //TODO: parent knows, which element was changed (row,column)
 
-const TileContainer = (props: TileInterface): ReactElement => {
+const TileContainer = observer((props: TileInterface): ReactElement => {
   const { tile, initialState } = props;
 
   const [currentTileState, setTileState] = useState<TileState>(initialState);
@@ -44,6 +44,6 @@ const TileContainer = (props: TileInterface): ReactElement => {
       )}
     </div>
   );
-};
+});
 
 export default TileContainer;

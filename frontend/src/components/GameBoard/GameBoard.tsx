@@ -34,7 +34,6 @@ const GameBoard: FC = (): ReactElement => {
   const [boardState] = useState<BoardState[]>(initialBoardState);
 
   const sortedBoardState = _.orderBy(boardState, ['row', 'column'], ['asc', 'asc']);
-  console.log(sortedBoardState);
   const tilesGroupedByRows = _.groupBy(sortedBoardState, 'row');
 
   return (

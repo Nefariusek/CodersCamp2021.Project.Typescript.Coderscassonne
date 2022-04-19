@@ -25,7 +25,7 @@ const App: FC = (): ReactElement => {
           <Route key={path.url} path={path.url} element={path.element} />
         ))}
       </Routes>
-      {pageValidation ? null : <Castle />}
+      {/* {pageValidation ? null : <Castle />} */}
     </div>
   );
 };

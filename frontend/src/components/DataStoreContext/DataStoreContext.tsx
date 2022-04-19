@@ -1,28 +1,13 @@
 import { createContext, useMemo, useState } from 'react';
 
-import type Technologies from '../../constants/technologies';
-import type Meeple from '../../model/Meeple';
-import { BoardSize, TileAmount, TurnLength } from '../../model/Settings';
-import type Tile from '../../model/Tile';
+import type Player from '../../model/Player';
+import type Settings from '../../model/Settings';
 
-export interface PlayersDataInterface {
-  name: string;
-  technology: Technologies;
-  score: number;
-  placedTiles: Tile[];
-  meeples: Meeple[];
-}
-export interface GameSettingsInterface {
-  turnLength: TurnLength;
-  tileAmount: TileAmount;
-  boardSizeX: BoardSize;
-  boardSizeY: BoardSize;
-}
 interface DataStoreContextInterface {
-  playersData: PlayersDataInterface | null;
-  setPlayersData: React.Dispatch<React.SetStateAction<PlayersDataInterface | null>>;
-  gameSettings: GameSettingsInterface | null;
-  setGameSettings: React.Dispatch<React.SetStateAction<GameSettingsInterface | null>>;
+  playersData: Player | null;
+  setPlayersData: React.Dispatch<React.SetStateAction<Player | null>>;
+  gameSettings: Settings | null;
+  setGameSettings: React.Dispatch<React.SetStateAction<Settings | null>>;
 }
 
 type DataStoreProviderProps = { children: React.ReactNode };
@@ -30,8 +15,8 @@ type DataStoreProviderProps = { children: React.ReactNode };
 const DataStoreContext = createContext<DataStoreContextInterface | null>(null);
 
 export const DataStoreProvider = ({ children }: DataStoreProviderProps) => {
-  const [playersData, setPlayersData] = useState<PlayersDataInterface | null>(null);
-  const [gameSettings, setGameSettings] = useState<GameSettingsInterface | null>(null);
+  const [playersData, setPlayersData] = useState<Player | null>(null);
+  const [gameSettings, setGameSettings] = useState<Settings | null>(null);
 
   const storeDataWithMemo = useMemo(
     () => ({

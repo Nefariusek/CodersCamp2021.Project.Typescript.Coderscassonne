@@ -1,6 +1,10 @@
+import { makeAutoObservable } from 'mobx';
+
 import Locations from '../constants/locations';
 import { PREDEFINED_TILES } from '../constants/tiles';
 import type Player from './Player';
+
+export type Rotation = 0 | 90 | 180 | 270;
 
 export type Edges = {
   bottom: Locations;
@@ -20,6 +24,8 @@ class Tile {
 
   public isSpecial: boolean;
 
+  public rotation: Rotation;
+
   private readonly originalEdges: Edges;
 
   constructor(edges: Edges, middle: Locations, isSpecial = false) {
@@ -27,6 +33,8 @@ class Tile {
     this.middle = middle;
     this.originalEdges = edges;
     this.isSpecial = isSpecial;
+    this.rotation = 0;
+    makeAutoObservable(this);
   }
 
   private getCurrentEdges(): Edges {
@@ -34,6 +42,10 @@ class Tile {
   }
 
   public rotateLeft(): void {
+    this.rotation -= 90;
+    if (this.rotation === -90) {
+      this.rotation = 270;
+    }
     const prevEdges = this.getCurrentEdges();
     this.edges = {
       bottom: prevEdges.left,
@@ -44,6 +56,10 @@ class Tile {
   }
 
   public rotateRight(): void {
+    this.rotation += 90;
+    if (this.rotation === 360) {
+      this.rotation = 0;
+    }
     const prevEdges = this.getCurrentEdges();
     this.edges = {
       bottom: prevEdges.right,

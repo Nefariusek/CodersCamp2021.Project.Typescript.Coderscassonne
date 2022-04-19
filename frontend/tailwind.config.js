@@ -11,6 +11,9 @@ module.exports = {
       fontFamily: {
         ALMENDRA: ['Almendra'],
       },
+      rotate: {
+        270: '270deg',
+      },
     },
   },
   variants: {

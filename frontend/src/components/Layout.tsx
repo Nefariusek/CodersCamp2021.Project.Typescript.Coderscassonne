@@ -3,7 +3,7 @@ import { FC } from 'react';
 import { APPLICATION_TITLE } from '../constants/labels';
 import { CASTLE_SOURCE, SETTINGS_ICON_SOURCE, TILE_TITLE_SOURCE } from '../constants/layoutElements';
 
-export const Header: FC = () => (
+export const AppHeaderSection: FC = () => (
   <div className="flex justify-center p-2 h-40 bg-DARKTHEME_BACKGROUND_COLOR">
     <div className="mt-2">
       <div className="absolute top-5 right-7 ">

@@ -3,12 +3,9 @@ import _ from 'lodash';
 import { FC, ReactElement, useState } from 'react';
 
 import TileState from '../../constants/tileState';
-import { JSONData } from '../../mocks/mocks';
 import Tile from '../../model/Tile';
-import GameModeParser from '../GameModeParser';
+import { drawnTiles } from '../DataStoreContext/DataStoreContext';
 import TileContainer from '../TileContainer/TileContainer';
-
-export const drawnTiles = GameModeParser(JSONData);
 
 export interface BoardState {
   column: number;
@@ -36,18 +33,47 @@ const GameBoard: FC = (): ReactElement => {
   const sortedBoardState = _.orderBy(boardState, ['row', 'column'], ['asc', 'asc']);
   const tilesGroupedByRows = _.groupBy(sortedBoardState, 'row');
 
-  const extendBoard = (row: number, column: number) => {
-    const maxRow = _.maxBy(boardState, 'row');
-    const minRow = _.minBy(boardState, 'row');
-    const minColumn = _.minBy(boardState, 'column');
-    const maxColumn = _.maxBy(boardState, 'column');
-    console.log(minColumn, maxColumn);
+  const extendBoard = (column: number, row: number) => {
+    const bottomRow = _.maxBy(boardState, 'row')!.row;
+    console.log('bottom row ', bottomRow);
+    const topRow = _.minBy(boardState, 'row')!.row;
+    console.log('top row ', topRow);
+    const leftColumn = _.minBy(boardState, 'column')!.column;
+    console.log('left column ', leftColumn);
+    const rightColumn = _.maxBy(boardState, 'column')!.column;
+    console.log('right column ', rightColumn);
+    if (row === bottomRow) {
+      for (let col = leftColumn; col <= rightColumn; col++) {
+        boardState.push({ row: row + 1, column: col, state: TileState.IDLE });
+      }
+    }
+    if (row === topRow) {
+      for (let col = leftColumn; col <= rightColumn; col++) {
+        boardState.unshift({ row: row - 1, column: col, state: TileState.IDLE });
+      }
+    }
+    if (column === rightColumn) {
+      for (let row = topRow; row <= bottomRow; row++) {
+        boardState.push({ row: row, column: column + 1, state: TileState.IDLE });
+      }
+    }
+    if (column === leftColumn) {
+      for (let row = topRow; row <= bottomRow; row++) {
+        boardState.push({ row: row, column: column - 1, state: TileState.IDLE });
+      }
+    }
+    setBoardState([...boardState]);
   };
 
   const handleChangeBoardState = (row: number, column: number, newTile: Tile) => {
-    setBoardState((boardState) => [...boardState, { row: row, column: column, state: TileState.TAKEN, tile: newTile }]);
+    const tileToChange = boardState.find((tile) => tile.row === row && tile.column === column);
+    if (tileToChange) {
+      tileToChange.state = TileState.TAKEN;
+      tileToChange.tile = drawnTiles[1];
+    }
+    extendBoard(column, row);
   };
-
+  console.log(boardState);
   return (
     <div id="gameBoard">
       <table>

@@ -19,7 +19,6 @@ describe('Player model', () => {
     false,
   );
   const testPointsToAdd = 2;
-  const testPointsToAddAfterReturnMeeple = 12;
 
   test('Player is created', () => {
     expect(testPlayer.name).toBe(testName);
@@ -52,9 +51,8 @@ describe('Player model', () => {
   });
 
   test('Player returned a meeple', () => {
-    testPlayer.returnMeeple(testMeeple, testPointsToAddAfterReturnMeeple);
+    testPlayer.returnMeeple(testMeeple);
     expect(testPlayer.getMeepleCount()).toBe(DEFAULT_PLAYERS_MEEPLE_COUNT);
-    expect(testPlayer.score).toBe(testPointsToAddAfterReturnMeeple);
   });
 
   test('Player has no meeple', () => {
@@ -67,7 +65,7 @@ describe('Player model', () => {
   });
 
   test("Player's score is computed", () => {
-    const expectedTotalScore = testPointsToAddAfterReturnMeeple + testPointsToAdd;
+    const expectedTotalScore = testPointsToAdd;
     expect(testPlayer.updateScore(testPointsToAdd)).toBe(expectedTotalScore);
     expect(testPlayer.score).toBe(expectedTotalScore);
   });

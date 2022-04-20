@@ -1,9 +1,8 @@
 import { FC, ReactElement } from 'react';
 
 import DrawPile from '../components/DrawPile/DrawPile';
-import PlayersInfo from '../components/PlayersInfo/PlayersInfo';
 import PlayersHand from '../components/PlayersHand/PlayersHand';
-
+import PlayersInfo from '../components/PlayersInfo/PlayersInfo';
 import { APPLICATION_TITLE } from '../constants/labels';
 import Locations from '../constants/locations';
 import mocksPlayers from '../mocks/mocksPlayers';
@@ -24,7 +23,6 @@ const LandingPage: FC = (): ReactElement => {
       <DrawPile numberOfAvailableTiles={10} />
       <PlayersInfo players={mocksPlayers} currentPlayer={1} />
       <PlayersHand tile={tile} />
-
     </div>
   );
 };

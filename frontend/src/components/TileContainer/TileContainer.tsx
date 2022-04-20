@@ -4,10 +4,12 @@ import { MouseEvent, ReactElement, useState } from 'react';
 import { ACTIVE_TILE_SOURCE, IDLE_TILE_SOURCE } from '../../constants/layoutElements';
 import TileState from '../../constants/tileState';
 import Tile from '../../model/Tile';
-
 export interface TileInterface {
   tile: Tile | undefined;
   initialState: TileState;
+  onChange: (row: number, column: number, tile: Tile) => void;
+  row?: number;
+  column?: number;
 }
 //TODO: change props so that TileContainer receives callback to update parent's state
 //TODO: send in callback as props info about row and column of tile that should be rerendered
@@ -15,12 +17,13 @@ export interface TileInterface {
 //TODO: parent knows, which element was changed (row,column)
 
 const TileContainer = observer((props: TileInterface): ReactElement => {
-  const { tile, initialState } = props;
+  const { tile, initialState, onChange, row, column } = props;
 
   const [currentTileState, setTileState] = useState<TileState>(initialState);
   function handleActiveTileClick(event: MouseEvent<HTMLImageElement>): void {
     event.preventDefault();
     setTileState(TileState.TAKEN);
+    onChange(row!, column!, tile!);
   }
 
   return (

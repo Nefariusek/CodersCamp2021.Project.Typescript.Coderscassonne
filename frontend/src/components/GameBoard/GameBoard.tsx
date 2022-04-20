@@ -10,7 +10,7 @@ import TileContainer from '../TileContainer/TileContainer';
 
 export const drawnTiles = GameModeParser(JSONData);
 
-interface BoardState {
+export interface BoardState {
   column: number;
   row: number;
   state: TileState;
@@ -31,10 +31,14 @@ export const initialBoardState: BoardState[] = [
 ];
 
 const GameBoard: FC = (): ReactElement => {
-  const [boardState] = useState<BoardState[]>(initialBoardState);
+  const [boardState, setBoardState] = useState<BoardState[]>(initialBoardState);
 
   const sortedBoardState = _.orderBy(boardState, ['row', 'column'], ['asc', 'asc']);
   const tilesGroupedByRows = _.groupBy(sortedBoardState, 'row');
+
+  const handleChangeBoardState = (row: number, column: number, newTile: Tile) => {
+    setBoardState((boardState) => [...boardState, { row: row, column: column, state: TileState.TAKEN, tile: newTile }]);
+  };
 
   return (
     <div id="gameBoard">
@@ -44,7 +48,13 @@ const GameBoard: FC = (): ReactElement => {
             <tr key={`row-${rowIndex}`}>
               {columnsInRow.map((element) => (
                 <td key={`${element.row}-${element.column}`}>
-                  <TileContainer tile={element.tile || undefined} initialState={element.state} />
+                  <TileContainer
+                    tile={element.tile || undefined}
+                    initialState={element.state}
+                    onChange={handleChangeBoardState}
+                    row={element.row}
+                    column={element.column}
+                  />
                 </td>
               ))}
             </tr>

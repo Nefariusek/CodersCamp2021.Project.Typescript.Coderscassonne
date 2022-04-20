@@ -7,16 +7,20 @@ import Tile from '../../model/Tile';
 export interface TileInterface {
   tile: Tile | undefined;
   initialState: TileState;
+}
+
+interface TileStateInterface extends TileInterface {
   onChange: (row: number, column: number, tile: Tile) => void;
   row?: number;
   column?: number;
 }
+
 //TODO: change props so that TileContainer receives callback to update parent's state
 //TODO: send in callback as props info about row and column of tile that should be rerendered
 //TODO: handleClick by invoking callback with parameters (see above), which causes rerender of parent
 //TODO: parent knows, which element was changed (row,column)
 
-const TileContainer = observer((props: TileInterface): ReactElement => {
+const TileContainer = observer((props: TileStateInterface): ReactElement => {
   const { tile, initialState, onChange, row, column } = props;
 
   const [currentTileState, setTileState] = useState<TileState>(initialState);

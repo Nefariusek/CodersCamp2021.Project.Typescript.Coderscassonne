@@ -36,6 +36,14 @@ const GameBoard: FC = (): ReactElement => {
   const sortedBoardState = _.orderBy(boardState, ['row', 'column'], ['asc', 'asc']);
   const tilesGroupedByRows = _.groupBy(sortedBoardState, 'row');
 
+  const extendBoard = (row: number, column: number) => {
+    const maxRow = _.maxBy(boardState, 'row');
+    const minRow = _.minBy(boardState, 'row');
+    const minColumn = _.minBy(boardState, 'column');
+    const maxColumn = _.maxBy(boardState, 'column');
+    console.log(minColumn, maxColumn);
+  };
+
   const handleChangeBoardState = (row: number, column: number, newTile: Tile) => {
     setBoardState((boardState) => [...boardState, { row: row, column: column, state: TileState.TAKEN, tile: newTile }]);
   };

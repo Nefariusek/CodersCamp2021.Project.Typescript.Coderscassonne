@@ -2,12 +2,10 @@ import React from 'react';
 
 interface ModalProps {
   setModalOn: (a: boolean) => void;
-  setClose: (a: boolean) => void;
 }
 
-const Modal: React.FC<ModalProps> = ({ setModalOn, setClose }) => {
+const Modal: React.FC<ModalProps> = ({ setModalOn }) => {
   const handleCancelClick = () => {
-    setClose(false);
     setModalOn(false);
   };
 

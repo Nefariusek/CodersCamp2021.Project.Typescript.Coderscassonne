@@ -10,7 +10,6 @@ import Tile from '../model/Tile';
 import TileState from '../constants/tileState';
 const LandingPage: FC = (): ReactElement => {
   const [modalOn, setModalOn] = useState(false);
-  const [close, setClose] = useState(false);
   const clicked = () => {
     setModalOn(true);
   };
@@ -28,7 +27,7 @@ const LandingPage: FC = (): ReactElement => {
       <DrawPile numberOfAvailableTiles={10} />
       <PlayersHand tile={tile} initialState={TileState.ACTIVE} />
       <PlayersInfo players={mocksPlayers} currentPlayer={1} />
-      {modalOn && <Modal setModalOn={setModalOn} setClose={setClose} />}
+      {modalOn && <Modal setModalOn={setModalOn} />}
     </div>
   );
 };

@@ -8,6 +8,7 @@ const Modal: React.FC<ModalProps> = ({ setModalOn }) => {
   const handleCancelClick = () => {
     setModalOn(false);
   };
+  setTimeout(handleCancelClick, 5000);
 
   return (
     <div className="   bg-DARKTHEME_DARK_GREEN_COLOR opacity-95 fixed inset-0 z-50   ">

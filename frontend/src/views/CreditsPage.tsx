@@ -1,10 +1,17 @@
 import React, { ReactElement } from 'react';
+import { Link } from 'react-router-dom';
 
 import { IDLE_TILE_SOURCE, TILE_GAME_SOURCE } from '../constants/layoutElements';
+import { PATH_TO_HOMEPAGE } from '../constants/paths';
 
 type Authors = {
   name: string;
   url: string;
+};
+
+const CREDITS_TITLE = {
+  subtitle: 'Meet our team',
+  title: 'This is our project during Coders Camp 2021/2022',
 };
 
 const CreditsButtons = () => {
@@ -36,7 +43,14 @@ const CreditsButtons = () => {
 const CreditsPage: React.FunctionComponent = (): ReactElement => (
   <div className="flex justify-center py-1">
     <div className="flex items-center flex-col text-DARKTHEME_LIGHT_GREEN_COLOR">
+      <header className="text-center mb-2">
+        <h2 className="text-2xl mb-2">{CREDITS_TITLE.title}</h2>
+        <h3 className="text-1xl mb-2">{CREDITS_TITLE.subtitle}</h3>
+      </header>
       <CreditsButtons />
+      <footer className="text-center mt-3">
+        <Link to={PATH_TO_HOMEPAGE}>Back to Homepage</Link>
+      </footer>
     </div>
   </div>
 );

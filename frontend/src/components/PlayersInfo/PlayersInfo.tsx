@@ -1,8 +1,7 @@
-/* eslint-disable react/jsx-no-useless-fragment */
 import Player from '../../model/Player';
 
 interface PlayersInfoProps {
-  players: Player[];
+  players: Player[] | undefined;
   currentPlayer: number;
 }
 interface PlayersInfoItemProps {
@@ -40,9 +39,7 @@ const PlayersInfoItem = ({ player, isCurrent }: PlayersInfoItemProps) => {
 
 const PlayersInfo = ({ players, currentPlayer }: PlayersInfoProps) => (
   <div className="flex items-center bg-DARKTHEME_BACKGROUND_COLOR">
-    {players.map((player, i) => (
-      <PlayersInfoItem player={player} isCurrent={i === currentPlayer} />
-    ))}
+    {players && players.map((player, i) => <PlayersInfoItem player={player} isCurrent={i === currentPlayer} />)}
   </div>
 );
 

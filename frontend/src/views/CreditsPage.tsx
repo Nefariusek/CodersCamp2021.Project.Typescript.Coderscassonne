@@ -1,5 +1,7 @@
 import React, { ReactElement } from 'react';
 
+import { IDLE_TILE_SOURCE, TILE_GAME_SOURCE } from '../constants/layoutElements';
+
 type Authors = {
   name: string;
   url: string;
@@ -21,7 +23,7 @@ const CreditsButtons = () => {
           <button
             key={author.name}
             type="button"
-            className={`border border-DARKTHEME_LIGHT_GREEN_COLOR font-ALMENDRA text-3xl text-DARKTHEME_LIGHT_GREEN_COLOR w-40 h-40`}
+            className={`bg-[url('${TILE_GAME_SOURCE}')] hover:bg-[url('${IDLE_TILE_SOURCE}')] bg-contain border hover:border-2 border-DARKTHEME_LIGHT_GREEN_COLOR font-ALMENDRA text-3xl text-DARKTHEME_LIGHT_GREEN_COLOR w-40 h-40`}
           >
             {author.name}
           </button>

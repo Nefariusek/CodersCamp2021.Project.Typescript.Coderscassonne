@@ -1,19 +1,23 @@
 import { observer } from 'mobx-react-lite';
 import { MouseEvent, ReactElement, useState } from 'react';
 
-import { ACTIVE_TILE_SOURCE, IDLE_TILE_SOURCE } from '../constants/layoutElements';
-import TileState from '../constants/tileState';
-import Tile from '../model/Tile';
+import { ACTIVE_TILE_SOURCE, IDLE_TILE_SOURCE } from '../../constants/layoutElements';
+import TileState from '../../constants/tileState';
+import Tile from '../../model/Tile';
 
 export interface TileInterface {
-  tile: Tile;
+  tile: Tile | undefined;
+  initialState: TileState;
 }
+//TODO: change props so that TileContainer receives callback to update parent's state
+//TODO: send in callback as props info about row and column of tile that should be rerendered
+//TODO: handleClick by invoking callback with parameters (see above), which causes rerender of parent
+//TODO: parent knows, which element was changed (row,column)
 
 const TileContainer = observer((props: TileInterface): ReactElement => {
-  const { tile } = props;
+  const { tile, initialState } = props;
 
-  const [currentTileState, setTileState] = useState<TileState>(TileState.ACTIVE);
-
+  const [currentTileState, setTileState] = useState<TileState>(initialState);
   function handleActiveTileClick(event: MouseEvent<HTMLImageElement>): void {
     event.preventDefault();
     setTileState(TileState.TAKEN);
@@ -30,12 +34,12 @@ const TileContainer = observer((props: TileInterface): ReactElement => {
       {currentTileState === TileState.TAKEN && (
         <img
           id="taken"
-          src={tile.getTileImageSource()}
+          src={tile!.getTileImageSource()}
           alt={TileState.TAKEN}
           className={`hover: cursor-not-allowed
-      ${tile.rotation === 90 ? 'rotate-90' : ''}
-      ${tile.rotation === 180 ? 'rotate-180' : ''}
-      ${tile.rotation === 270 ? 'rotate-270' : ''}`}
+      ${tile!.rotation === 90 ? 'rotate-90' : ''}
+      ${tile!.rotation === 180 ? 'rotate-180' : ''}
+      ${tile!.rotation === 270 ? 'rotate-270' : ''}`}
         />
       )}
     </div>

@@ -34,33 +34,34 @@ const GameBoard: FC = (): ReactElement => {
   const tilesGroupedByRows = _.groupBy(sortedBoardState, 'row');
 
   const extendBoard = (column: number, row: number) => {
-    const bottomRow = _.maxBy(boardState, 'row')!.row;
-    console.log('bottom row ', bottomRow);
-    const topRow = _.minBy(boardState, 'row')!.row;
-    console.log('top row ', topRow);
-    const leftColumn = _.minBy(boardState, 'column')!.column;
-    console.log('left column ', leftColumn);
-    const rightColumn = _.maxBy(boardState, 'column')!.column;
-    console.log('right column ', rightColumn);
+    let bottomRow = _.maxBy(boardState, 'row')!.row;
+    let topRow = _.minBy(boardState, 'row')!.row;
+    let leftColumn = _.minBy(boardState, 'column')!.column;
+    let rightColumn = _.maxBy(boardState, 'column')!.column;
     if (row === bottomRow) {
       for (let col = leftColumn; col <= rightColumn; col++) {
         boardState.push({ row: row + 1, column: col, state: TileState.IDLE });
       }
+      bottomRow += 1;
     }
+
     if (row === topRow) {
       for (let col = leftColumn; col <= rightColumn; col++) {
         boardState.unshift({ row: row - 1, column: col, state: TileState.IDLE });
       }
+      topRow -= 1;
     }
     if (column === rightColumn) {
       for (let row = topRow; row <= bottomRow; row++) {
         boardState.push({ row: row, column: column + 1, state: TileState.IDLE });
       }
+      rightColumn += 1;
     }
     if (column === leftColumn) {
       for (let row = topRow; row <= bottomRow; row++) {
         boardState.push({ row: row, column: column - 1, state: TileState.IDLE });
       }
+      leftColumn -= 1;
     }
     setBoardState([...boardState]);
   };
@@ -73,26 +74,29 @@ const GameBoard: FC = (): ReactElement => {
     }
     extendBoard(column, row);
   };
-  console.log(boardState);
+  console.log('sorted', sortedBoardState);
+  console.log(tilesGroupedByRows);
   return (
     <div id="gameBoard">
       <table>
         <tbody>
-          {Object.entries(tilesGroupedByRows).map(([rowIndex, columnsInRow]) => (
-            <tr key={`row-${rowIndex}`}>
-              {columnsInRow.map((element) => (
-                <td key={`${element.row}-${element.column}`}>
-                  <TileContainer
-                    tile={element.tile || undefined}
-                    initialState={element.state}
-                    onChange={handleChangeBoardState}
-                    row={element.row}
-                    column={element.column}
-                  />
-                </td>
-              ))}
-            </tr>
-          ))}
+          {Object.entries(tilesGroupedByRows)
+            .sort()
+            .map(([rowIndex, columnsInRow]) => (
+              <tr key={`row-${rowIndex}`}>
+                {columnsInRow.map((element) => (
+                  <td key={`${element.row}-${element.column}`}>
+                    <TileContainer
+                      tile={element.tile || undefined}
+                      initialState={element.state}
+                      onChange={handleChangeBoardState}
+                      row={element.row}
+                      column={element.column}
+                    />
+                  </td>
+                ))}
+              </tr>
+            ))}
         </tbody>
       </table>
     </div>

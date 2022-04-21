@@ -22,11 +22,13 @@ const App: FC = (): ReactElement => {
   return (
     <div className="h-screen bg-DARKTHEME_BACKGROUND_COLOR ">
       {pageValidation ? null : <AppHeaderSection />}
-      <Routes>
-        {paths.map((path) => (
-          <Route key={path.url} path={path.url} element={path.element} />
-        ))}
-      </Routes>
+      <div className="relative mt-10 z-50">
+        <Routes>
+          {paths.map((path) => (
+            <Route key={path.url} path={path.url} element={path.element} />
+          ))}
+        </Routes>
+      </div>
       {pageValidation ? null : <Castle />}
     </div>
   );

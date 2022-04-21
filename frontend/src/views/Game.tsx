@@ -4,16 +4,8 @@ import PlayersInfo from '../components/PlayersInfo/PlayersInfo';
 import GameTimer from '../components/GameTimer/GameTimer';
 import GameBoard from '../components/GameBoard/GameBoard';
 import PlayersHand from '../components/PlayersHand/PlayersHand';
-import Locations from '../constants/locations';
-import Tile from '../model/Tile';
-import TileState from '../constants/tileState';
-import DrawPile from '../components/DrawPile/DrawPile';
 
-const tile = new Tile(
-  { bottom: Locations.FIELD, left: Locations.CITY, right: Locations.FIELD, top: Locations.CITY },
-  Locations.CITY,
-  false,
-);
+import DrawPile from '../components/DrawPile/DrawPile';
 
 const GamePage: React.FunctionComponent = (): ReactElement => {
   const context = useContext(DataStoreContext);

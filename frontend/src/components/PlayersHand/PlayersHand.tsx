@@ -6,7 +6,7 @@ import DataStoreContext from '../DataStoreContext/DataStoreContext';
 import TileState from '../../constants/tileState';
 
 const PlayersHand = observer((): ReactElement => {
-  const { tileInHand, setTileInHand } = useContext(DataStoreContext);
+  const { tileInHand } = useContext(DataStoreContext);
 
   return (
     <div className="flex justify-center">

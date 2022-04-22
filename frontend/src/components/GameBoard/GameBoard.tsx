@@ -66,7 +66,7 @@ const GameBoard: FC = (): ReactElement => {
     setBoardState([...boardState]);
   };
 
-  const handleChangeBoardState = (row: number, column: number, newTile: Tile) => {
+  const handleChangeBoardState = (row: number, column: number) => {
     const tileToChange = boardState.find((tile) => tile.row === row && tile.column === column);
     if (tileToChange) {
       tileToChange.state = TileState.TAKEN;

@@ -8,6 +8,7 @@ import Locations from '../constants/locations';
 import Tile from '../model/Tile';
 import TileState from '../constants/tileState';
 import DrawPile from '../components/DrawPile/DrawPile';
+import Legend from '../components/Legend/Legend';
 
 const tile = new Tile(
   { bottom: Locations.FIELD, left: Locations.CITY, right: Locations.FIELD, top: Locations.CITY },
@@ -21,9 +22,10 @@ const GamePage: React.FunctionComponent = (): ReactElement => {
 
   return (
     <div>
-      <div className="flex justify-between p-[10px]">
+      <div className="flex justify-between p-[10px] z-0">
         <PlayersInfo players={context?.allPlayersData} currentPlayer={currentPlayer} />
         <GameTimer isTurnTimerVisible={false} turnLength={60} />
+        <Legend />
       </div>
       <div className="flex justify-center">
         <GameBoard />

@@ -7,6 +7,7 @@ import Locations from '../constants/locations';
 import mocksPlayers from '../mocks/mocksPlayers';
 import Tile from '../model/Tile';
 import TileState from '../constants/tileState';
+
 const LandingPage: FC = (): ReactElement => {
   const tile = new Tile(
     { bottom: Locations.FIELD, left: Locations.CITY, right: Locations.FIELD, top: Locations.CITY },

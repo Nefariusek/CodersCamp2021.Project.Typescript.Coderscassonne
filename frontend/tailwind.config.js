@@ -14,6 +14,12 @@ module.exports = {
       rotate: {
         270: '270deg',
       },
+      width: {
+        '380px': '380px',
+      },
+      height: {
+        '380px': '380px',
+      },
     },
   },
   variants: {

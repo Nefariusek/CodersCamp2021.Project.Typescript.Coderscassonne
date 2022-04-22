@@ -26,7 +26,7 @@ const GameTimer = (props: GameTimerProps) => {
   }, [seconds, minutes]);
 
   return (
-    <div className="font-ALMENDRA font-bold text-2xl text-DARKTHEME_LIGHT_GREEN_COLOR p-3">
+    <div className="font-ALMENDRA font-bold text-3xl text-DARKTHEME_LIGHT_GREEN_COLOR p-3">
       <p>
         Game time: {minutes}:{seconds}s
       </p>

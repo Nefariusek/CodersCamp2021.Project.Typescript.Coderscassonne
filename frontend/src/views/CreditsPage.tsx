@@ -1,7 +1,5 @@
 import React, { ReactElement } from 'react';
 import { Link } from 'react-router-dom';
-
-import { IDLE_TILE_SOURCE, TILE_GAME_SOURCE } from '../constants/layoutElements';
 import { PATH_TO_HOMEPAGE } from '../constants/paths';
 
 type Authors = {
@@ -24,13 +22,15 @@ const CreditsButtons = () => {
     { name: 'Grzegorz', url: 'https://github.com/GRosza' },
   ];
   return (
-    <div className="grid md:grid-cols-3 sm:grid-cols-2 gap-4">
+    <div className="grid md:grid-cols-3 grid-cols-2 gap-4">
       {AUTHORS.map((author) => (
-        <a target="_blank" href={author.url} rel="noreferrer">
+        <a target="_blank" href={author.url} rel="noreferrer" tabIndex={-1}>
           <button
             key={author.name}
             type="button"
-            className={`bg-[url('${TILE_GAME_SOURCE}')] hover:bg-[url('${IDLE_TILE_SOURCE}')] bg-contain border hover:border-2 border-DARKTHEME_LIGHT_GREEN_COLOR font-ALMENDRA text-3xl text-DARKTHEME_LIGHT_GREEN_COLOR w-40 h-40`}
+            className={
+              "bg-DARKTHEME_BACKGROUND_COLOR bg-[url('../../public/Elements/Layout/Tile_game.png')] hover:bg-[url('../../public/Elements/Layout/Tile_board_dark.png')] bg-contain border hover:border-2 focus:border-2 focus:outline-none border-DARKTHEME_LIGHT_GREEN_COLOR font-ALMENDRA text-3xl text-DARKTHEME_LIGHT_GREEN_COLOR w-40 h-40"
+            }
           >
             {author.name}
           </button>
@@ -41,17 +41,15 @@ const CreditsButtons = () => {
 };
 
 const CreditsPage: React.FunctionComponent = (): ReactElement => (
-  <div className="flex justify-center py-1">
-    <div className="flex items-center flex-col text-DARKTHEME_LIGHT_GREEN_COLOR">
-      <header className="text-center mb-2">
-        <h2 className="text-2xl mb-2">{CREDITS_TITLE.title}</h2>
-        <h3 className="text-1xl mb-2">{CREDITS_TITLE.subtitle}</h3>
-      </header>
-      <CreditsButtons />
-      <footer className="text-center mt-3">
-        <Link to={PATH_TO_HOMEPAGE}>Back to Homepage</Link>
-      </footer>
-    </div>
+  <div className="flex items-center justify-center flex-col text-DARKTHEME_LIGHT_GREEN_COLOR">
+    <header className="text-center mb-2">
+      <h2 className="text-2xl mb-2">{CREDITS_TITLE.title}</h2>
+      <h3 className="text-1xl mb-2">{CREDITS_TITLE.subtitle}</h3>
+    </header>
+    <CreditsButtons />
+    <footer className="text-center mt-3">
+      <Link to={PATH_TO_HOMEPAGE}>Back to Homepage</Link>
+    </footer>
   </div>
 );
 

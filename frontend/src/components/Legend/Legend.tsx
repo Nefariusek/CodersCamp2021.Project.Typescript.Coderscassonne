@@ -33,11 +33,8 @@ const Legend: React.FunctionComponent = (): ReactElement => {
   return (
     <div className="font-ALMENDRA text-DARKTHEME_LIGHT_GREEN_COLOR text-l">
       {!isLegendToggled && (
-        <button
-          onClick={toggleLegend}
-          className="bg-DARKTHEME_LIGHT_GREEN_COLOR text-DARKTHEME_BACKGROUND_COLOR rounded p-3"
-        >
-          III
+        <button onClick={toggleLegend}>
+          <img src="../../../public/Elements/Layout/glass.png" alt="legend" />
         </button>
       )}
       {isLegendToggled && (

@@ -25,7 +25,9 @@ const GamePage: React.FunctionComponent = (): ReactElement => {
       <div className="flex justify-between p-[10px] z-0">
         <PlayersInfo players={context?.allPlayersData} currentPlayer={currentPlayer} />
         <GameTimer isTurnTimerVisible={false} turnLength={60} />
-        <Legend />
+        <div className="w-[300px] flex justify-end">
+          <Legend />
+        </div>
       </div>
       <div className="flex justify-center">
         <GameBoard />

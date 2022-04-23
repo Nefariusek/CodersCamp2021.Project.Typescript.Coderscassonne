@@ -28,7 +28,7 @@ const CreditsButtons = () => {
           <button
             type="button"
             className={
-              "bg-DARKTHEME_BACKGROUND_COLOR bg-[url('../../public/Elements/Layout/Tile_game.png')] hover:bg-[url('../../public/Elements/Layout/Tile_board_dark.png')] focus:bg-[url('../../public/Elements/Layout/Tile_board_dark.png')] bg-contain border hover:border-2 focus:border-2 focus:outline-none border-DARKTHEME_LIGHT_GREEN_COLOR font-ALMENDRA text-3xl text-DARKTHEME_LIGHT_GREEN_COLOR w-40 h-40"
+              "bg-DARKTHEME_BACKGROUND_COLOR bg-[url('../Elements/Layout/Tile_game.png')] hover:bg-[url('../Elements/Layout/Tile_board_dark.png')] focus:bg-[url('../Elements/Layout/Tile_board_dark.png')] bg-contain border hover:border-2 focus:border-2 focus:outline-none border-DARKTHEME_LIGHT_GREEN_COLOR font-ALMENDRA text-3xl text-DARKTHEME_LIGHT_GREEN_COLOR w-40 h-40"
             }
           >
             {author.name}

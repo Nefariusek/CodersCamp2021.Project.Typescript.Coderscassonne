@@ -23,11 +23,7 @@ const Legend: React.FunctionComponent = (): ReactElement => {
   const [isLegendToggled, setIsLegendToggled] = useState(false);
 
   const toggleLegend = () => {
-    setIsLegendToggled(true);
-  };
-
-  const untoggleLegend = () => {
-    setIsLegendToggled(false);
+    setIsLegendToggled(!isLegendToggled);
   };
 
   return (
@@ -41,7 +37,7 @@ const Legend: React.FunctionComponent = (): ReactElement => {
         <div className="bg-DARKTHEME_DARK_GREEN_COLOR rounded w-[400px] absolute top-[20px] right-[20px]">
           <div className="grid grid-cols-6 p-[10px] z-100">
             <p className=" font-bold text-3xl p-3 col-span-5 text-center">Legend</p>
-            <button className="p-2 text-bold" onClick={untoggleLegend}>
+            <button className="p-2 text-bold" onClick={toggleLegend}>
               X
             </button>
           </div>

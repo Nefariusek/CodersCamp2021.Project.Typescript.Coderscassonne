@@ -33,7 +33,7 @@ const GameBoard: FC = (): ReactElement => {
   const sortedBoardState = _.orderBy(boardState, ['row', 'column'], ['asc', 'asc']);
   const tilesGroupedByRows = _.groupBy(sortedBoardState, 'row');
 
-  const extendBoard = (column: number, row: number) => {
+  const extendBoard = (row: number, column: number) => {
     let bottomRow = _.maxBy(boardState, 'row')!.row;
     let topRow = _.minBy(boardState, 'row')!.row;
     let leftColumn = _.minBy(boardState, 'column')!.column;
@@ -66,22 +66,43 @@ const GameBoard: FC = (): ReactElement => {
     setBoardState([...boardState]);
   };
 
+  const activateAdjacentTiles = (row: number, column: number) => {
+    const upperTile = boardState.find((tile) => tile.column === column && tile.row === row - 1);
+    if (upperTile && upperTile.state === TileState.IDLE) {
+      upperTile.state = TileState.ACTIVE;
+    }
+
+    const lowerTile = boardState.find((tile) => tile.column === column && tile.row === row + 1);
+    if (lowerTile && lowerTile.state === TileState.IDLE) {
+      lowerTile.state = TileState.ACTIVE;
+    }
+
+    const rightTile = boardState.find((tile) => tile.column === column + 1 && tile.row === row);
+    if (rightTile && rightTile.state === TileState.IDLE) {
+      rightTile.state = TileState.ACTIVE;
+    }
+
+    const leftTile = boardState.find((tile) => tile.column === column - 1 && tile.row === row);
+    if (leftTile && leftTile.state === TileState.IDLE) {
+      leftTile.state = TileState.ACTIVE;
+    }
+  };
+
   const handleChangeBoardState = (row: number, column: number) => {
     const tileToChange = boardState.find((tile) => tile.row === row && tile.column === column);
     if (tileToChange) {
       tileToChange.state = TileState.TAKEN;
       tileToChange.tile = drawnTiles[1];
     }
-    extendBoard(column, row);
+    extendBoard(row, column);
+    activateAdjacentTiles(row, column);
   };
-  console.log('sorted', sortedBoardState);
-  console.log(tilesGroupedByRows);
   return (
     <div id="gameBoard">
       <table>
         <tbody>
           {Object.entries(tilesGroupedByRows)
-            .sort()
+            .sort((a, b) => parseInt(a[0]) - parseInt(b[0]))
             .map(([rowIndex, columnsInRow]) => (
               <tr key={`row-${rowIndex}`}>
                 {columnsInRow.map((element) => (

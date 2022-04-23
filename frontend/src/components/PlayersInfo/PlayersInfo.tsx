@@ -39,7 +39,8 @@ const PlayersInfoItem = ({ player, isCurrent }: PlayersInfoItemProps) => {
 
 const PlayersInfo = ({ players, currentPlayer }: PlayersInfoProps) => (
   <div className="flex items-center bg-DARKTHEME_BACKGROUND_COLOR">
-    {players && players.map((player, i) => <PlayersInfoItem player={player} isCurrent={i === currentPlayer} />)}
+    {players &&
+      players.map((player, i) => <PlayersInfoItem key={player.name} player={player} isCurrent={i === currentPlayer} />)}
   </div>
 );
 

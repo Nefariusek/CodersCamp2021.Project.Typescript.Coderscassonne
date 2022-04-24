@@ -89,14 +89,44 @@ const GameBoard: FC = (): ReactElement => {
     }
   };
 
+  const tilePlacementValidator = (row: number, column: number): boolean => {
+    const upperTile = boardState.find((tile) => tile.column === column && tile.row === row - 1);
+    console.log(upperTile);
+    console.log(tileInHand);
+    if (upperTile && upperTile.state === TileState.TAKEN && upperTile.tile?.edges.bottom !== tileInHand?.edges.top) {
+      console.log('dupa');
+      return false;
+    }
+
+    const lowerTile = boardState.find((tile) => tile.column === column && tile.row === row + 1);
+    if (lowerTile && lowerTile.state === TileState.TAKEN && lowerTile.tile?.edges.top !== tileInHand?.edges.bottom) {
+      return false;
+    }
+
+    const rightTile = boardState.find((tile) => tile.column === column + 1 && tile.row === row);
+    if (rightTile && rightTile.state === TileState.TAKEN && rightTile.tile?.edges.left !== tileInHand?.edges.right) {
+      return false;
+    }
+
+    const leftTile = boardState.find((tile) => tile.column === column - 1 && tile.row === row);
+    if (leftTile && leftTile.state === TileState.TAKEN && leftTile.tile?.edges.right !== tileInHand?.edges.left) {
+      return false;
+    }
+    return true;
+  };
+
   const handleChangeBoardState = (row: number, column: number) => {
     const tileToChange = boardState.find((tile) => tile.row === row && tile.column === column);
     if (tileToChange) {
-      tileToChange.state = TileState.TAKEN;
-      tileToChange.tile = tileInHand;
+      if (tilePlacementValidator(row, column)) {
+        tileToChange.state = TileState.TAKEN;
+        tileToChange.tile = tileInHand;
+        extendBoard(row, column);
+        activateAdjacentTiles(row, column);
+      } else {
+        alert("Tile doesn't match!");
+      }
     }
-    extendBoard(row, column);
-    activateAdjacentTiles(row, column);
   };
   return (
     <div id="gameBoard">

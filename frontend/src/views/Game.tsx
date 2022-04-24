@@ -7,6 +7,7 @@ import PlayersHand from '../components/PlayersHand/PlayersHand';
 import DrawPile from '../components/DrawPile/DrawPile';
 import Legend from '../components/Legend/Legend';
 import { openInvalidMoveModal, InvalidMoveModal } from '../components/Modal/InvalidMoveModal';
+import { EndGameModal } from '../components/Modal/EndGameModal';
 
 const GamePage: React.FunctionComponent = (): ReactElement => {
   const context = useContext(DataStoreContext);
@@ -32,6 +33,7 @@ const GamePage: React.FunctionComponent = (): ReactElement => {
         <DrawPile numberOfAvailableTiles={20} />
       </div>
       <InvalidMoveModal />
+      <EndGameModal />
     </div>
   );
 };

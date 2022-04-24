@@ -16,8 +16,8 @@ import HomePage from './views/HomePage';
 import LandingPage from './views/LandingPage';
 
 const paths = [
-  { element: <LandingPage />, url: PATH_TO_LANDINGPAGE },
   { element: <HomePage />, url: PATH_TO_HOMEPAGE },
+  { element: <LandingPage />, url: PATH_TO_LANDINGPAGE },
   { element: <GamePage />, url: PATH_TO_GAMEPAGE },
   { element: <CreatePlayersPage />, url: PATH_TO_CREATE_PLAYERS },
   { element: <CreditsPage />, url: PATH_TO_CREDITS },

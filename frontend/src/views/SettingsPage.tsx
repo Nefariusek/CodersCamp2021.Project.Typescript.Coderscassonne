@@ -34,7 +34,7 @@ const GameModeContainer = (props: GameModeContainerProps) => {
   };
 
   return (
-    <div className="bg-[url('../../public/Elements/Layout/Tile_game.png')] w-380px h-380px">
+    <div className="bg-[url('../Elements/Layout/Tile_game.png')] w-380px h-380px">
       <button
         type="button"
         className="p-3 bg-DARKTHEME_LIGHT_GREEN_COLOR font-ALMENDRA font-bold text-3xl text-DARKTHEME_BACKGROUND_COLOR text-center relative top-[20px] left-[320px] rounded-full"

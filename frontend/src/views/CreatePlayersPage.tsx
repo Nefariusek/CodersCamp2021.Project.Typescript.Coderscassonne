@@ -33,7 +33,10 @@ const CreatePlayersPage = () => {
   };
 
   const savePlayers = () => {
-    context?.setAllPlayersData(players);
+    if (context.setAllPlayersData) {
+      context.setAllPlayersData(players);
+    }
+
     navigate(PATH_TO_GAMEPAGE);
   };
 

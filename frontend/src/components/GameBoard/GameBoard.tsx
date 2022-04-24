@@ -3,14 +3,11 @@ import _ from 'lodash';
 import { FC, ReactElement, useState } from 'react';
 
 import TileState from '../../constants/tileState';
-import { JSONData } from '../../mocks/mocks';
 import Tile from '../../model/Tile';
-import GameModeParser from '../GameModeParser';
+import { drawnTiles } from '../DataStoreContext/DataStoreContext';
 import TileContainer from '../TileContainer/TileContainer';
 
-export const drawnTiles = GameModeParser(JSONData);
-
-interface BoardState {
+export interface BoardState {
   column: number;
   row: number;
   state: TileState;
@@ -31,24 +28,96 @@ export const initialBoardState: BoardState[] = [
 ];
 
 const GameBoard: FC = (): ReactElement => {
-  const [boardState] = useState<BoardState[]>(initialBoardState);
+  const [boardState, setBoardState] = useState<BoardState[]>(initialBoardState);
 
   const sortedBoardState = _.orderBy(boardState, ['row', 'column'], ['asc', 'asc']);
   const tilesGroupedByRows = _.groupBy(sortedBoardState, 'row');
 
+  const extendBoard = (row: number, column: number) => {
+    let bottomRow = _.maxBy(boardState, 'row')!.row;
+    let topRow = _.minBy(boardState, 'row')!.row;
+    let leftColumn = _.minBy(boardState, 'column')!.column;
+    let rightColumn = _.maxBy(boardState, 'column')!.column;
+    if (row === bottomRow) {
+      for (let col = leftColumn; col <= rightColumn; col++) {
+        boardState.push({ row: row + 1, column: col, state: TileState.IDLE });
+      }
+      bottomRow += 1;
+    }
+
+    if (row === topRow) {
+      for (let col = leftColumn; col <= rightColumn; col++) {
+        boardState.unshift({ row: row - 1, column: col, state: TileState.IDLE });
+      }
+      topRow -= 1;
+    }
+    if (column === rightColumn) {
+      for (let row = topRow; row <= bottomRow; row++) {
+        boardState.push({ row: row, column: column + 1, state: TileState.IDLE });
+      }
+      rightColumn += 1;
+    }
+    if (column === leftColumn) {
+      for (let row = topRow; row <= bottomRow; row++) {
+        boardState.push({ row: row, column: column - 1, state: TileState.IDLE });
+      }
+      leftColumn -= 1;
+    }
+    setBoardState([...boardState]);
+  };
+
+  const activateAdjacentTiles = (row: number, column: number) => {
+    const upperTile = boardState.find((tile) => tile.column === column && tile.row === row - 1);
+    if (upperTile && upperTile.state === TileState.IDLE) {
+      upperTile.state = TileState.ACTIVE;
+    }
+
+    const lowerTile = boardState.find((tile) => tile.column === column && tile.row === row + 1);
+    if (lowerTile && lowerTile.state === TileState.IDLE) {
+      lowerTile.state = TileState.ACTIVE;
+    }
+
+    const rightTile = boardState.find((tile) => tile.column === column + 1 && tile.row === row);
+    if (rightTile && rightTile.state === TileState.IDLE) {
+      rightTile.state = TileState.ACTIVE;
+    }
+
+    const leftTile = boardState.find((tile) => tile.column === column - 1 && tile.row === row);
+    if (leftTile && leftTile.state === TileState.IDLE) {
+      leftTile.state = TileState.ACTIVE;
+    }
+  };
+
+  const handleChangeBoardState = (row: number, column: number) => {
+    const tileToChange = boardState.find((tile) => tile.row === row && tile.column === column);
+    if (tileToChange) {
+      tileToChange.state = TileState.TAKEN;
+      tileToChange.tile = drawnTiles[1];
+    }
+    extendBoard(row, column);
+    activateAdjacentTiles(row, column);
+  };
   return (
     <div id="gameBoard">
       <table>
         <tbody>
-          {Object.entries(tilesGroupedByRows).map(([rowIndex, columnsInRow]) => (
-            <tr key={`row-${rowIndex}`}>
-              {columnsInRow.map((element) => (
-                <td key={`${element.row}-${element.column}`}>
-                  <TileContainer tile={element.tile || undefined} initialState={element.state} />
-                </td>
-              ))}
-            </tr>
-          ))}
+          {Object.entries(tilesGroupedByRows)
+            .sort((a, b) => parseInt(a[0]) - parseInt(b[0]))
+            .map(([rowIndex, columnsInRow]) => (
+              <tr key={`row-${rowIndex}`}>
+                {columnsInRow.map((element) => (
+                  <td key={`${element.row}-${element.column}`}>
+                    <TileContainer
+                      tile={element.tile || undefined}
+                      initialState={element.state}
+                      onChange={handleChangeBoardState}
+                      row={element.row}
+                      column={element.column}
+                    />
+                  </td>
+                ))}
+              </tr>
+            ))}
         </tbody>
       </table>
     </div>

@@ -2,7 +2,14 @@ import { FC, ReactElement } from 'react';
 import { Route, Routes, useLocation } from 'react-router-dom';
 
 import { AppHeaderSection, Castle } from './components/Layout';
-import { PATH_TO_CREATE_PLAYERS, PATH_TO_GAMEPAGE, PATH_TO_HOMEPAGE, PATH_TO_LANDINGPAGE } from './constants/paths';
+import {
+  PATH_TO_CREDITS,
+  PATH_TO_CREATE_PLAYERS,
+  PATH_TO_GAMEPAGE,
+  PATH_TO_HOMEPAGE,
+  PATH_TO_LANDINGPAGE,
+} from './constants/paths';
+import CreditsPage from './views/CreditsPage';
 import CreatePlayersPage from './views/CreatePlayersPage';
 import GamePage from './views/Game';
 import HomePage from './views/HomePage';
@@ -13,6 +20,7 @@ const paths = [
   { element: <HomePage />, url: PATH_TO_HOMEPAGE },
   { element: <GamePage />, url: PATH_TO_GAMEPAGE },
   { element: <CreatePlayersPage />, url: PATH_TO_CREATE_PLAYERS },
+  { element: <CreditsPage />, url: PATH_TO_CREDITS },
 ];
 const pathsWithoutHeader = [PATH_TO_GAMEPAGE];
 

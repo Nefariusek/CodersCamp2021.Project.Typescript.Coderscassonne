@@ -6,6 +6,7 @@ import TileState from '../../constants/tileState';
 import Tile from '../../model/Tile';
 import DataStoreContext, { drawnTiles } from '../DataStoreContext/DataStoreContext';
 import TileContainer from '../TileContainer/TileContainer';
+import { openInvalidMoveModal, InvalidMoveModal } from '../Modal/InvalidMoveModal';
 
 export interface BoardState {
   column: number;
@@ -121,7 +122,7 @@ const GameBoard = ({ endOfTurn, setEndOfTurn }: GameBoardProps): ReactElement =>
     const tileToChange = boardState.find((tile) => tile.row === row && tile.column === column);
     if (tileToChange && tileInHand) {
       if (endOfTurn) {
-        alert("It's the end of your turn!");
+        openInvalidMoveModal();
       } else {
         if (tilePlacementValidator(row, column)) {
           tileToChange.state = TileState.TAKEN;
@@ -130,35 +131,38 @@ const GameBoard = ({ endOfTurn, setEndOfTurn }: GameBoardProps): ReactElement =>
           activateAdjacentTiles(row, column);
           setEndOfTurn(true);
         } else {
-          alert("Tile doesn't match!");
+          openInvalidMoveModal();
         }
       }
     }
   };
   return (
-    <div id="gameBoard">
-      <table>
-        <tbody>
-          {Object.entries(tilesGroupedByRows)
-            .sort((a, b) => parseInt(a[0]) - parseInt(b[0]))
-            .map(([rowIndex, columnsInRow]) => (
-              <tr key={`row-${rowIndex}`}>
-                {columnsInRow.map((element) => (
-                  <td key={`${element.row}-${element.column}`}>
-                    <TileContainer
-                      tile={element.tile || undefined}
-                      initialState={element.state}
-                      onChange={handleChangeBoardState}
-                      row={element.row}
-                      column={element.column}
-                    />
-                  </td>
-                ))}
-              </tr>
-            ))}
-        </tbody>
-      </table>
-    </div>
+    <>
+      <InvalidMoveModal />
+      <div id="gameBoard">
+        <table>
+          <tbody>
+            {Object.entries(tilesGroupedByRows)
+              .sort((a, b) => parseInt(a[0]) - parseInt(b[0]))
+              .map(([rowIndex, columnsInRow]) => (
+                <tr key={`row-${rowIndex}`}>
+                  {columnsInRow.map((element) => (
+                    <td key={`${element.row}-${element.column}`}>
+                      <TileContainer
+                        tile={element.tile || undefined}
+                        initialState={element.state}
+                        onChange={handleChangeBoardState}
+                        row={element.row}
+                        column={element.column}
+                      />
+                    </td>
+                  ))}
+                </tr>
+              ))}
+          </tbody>
+        </table>
+      </div>
+    </>
   );
 };
 

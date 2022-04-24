@@ -6,7 +6,6 @@ import GameBoard from '../components/GameBoard/GameBoard';
 import PlayersHand from '../components/PlayersHand/PlayersHand';
 import DrawPile from '../components/DrawPile/DrawPile';
 import Legend from '../components/Legend/Legend';
-import { openInvalidMoveModal, InvalidMoveModal } from '../components/Modal/InvalidMoveModal';
 
 const GamePage: React.FunctionComponent = (): ReactElement => {
   const context = useContext(DataStoreContext);
@@ -26,13 +25,9 @@ const GamePage: React.FunctionComponent = (): ReactElement => {
         <GameBoard endOfTurn={endOfTurn} setEndOfTurn={setEndOfTurn} />
       </div>
       <div className="flex justify-around p-[10px]">
-        <button id="btn" className="bg-white text-black h-12" onClick={openInvalidMoveModal}>
-          Modal
-        </button>
         {!endOfTurn && <PlayersHand />}
         <DrawPile numberOfAvailableTiles={20} />
       </div>
-      <InvalidMoveModal />
     </div>
   );
 };

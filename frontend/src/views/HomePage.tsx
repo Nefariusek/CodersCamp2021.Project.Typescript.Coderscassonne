@@ -12,13 +12,13 @@ const HomePage: React.FunctionComponent = (): ReactElement => {
     { name: 'Credits', url: PATH_TO_CREDITS },
   ];
   return (
-    <div className=" bg-DARKTHEME_BACKGROUND_COLOR flex justify-center mt-30 pt-10">
+    <div className="flex justify-center mt-30 pt-10">
       <div className="flex flex-col">
         {views.map((view) => (
           <button
             key={view.name}
             type="button"
-            className="bg-transparent hover:bg-DARKTHEME_DARK_GREEN_COLOR border border-DARKTHEME_LIGHT_GREEN_COLOR font-ALMENDRA text-3xl text-DARKTHEME_LIGHT_GREEN_COLOR w-60 py-2 px-4 my-3 "
+            className="bg-DARKTHEME_BACKGROUND_COLOR hover:bg-DARKTHEME_DARK_GREEN_COLOR border border-DARKTHEME_LIGHT_GREEN_COLOR font-ALMENDRA text-3xl text-DARKTHEME_LIGHT_GREEN_COLOR w-60 py-2 px-4 my-3 "
             onClick={() => {
               navigate(view.url);
             }}

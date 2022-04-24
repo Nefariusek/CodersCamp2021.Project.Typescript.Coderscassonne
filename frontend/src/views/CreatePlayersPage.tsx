@@ -41,7 +41,7 @@ const CreatePlayersPage = () => {
   };
 
   return (
-    <div className="bg-DARKTHEME_BACKGROUND_COLOR flex items-center justify-center">
+    <div className="flex items-center justify-center">
       {availableTechnologies.length > 0 && (
         <CreatePlayer
           availableTechnologies={availableTechnologies}

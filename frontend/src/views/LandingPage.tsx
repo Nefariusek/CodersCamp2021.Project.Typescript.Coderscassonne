@@ -1,5 +1,4 @@
 import { FC, ReactElement } from 'react';
-
 import DrawPile from '../components/DrawPile/DrawPile';
 import PlayersInfo from '../components/PlayersInfo/PlayersInfo';
 import PlayersHand from '../components/PlayersHand/PlayersHand';

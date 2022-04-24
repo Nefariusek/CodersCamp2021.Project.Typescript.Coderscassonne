@@ -30,7 +30,7 @@ const Legend: React.FunctionComponent = (): ReactElement => {
     <div className="font-ALMENDRA text-DARKTHEME_LIGHT_GREEN_COLOR text-l">
       {!isLegendToggled && (
         <button onClick={toggleLegend}>
-          <img src="../../../public/Elements/Layout/glass.png" alt="legend" />
+          <img src="./Elements/Layout/glass.png" alt="legend" />
         </button>
       )}
       {isLegendToggled && (
@@ -45,32 +45,32 @@ const Legend: React.FunctionComponent = (): ReactElement => {
             <Description
               name="Abbot"
               description="Can be placed on just placed tiles- on unoccupied monasteries"
-              imgURL="../../../public/Elements/Meeple/Card_HTML.png"
+              imgURL="./Elements/Meeple/Card_HTML.png"
             />
             <Description
               name="Meeple"
               description="Can be placed on just placed tiles- on unoccupied roads and cities with no king"
-              imgURL="../../../public/Elements/Meeple/HTML_meeple.png"
+              imgURL="./Elements/Meeple/HTML_meeple.png"
             />
             <Description
               name="Road"
               description="When closed, gives 1 point for every tile on of this road"
-              imgURL="../../../public/Elements/Tiles/Roads/Road_1.png"
+              imgURL="./Elements/Tiles/Roads/Road_1.png"
             />
             <Description
               name="City"
               description="Each tile in a completed city is worth 2 points. Each coat of arms is worth 2 more points."
-              imgURL="../../../public/Elements/Tiles/City/City_7.png"
+              imgURL="./Elements/Tiles/City/City_7.png"
             />
             <Description
               name="Monastery"
               description="When surrounded by tiles, gives 9 points to a player whose abbot stands on it"
-              imgURL="../../../public/Elements/Tiles/Monastery/Monastery.png"
+              imgURL="./Elements/Tiles/Monastery/Monastery.png"
             />
             <Description
               name="Garden"
               description="Scores like monastery"
-              imgURL="../../../public/Elements/Tiles/Monastery/Garden.png"
+              imgURL="./Elements/Tiles/Monastery/Garden.png"
             />
           </div>
         </div>

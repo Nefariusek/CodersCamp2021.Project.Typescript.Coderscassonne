@@ -14,7 +14,7 @@ type PredefinedTile = {
 export const PREDEFINED_TILES: PredefinedTile[] = [
   {
     name: 'Joiner_1',
-    imageSource: '../../public/Elements/Tiles/Joiners/Joiner_1.png', // image
+    imageSource: './Elements/Tiles/Joiners/Joiner_1.png', // image
     top: Locations.CITY,
     left: Locations.CITY,
     middle: Locations.CITY,
@@ -24,7 +24,7 @@ export const PREDEFINED_TILES: PredefinedTile[] = [
   },
   {
     name: 'Joiner_2',
-    imageSource: '../../public/Elements/Tiles/Joiners/Joiner_2.png', // image
+    imageSource: './Elements/Tiles/Joiners/Joiner_2.png', // image
     top: Locations.FIELD,
     left: Locations.CITY,
     middle: Locations.CITY,
@@ -34,7 +34,7 @@ export const PREDEFINED_TILES: PredefinedTile[] = [
   },
   {
     name: 'Joiner_3',
-    imageSource: '../../public/Elements/Tiles/Joiners/Joiner_3.png', // image
+    imageSource: './Elements/Tiles/Joiners/Joiner_3.png', // image
     top: Locations.CITY,
     left: Locations.CITY,
     middle: Locations.CITY,
@@ -44,7 +44,7 @@ export const PREDEFINED_TILES: PredefinedTile[] = [
   },
   {
     name: 'Monastery',
-    imageSource: '../../public/Elements/Tiles/Monastery/Monastery.png', // image
+    imageSource: './Elements/Tiles/Monastery/Monastery.png', // image
     top: Locations.MONASTERY,
     left: Locations.MONASTERY,
     middle: Locations.MONASTERY,
@@ -54,7 +54,7 @@ export const PREDEFINED_TILES: PredefinedTile[] = [
   },
   {
     name: 'Garden',
-    imageSource: '../../public/Elements/Tiles/Monastery/Garden.png', // image
+    imageSource: './Elements/Tiles/Monastery/Garden.png', // image
     top: Locations.GARDEN,
     left: Locations.GARDEN,
     middle: Locations.GARDEN,
@@ -64,7 +64,7 @@ export const PREDEFINED_TILES: PredefinedTile[] = [
   },
   {
     name: 'City_1',
-    imageSource: '../../public/Elements/Tiles/City/City_1.png', // image
+    imageSource: './Elements/Tiles/City/City_1.png', // image
     top: Locations.CITY,
     left: Locations.ROAD,
     middle: Locations.ROAD,
@@ -74,7 +74,7 @@ export const PREDEFINED_TILES: PredefinedTile[] = [
   },
   {
     name: 'City_2',
-    imageSource: '../../public/Elements/Tiles/City/City_2.png', // image
+    imageSource: './Elements/Tiles/City/City_2.png', // image
     top: Locations.CITY,
     left: Locations.ROAD,
     middle: Locations.ROAD,
@@ -84,7 +84,7 @@ export const PREDEFINED_TILES: PredefinedTile[] = [
   },
   {
     name: 'City_3',
-    imageSource: '../../public/Elements/Tiles/City/City_3.png', // image
+    imageSource: './Elements/Tiles/City/City_3.png', // image
     top: Locations.CITY,
     left: Locations.FIELD,
     middle: Locations.ROAD,
@@ -94,7 +94,7 @@ export const PREDEFINED_TILES: PredefinedTile[] = [
   },
   {
     name: 'City_4',
-    imageSource: '../../public/Elements/Tiles/City/City_4.png', // image
+    imageSource: './Elements/Tiles/City/City_4.png', // image
     top: Locations.CITY,
     left: Locations.ROAD,
     middle: Locations.TAVERN,
@@ -104,7 +104,7 @@ export const PREDEFINED_TILES: PredefinedTile[] = [
   },
   {
     name: 'City_5',
-    imageSource: '../../public/Elements/Tiles/City/City_5.png', // image
+    imageSource: './Elements/Tiles/City/City_5.png', // image
     top: Locations.CITY,
     left: Locations.FIELD,
     middle: Locations.FIELD,
@@ -114,7 +114,7 @@ export const PREDEFINED_TILES: PredefinedTile[] = [
   },
   {
     name: 'City_6',
-    imageSource: '../../public/Elements/Tiles/City/City_6.png', // image
+    imageSource: './Elements/Tiles/City/City_6.png', // image
     top: Locations.CITY,
     left: Locations.CITY,
     middle: Locations.CITY,
@@ -124,7 +124,7 @@ export const PREDEFINED_TILES: PredefinedTile[] = [
   },
   {
     name: 'City_7',
-    imageSource: '../../public/Elements/Tiles/City/City_7.png', // image
+    imageSource: './Elements/Tiles/City/City_7.png', // image
     top: Locations.CITY,
     left: Locations.CITY,
     middle: Locations.CITY,
@@ -134,7 +134,7 @@ export const PREDEFINED_TILES: PredefinedTile[] = [
   },
   {
     name: 'City_8',
-    imageSource: '../../public/Elements/Tiles/City/City_8.png', // image
+    imageSource: './Elements/Tiles/City/City_8.png', // image
     top: Locations.CITY,
     left: Locations.CITY,
     middle: Locations.CITY,
@@ -144,7 +144,7 @@ export const PREDEFINED_TILES: PredefinedTile[] = [
   },
   {
     name: 'Road_1',
-    imageSource: '../../public/Elements/Tiles/Roads/Road_1.png', // image
+    imageSource: './Elements/Tiles/Roads/Road_1.png', // image
     top: Locations.FIELD,
     left: Locations.ROAD,
     middle: Locations.ROAD,
@@ -154,7 +154,7 @@ export const PREDEFINED_TILES: PredefinedTile[] = [
   },
   {
     name: 'Road_2',
-    imageSource: '../../public/Elements/Tiles/Roads/Road_2.png', // image
+    imageSource: './Elements/Tiles/Roads/Road_2.png', // image
     top: Locations.FIELD,
     left: Locations.FIELD,
     middle: Locations.ROAD,
@@ -164,7 +164,7 @@ export const PREDEFINED_TILES: PredefinedTile[] = [
   },
   {
     name: 'Road_3',
-    imageSource: '../../public/Elements/Tiles/Roads/Road_3.png', // image
+    imageSource: './Elements/Tiles/Roads/Road_3.png', // image
     top: Locations.FIELD,
     left: Locations.ROAD,
     middle: Locations.TAVERN,
@@ -174,7 +174,7 @@ export const PREDEFINED_TILES: PredefinedTile[] = [
   },
   {
     name: 'Road_4',
-    imageSource: '../../public/Elements/Tiles/Roads/Road_4.png', // image
+    imageSource: './Elements/Tiles/Roads/Road_4.png', // image
     top: Locations.ROAD,
     left: Locations.ROAD,
     middle: Locations.TAVERN,
@@ -184,7 +184,7 @@ export const PREDEFINED_TILES: PredefinedTile[] = [
   },
   {
     name: 'Splitter_1',
-    imageSource: '../../public/Elements/Tiles/Splitters/Splitter_1.png', // image
+    imageSource: './Elements/Tiles/Splitters/Splitter_1.png', // image
     top: Locations.CITY,
     left: Locations.FIELD,
     middle: Locations.FIELD,
@@ -194,7 +194,7 @@ export const PREDEFINED_TILES: PredefinedTile[] = [
   },
   {
     name: 'Splitter_2',
-    imageSource: '../../public/Elements/Tiles/Splitters/Splitter_2.png', // image
+    imageSource: './Elements/Tiles/Splitters/Splitter_2.png', // image
     top: Locations.CITY,
     left: Locations.CITY,
     middle: Locations.FIELD,

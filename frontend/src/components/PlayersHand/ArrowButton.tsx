@@ -14,12 +14,12 @@ const ArrowButton = observer((props: ArrowButtonInterface) => {
     <div>
       {direction === 'left' && (
         <button type="button" onClick={() => tile?.rotateLeft()}>
-          <img src="../../../public/Elements/Layout/Left_arrow.png" alt="left arrow" />
+          <img src="./Elements/Layout/Left_arrow.png" alt="left arrow" />
         </button>
       )}
       {direction === 'right' && (
         <button type="button" onClick={() => tile?.rotateRight()}>
-          <img src="../../../public/Elements/Layout/Right_arrow.png" alt="right arrow" />
+          <img src="./Elements/Layout/Right_arrow.png" alt="right arrow" />
         </button>
       )}
     </div>

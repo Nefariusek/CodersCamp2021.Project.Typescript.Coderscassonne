@@ -30,7 +30,7 @@ export const initialBoardState: BoardState[] = [
 const GameBoard: FC = (): ReactElement => {
   const [boardState, setBoardState] = useState<BoardState[]>(initialBoardState);
 
-  const { turnNumber, tileInHand } = useContext(DataStoreContext);
+  const { tileInHand } = useContext(DataStoreContext);
   const sortedBoardState = _.orderBy(boardState, ['row', 'column'], ['asc', 'asc']);
   const tilesGroupedByRows = _.groupBy(sortedBoardState, 'row');
 

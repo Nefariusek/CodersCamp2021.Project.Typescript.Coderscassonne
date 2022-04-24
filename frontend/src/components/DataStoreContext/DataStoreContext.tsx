@@ -1,4 +1,4 @@
-import { createContext, useMemo, useState } from 'react';
+import { createContext, useEffect, useMemo, useState } from 'react';
 import { JSONData } from '../../mocks/mocks';
 
 import type Player from '../../model/Player';
@@ -16,6 +16,8 @@ interface DataStoreContextInterface {
   setTileInHand?: React.Dispatch<React.SetStateAction<Tile | undefined>>;
   allPlayersData: Player[];
   setAllPlayersData?: React.Dispatch<React.SetStateAction<Player[]>>;
+  turnNumber: number;
+  setTurnNumber?: React.Dispatch<React.SetStateAction<number>>;
 }
 
 type DataStoreProviderProps = { children: React.ReactNode };
@@ -25,6 +27,7 @@ const DataStoreContext = createContext<DataStoreContextInterface>({
   gameSettings: null,
   tileInHand: undefined,
   allPlayersData: [],
+  turnNumber: 1,
 });
 
 export const DataStoreProvider = ({ children }: DataStoreProviderProps) => {
@@ -32,6 +35,11 @@ export const DataStoreProvider = ({ children }: DataStoreProviderProps) => {
   const [gameSettings, setGameSettings] = useState<Settings | null>(null);
   const [tileInHand, setTileInHand] = useState<Tile | undefined>(drawnTiles[1]);
   const [allPlayersData, setAllPlayersData] = useState<Player[]>([]);
+  const [turnNumber, setTurnNumber] = useState(1);
+
+  useEffect(() => {
+    setTileInHand(drawnTiles[turnNumber]);
+  }, [turnNumber]);
 
   const storeDataWithMemo = useMemo(
     () => ({
@@ -43,6 +51,8 @@ export const DataStoreProvider = ({ children }: DataStoreProviderProps) => {
       setTileInHand,
       allPlayersData,
       setAllPlayersData,
+      turnNumber,
+      setTurnNumber,
     }),
     [
       gameSettings,
@@ -53,6 +63,8 @@ export const DataStoreProvider = ({ children }: DataStoreProviderProps) => {
       setAllPlayersData,
       tileInHand,
       setTileInHand,
+      turnNumber,
+      setTurnNumber,
     ],
   );
 

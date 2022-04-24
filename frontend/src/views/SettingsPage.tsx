@@ -1,4 +1,7 @@
 import { FC, ReactElement, useState } from 'react';
+import { PATH_TO_GAMEPAGE } from '../constants/paths';
+
+import { useNavigate } from 'react-router-dom';
 
 import GameMode from '../model/GameMode';
 
@@ -13,6 +16,7 @@ interface GameModeContainerProps {
 
 const GameModeContainer = (props: GameModeContainerProps) => {
   const { gameMode, infoText } = props;
+  const navigate = useNavigate();
   const [isHovering, setIsHovering] = useState(false);
   const handleMouseOver = () => {
     setIsHovering(true);
@@ -21,7 +25,7 @@ const GameModeContainer = (props: GameModeContainerProps) => {
   const handleMouseOut = () => {
     setIsHovering(false);
   };
-  const handleOnClick = () => {
+  const handlePlayGameButtonClick = () => {
     if (gameMode === 'Classic') {
       const mode = new GameMode(60, 128, 64, 64, gameMode);
       localStorage.setItem('Game mode', JSON.stringify(mode));
@@ -31,6 +35,7 @@ const GameModeContainer = (props: GameModeContainerProps) => {
     } else {
       alert('Custom mode chosen');
     }
+    navigate(PATH_TO_GAMEPAGE);
   };
 
   return (
@@ -49,7 +54,7 @@ const GameModeContainer = (props: GameModeContainerProps) => {
       <button
         type="button"
         className="p-3 bg-DARKTHEME_LIGHT_GREEN_COLOR font-ALMENDRA font-bold text-4xl text-DARKTHEME_BACKGROUND_COLOR text-center relative top-[100px] left-[100px] rounded"
-        onClick={handleOnClick}
+        onClick={handlePlayGameButtonClick}
       >
         Play game
       </button>

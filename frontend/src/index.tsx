@@ -2,7 +2,7 @@ import './index.css';
 
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { BrowserRouter } from 'react-router-dom';
+import { HashRouter } from 'react-router-dom';
 
 import App from './App';
 import { DataStoreProvider } from './components/DataStoreContext/DataStoreContext';
@@ -12,11 +12,11 @@ const AppWrapper: React.FC = (): React.ReactElement => <App />;
 
 ReactDOM.render(
   <React.StrictMode>
-    <BrowserRouter>
+    <HashRouter>
       <DataStoreProvider>
         <AppWrapper />
       </DataStoreProvider>
-    </BrowserRouter>
+    </HashRouter>
   </React.StrictMode>,
   document.getElementById('root'),
 );

@@ -10,7 +10,7 @@ const HOW_TO_PLAY_TITLE = {
 const VideoPlayer = () => {
   return (
     <div>
-      <ReactPlayer url="https://youtu.be/BwuLxPH8IDs" controls />
+      <ReactPlayer url="https://www.youtube.com/watch?v=R1qh-lhxy9s" controls />
     </div>
   );
 };

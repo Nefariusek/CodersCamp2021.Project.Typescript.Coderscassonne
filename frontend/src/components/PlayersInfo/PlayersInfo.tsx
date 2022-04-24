@@ -1,4 +1,6 @@
+import { useContext } from 'react';
 import Player from '../../model/Player';
+import DataStoreContext from '../DataStoreContext/DataStoreContext';
 
 interface PlayersInfoProps {
   players: Player[] | undefined;
@@ -37,11 +39,16 @@ const PlayersInfoItem = ({ player, isCurrent }: PlayersInfoItemProps) => {
   );
 };
 
-const PlayersInfo = ({ players, currentPlayer }: PlayersInfoProps) => (
-  <div className="flex items-center bg-DARKTHEME_BACKGROUND_COLOR">
-    {players &&
-      players.map((player, i) => <PlayersInfoItem key={player.name} player={player} isCurrent={i === currentPlayer} />)}
-  </div>
-);
+const PlayersInfo = ({ players }: PlayersInfoProps) => {
+  const { turnNumber } = useContext(DataStoreContext);
+  return (
+    <div className="flex items-center bg-DARKTHEME_BACKGROUND_COLOR">
+      {players &&
+        players.map((player, i) => (
+          <PlayersInfoItem key={player.name} player={player} isCurrent={i === (turnNumber + 1) % players.length} />
+        ))}
+    </div>
+  );
+};
 
 export default PlayersInfo;

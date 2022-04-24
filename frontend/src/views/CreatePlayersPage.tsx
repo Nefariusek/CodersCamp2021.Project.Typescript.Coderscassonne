@@ -1,6 +1,6 @@
 import { useContext, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { PATH_TO_GAMEPAGE } from '../constants/paths';
+import { PATH_TO_SETTINGS } from '../constants/paths';
 
 import AddedPlayers from '../components/CreatePlayer/AddedPlayers';
 import CreatePlayer from '../components/CreatePlayer/CreatePlayer';
@@ -37,7 +37,7 @@ const CreatePlayersPage = () => {
       context.setAllPlayersData(players);
     }
 
-    navigate(PATH_TO_GAMEPAGE);
+    navigate(PATH_TO_SETTINGS);
   };
 
   return (

@@ -72,7 +72,7 @@ const CustomModePage: FC = (): ReactElement => {
       >
         Play Game
       </button>
-      <img src="../../public/Elements/Layout/castle.png" alt="Custom mode" className="w-full relative bottom-[0px]" />
+      <img src="./Elements/Layout/castle.png" alt="Custom mode" className="w-full relative bottom-[0px]" />
     </div>
   );
 };

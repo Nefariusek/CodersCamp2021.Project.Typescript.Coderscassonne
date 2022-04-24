@@ -6,11 +6,12 @@ import GameBoard from '../components/GameBoard/GameBoard';
 import PlayersHand from '../components/PlayersHand/PlayersHand';
 import DrawPile from '../components/DrawPile/DrawPile';
 import Legend from '../components/Legend/Legend';
+import Modal from '../components/Modal/Modal';
 
 const GamePage: React.FunctionComponent = (): ReactElement => {
   const context = useContext(DataStoreContext);
   const [currentPlayer] = useState<number>(0);
-
+  const [modalOn, setModalOn] = useState(false);
   return (
     <div>
       <div className="flex justify-between p-[10px] z-0">
@@ -24,9 +25,13 @@ const GamePage: React.FunctionComponent = (): ReactElement => {
         <GameBoard />
       </div>
       <div className="flex justify-around p-[10px]">
+        <button id="btn" className="bg-white text-black h-12">
+          Modal
+        </button>
         <PlayersHand />
         <DrawPile numberOfAvailableTiles={20} />
       </div>
+      {modalOn && <Modal setModalOn={setModalOn} />}
     </div>
   );
 };

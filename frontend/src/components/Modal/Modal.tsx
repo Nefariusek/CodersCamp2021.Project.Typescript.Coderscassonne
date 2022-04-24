@@ -8,6 +8,12 @@ const Modal: React.FC<ModalProps> = ({ setModalOn }) => {
   const handleClose = () => {
     setModalOn(false);
   };
+  React.useEffect(() => {
+    window.addEventListener('invalidMove', (event) => {
+      setModalOn(true);
+    });
+  }, []);
+
   setTimeout(handleClose, 5000);
 
   return (

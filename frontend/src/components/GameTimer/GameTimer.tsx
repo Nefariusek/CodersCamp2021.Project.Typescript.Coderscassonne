@@ -26,9 +26,9 @@ const GameTimer = (props: GameTimerProps) => {
   }, [seconds, minutes]);
 
   return (
-    <div className="font-ALMENDRA font-bold text-2xl text-DARKTHEME_LIGHT_GREEN_COLOR p-3">
+    <div className="font-ALMENDRA font-bold text-3xl text-DARKTHEME_LIGHT_GREEN_COLOR p-3">
       <p>
-        Game time: {minutes}:{seconds}s
+        Game time: {minutes}:{seconds > 9 ? seconds : `0${seconds}`}
       </p>
       {isTurnTimerVisible && <TurnTimer turnLength={turnLength} />}
     </div>

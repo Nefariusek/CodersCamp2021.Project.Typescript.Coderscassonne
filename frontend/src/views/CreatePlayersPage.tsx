@@ -1,11 +1,16 @@
-import { useState } from 'react';
+import { useContext, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { PATH_TO_GAMEPAGE } from '../constants/paths';
 
 import AddedPlayers from '../components/CreatePlayer/AddedPlayers';
 import CreatePlayer from '../components/CreatePlayer/CreatePlayer';
+import DataStoreContext from '../components/DataStoreContext/DataStoreContext';
 import Technologies from '../constants/technologies';
 import Player from '../model/Player';
 
 const CreatePlayersPage = () => {
+  const navigate = useNavigate();
+  const context = useContext(DataStoreContext);
   const [players, setPlayers] = useState<Player[]>([]);
   const [availableTechnologies, setAvailableTechnologies] = useState<Technologies[]>([
     Technologies.HTML,
@@ -17,6 +22,7 @@ const CreatePlayersPage = () => {
 
   const addPlayer = (playerName: string, technology: Technologies) => {
     const player: Player = new Player(playerName, technology);
+
     setPlayers([...players, player]);
     setAvailableTechnologies(availableTechnologies.filter((tech) => tech !== technology));
   };
@@ -27,7 +33,11 @@ const CreatePlayersPage = () => {
   };
 
   const savePlayers = () => {
-    alert('saved');
+    if (context.setAllPlayersData) {
+      context.setAllPlayersData(players);
+    }
+
+    navigate(PATH_TO_GAMEPAGE);
   };
 
   return (

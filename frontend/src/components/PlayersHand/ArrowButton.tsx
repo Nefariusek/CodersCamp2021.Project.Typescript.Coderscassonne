@@ -3,7 +3,7 @@ import { observer } from 'mobx-react-lite';
 import Tile from '../../model/Tile';
 
 interface ArrowButtonInterface {
-  tile: Tile;
+  tile?: Tile;
   direction: 'left' | 'right';
 }
 
@@ -13,13 +13,13 @@ const ArrowButton = observer((props: ArrowButtonInterface) => {
   return (
     <div>
       {direction === 'left' && (
-        <button type="button" onClick={() => tile.rotateLeft()}>
-          <img src="../../../public/Elements/Layout/Left_arrow.png" alt="left arrow" />
+        <button type="button" onClick={() => tile?.rotateLeft()}>
+          <img src="./Elements/Layout/Left_arrow.png" alt="left arrow" />
         </button>
       )}
       {direction === 'right' && (
-        <button type="button" onClick={() => tile.rotateRight()}>
-          <img src="../../../public/Elements/Layout/Right_arrow.png" alt="right arrow" />
+        <button type="button" onClick={() => tile?.rotateRight()}>
+          <img src="./Elements/Layout/Right_arrow.png" alt="right arrow" />
         </button>
       )}
     </div>

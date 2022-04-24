@@ -16,7 +16,8 @@ const tile = new Tile(
 );
 let city: Project;
 if (meeple) {
-  city = new Project(meeple, tile, Locations.CITY);
+  city = new Project(tile, Locations.CITY);
+  city.meeples.push(meeple);
 }
 
 test('Model Project has all attributes', () => {

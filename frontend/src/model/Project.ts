@@ -13,10 +13,11 @@ class Project {
 
   public isFinished: boolean;
 
-  constructor(meeple: Meeple, tile: Tile, type: Locations) {
-    this.meeples = [meeple];
+  constructor(tile: Tile, type: Locations) {
+    this.meeples = [];
     this.tiles = [tile];
     this.type = type;
+    this.isFinished = false;
   }
 
   public get owner(): Player {

@@ -1,6 +1,6 @@
 /* eslint-disable sort-keys */
 import _ from 'lodash';
-import { FC, ReactElement, useContext, useState } from 'react';
+import { ReactElement, useContext, useState } from 'react';
 
 import TileState from '../../constants/tileState';
 import Tile from '../../model/Tile';
@@ -27,7 +27,12 @@ export const initialBoardState: BoardState[] = [
   { row: 1, column: 1, state: TileState.TAKEN, tile: drawnTiles[0] },
 ];
 
-const GameBoard: FC = (): ReactElement => {
+interface GameBoardProps {
+  endOfTurn: boolean;
+  setEndOfTurn: React.Dispatch<React.SetStateAction<boolean>>;
+}
+
+const GameBoard = ({ endOfTurn, setEndOfTurn }: GameBoardProps): ReactElement => {
   const [boardState, setBoardState] = useState<BoardState[]>(initialBoardState);
 
   const { tileInHand } = useContext(DataStoreContext);
@@ -91,10 +96,7 @@ const GameBoard: FC = (): ReactElement => {
 
   const tilePlacementValidator = (row: number, column: number): boolean => {
     const upperTile = boardState.find((tile) => tile.column === column && tile.row === row - 1);
-    console.log(upperTile);
-    console.log(tileInHand);
     if (upperTile && upperTile.state === TileState.TAKEN && upperTile.tile?.edges.bottom !== tileInHand?.edges.top) {
-      console.log('dupa');
       return false;
     }
 
@@ -117,14 +119,19 @@ const GameBoard: FC = (): ReactElement => {
 
   const handleChangeBoardState = (row: number, column: number) => {
     const tileToChange = boardState.find((tile) => tile.row === row && tile.column === column);
-    if (tileToChange) {
-      if (tilePlacementValidator(row, column)) {
-        tileToChange.state = TileState.TAKEN;
-        tileToChange.tile = tileInHand;
-        extendBoard(row, column);
-        activateAdjacentTiles(row, column);
+    if (tileToChange && tileInHand) {
+      if (endOfTurn) {
+        alert("It's the end of your turn!");
       } else {
-        alert("Tile doesn't match!");
+        if (tilePlacementValidator(row, column)) {
+          tileToChange.state = TileState.TAKEN;
+          tileToChange.tile = tileInHand;
+          extendBoard(row, column);
+          activateAdjacentTiles(row, column);
+          setEndOfTurn(true);
+        } else {
+          alert("Tile doesn't match!");
+        }
       }
     }
   };

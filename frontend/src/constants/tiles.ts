@@ -45,11 +45,11 @@ export const PREDEFINED_TILES: PredefinedTile[] = [
   {
     name: 'Monastery',
     imageSource: './Elements/Tiles/Monastery/Monastery.png', // image
-    top: Locations.MONASTERY,
-    left: Locations.MONASTERY,
+    top: Locations.FIELD,
+    left: Locations.FIELD,
     middle: Locations.MONASTERY,
-    right: Locations.MONASTERY,
-    bottom: Locations.MONASTERY,
+    right: Locations.FIELD,
+    bottom: Locations.ROAD,
     isSpecial: true,
   },
   {

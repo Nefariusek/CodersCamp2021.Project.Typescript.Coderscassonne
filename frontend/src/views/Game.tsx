@@ -10,21 +10,22 @@ import Legend from '../components/Legend/Legend';
 const GamePage: React.FunctionComponent = (): ReactElement => {
   const context = useContext(DataStoreContext);
   const [currentPlayer] = useState<number>(0);
+  const [endOfTurn, setEndOfTurn] = useState<boolean>(false);
 
   return (
     <div>
       <div className="flex justify-between p-[10px] z-0">
         <PlayersInfo players={context?.allPlayersData} currentPlayer={currentPlayer} />
-        <GameTimer isTurnTimerVisible={false} turnLength={60} />
+        <GameTimer isTurnTimerVisible={false} turnLength={60} setEndOfTurn={setEndOfTurn} />
         <div className="w-[300px] flex justify-end">
           <Legend />
         </div>
       </div>
       <div className="flex justify-center">
-        <GameBoard />
+        <GameBoard endOfTurn={endOfTurn} setEndOfTurn={setEndOfTurn} />
       </div>
       <div className="flex justify-around p-[10px]">
-        <PlayersHand />
+        {!endOfTurn && <PlayersHand />}
         <DrawPile numberOfAvailableTiles={20} />
       </div>
     </div>

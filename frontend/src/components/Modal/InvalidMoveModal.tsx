@@ -12,12 +12,12 @@ export const InvalidMoveModal: React.FC = () => {
     setModalOn(false);
   };
   React.useEffect(() => {
-    window.addEventListener('invalidMove', (event) => {
+    window.addEventListener('invalidMove', () => {
       setModalOn(true);
     });
   }, []);
 
-  setTimeout(handleClose, 5000);
+  //setTimeout(handleClose, 5000);
 
   return (
     <>

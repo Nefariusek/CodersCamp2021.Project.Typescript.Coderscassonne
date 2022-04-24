@@ -1,4 +1,4 @@
-import { createContext, useMemo, useState } from 'react';
+import { createContext, useEffect, useMemo, useState } from 'react';
 import { JSONData } from '../../mocks/mocks';
 
 import type Player from '../../model/Player';
@@ -36,6 +36,10 @@ export const DataStoreProvider = ({ children }: DataStoreProviderProps) => {
   const [tileInHand, setTileInHand] = useState<Tile | undefined>(drawnTiles[1]);
   const [allPlayersData, setAllPlayersData] = useState<Player[]>([]);
   const [turnNumber, setTurnNumber] = useState(1);
+
+  useEffect(() => {
+    setTileInHand(drawnTiles[turnNumber]);
+  }, [turnNumber]);
 
   const storeDataWithMemo = useMemo(
     () => ({

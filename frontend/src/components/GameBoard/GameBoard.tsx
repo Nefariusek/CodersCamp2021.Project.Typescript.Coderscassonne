@@ -1,10 +1,10 @@
 /* eslint-disable sort-keys */
 import _ from 'lodash';
-import { FC, ReactElement, useState } from 'react';
+import { FC, ReactElement, useContext, useState } from 'react';
 
 import TileState from '../../constants/tileState';
 import Tile from '../../model/Tile';
-import { drawnTiles } from '../DataStoreContext/DataStoreContext';
+import DataStoreContext, { drawnTiles } from '../DataStoreContext/DataStoreContext';
 import TileContainer from '../TileContainer/TileContainer';
 
 export interface BoardState {
@@ -30,6 +30,7 @@ export const initialBoardState: BoardState[] = [
 const GameBoard: FC = (): ReactElement => {
   const [boardState, setBoardState] = useState<BoardState[]>(initialBoardState);
 
+  const { turnNumber, tileInHand } = useContext(DataStoreContext);
   const sortedBoardState = _.orderBy(boardState, ['row', 'column'], ['asc', 'asc']);
   const tilesGroupedByRows = _.groupBy(sortedBoardState, 'row');
 
@@ -92,7 +93,7 @@ const GameBoard: FC = (): ReactElement => {
     const tileToChange = boardState.find((tile) => tile.row === row && tile.column === column);
     if (tileToChange) {
       tileToChange.state = TileState.TAKEN;
-      tileToChange.tile = drawnTiles[1];
+      tileToChange.tile = tileInHand;
     }
     extendBoard(row, column);
     activateAdjacentTiles(row, column);

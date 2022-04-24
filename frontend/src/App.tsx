@@ -28,14 +28,14 @@ const App: FC = (): ReactElement => {
   const { pathname } = useLocation();
   const pageValidation = pathsWithoutHeader.includes(pathname);
   return (
-    <div className="h-screen bg-DARKTHEME_BACKGROUND_COLOR ">
+    <div className="h-full min-h-screen bg-DARKTHEME_BACKGROUND_COLOR ">
       {pageValidation ? null : <AppHeaderSection />}
       <Routes>
         {paths.map((path) => (
           <Route key={path.url} path={path.url} element={path.element} />
         ))}
       </Routes>
-      {pageValidation ? null : <Castle />}
+      {pageValidation ? <div className="bg-DARKTHEME_BACKGROUND_COLOR" /> : <Castle />}
     </div>
   );
 };

@@ -22,9 +22,6 @@ const HowToPlayPage: React.FunctionComponent = (): ReactElement => (
     </header>
     <VideoPlayer />
     <footer className="text-center mt-3">
-      <a target="_blank" href="https://www.wikihow.com/Play-Carcassonne" rel="noreferrer">
-        Read how to play on wikihow.com
-      </a>
       <Link to={PATH_TO_HOMEPAGE}>Back to Homepage</Link>
     </footer>
   </div>

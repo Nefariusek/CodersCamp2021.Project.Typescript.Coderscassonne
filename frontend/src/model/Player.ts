@@ -59,8 +59,7 @@ class Player {
     return this._meeples.length;
   }
 
-  public returnMeeple(meeple: Meeple, pointsToAdd: number): void {
-    this.updateScore(pointsToAdd);
+  public returnMeeple(meeple: Meeple): void {
     this._meeples.push(meeple);
   }
 

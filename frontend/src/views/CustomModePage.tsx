@@ -2,6 +2,8 @@ import { Dispatch, FC, ReactElement, SetStateAction, useState } from 'react';
 
 import GameMode from '../model/GameMode';
 import { BoardSize, TileAmount, TurnLength } from '../model/Settings';
+import { useNavigate } from 'react-router-dom';
+import { PATH_TO_GAMEPAGE } from '../constants/paths';
 
 const sizes: BoardSize[] = [4, 8, 16, 32, 64];
 const amounts: TileAmount[] = [16, 32, 64, 128];
@@ -46,6 +48,7 @@ const CustomModeForm = (props: CustomModeFormProps) => {
 };
 
 const CustomModePage: FC = (): ReactElement => {
+  const navigate = useNavigate();
   const [boardSize, setBoardSize] = useState<BoardSize>(32);
   const [tileAmount, setTileAmount] = useState<TileAmount>(32);
   const [turnLength, setTurnLength] = useState<TurnLength>(30);
@@ -53,6 +56,7 @@ const CustomModePage: FC = (): ReactElement => {
   const handleGameModeSubmit = () => {
     const gameMode = new GameMode(turnLength, tileAmount, boardSize, boardSize, 'Custom');
     localStorage.setItem('Game mode', JSON.stringify(gameMode));
+    navigate(PATH_TO_GAMEPAGE);
   };
 
   return (

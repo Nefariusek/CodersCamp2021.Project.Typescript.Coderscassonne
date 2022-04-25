@@ -1,5 +1,5 @@
 import { FC, ReactElement, useState } from 'react';
-import { PATH_TO_GAMEPAGE } from '../constants/paths';
+import { PATH_TO_GAMEPAGE, PATH_TO_CUSTOM_MODE_FORM } from '../constants/paths';
 
 import { useNavigate } from 'react-router-dom';
 
@@ -29,13 +29,14 @@ const GameModeContainer = (props: GameModeContainerProps) => {
     if (gameMode === 'Classic') {
       const mode = new GameMode(60, 128, 64, 64, gameMode);
       localStorage.setItem('Game mode', JSON.stringify(mode));
+      navigate(PATH_TO_GAMEPAGE);
     } else if (gameMode === 'Fast') {
       const mode = new GameMode(10, 32, 4, 4, gameMode);
       localStorage.setItem('Game mode', JSON.stringify(mode));
+      navigate(PATH_TO_GAMEPAGE);
     } else {
-      alert('Custom mode chosen');
+      navigate(PATH_TO_CUSTOM_MODE_FORM);
     }
-    navigate(PATH_TO_GAMEPAGE);
   };
 
   return (

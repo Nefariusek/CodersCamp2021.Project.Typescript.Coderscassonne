@@ -18,6 +18,7 @@ import HomePage from './views/HomePage';
 import HowToPlayPage from './views/HowToPlayPage';
 import LandingPage from './views/LandingPage';
 import SettingsPage from './views/SettingsPage';
+import { InvalidMoveModal } from './components/Modal/InvalidMoveModal';
 
 const paths = [
   { element: <HomePage />, url: PATH_TO_HOMEPAGE },
@@ -44,6 +45,7 @@ const App: FC = (): ReactElement => {
         </Routes>
       </div>
       {pageValidation ? <div className="bg-DARKTHEME_BACKGROUND_COLOR" /> : <Castle />}
+      <InvalidMoveModal />
     </div>
   );
 };

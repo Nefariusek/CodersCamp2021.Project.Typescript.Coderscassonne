@@ -5,7 +5,6 @@ import GameBoard from '../components/GameBoard/GameBoard';
 import PlayersHand from '../components/PlayersHand/PlayersHand';
 import DrawPile from '../components/DrawPile/DrawPile';
 import Legend from '../components/Legend/Legend';
-import { openInvalidMoveModal, InvalidMoveModal } from '../components/Modal/InvalidMoveModal';
 import { MENU_TITLE_SOURCE } from '../constants/layoutElements';
 import { Link } from 'react-router-dom';
 import { PATH_TO_HOMEPAGE } from '../constants/paths';
@@ -15,6 +14,7 @@ import DataStoreContext, { drawnTiles } from '../components/DataStoreContext/Dat
 const GamePage: React.FunctionComponent = (): ReactElement => {
   const context = useContext(DataStoreContext);
   const [currentPlayer] = useState<number>(0);
+  const [endOfTurn, setEndOfTurn] = useState<boolean>(false);
   const drawTilesLeft = drawnTiles.length - context.turnNumber > 0 ? drawnTiles.length - context.turnNumber : 0;
   const { turnNumber } = useContext(DataStoreContext);
   let tilesLeft = drawnTiles.length - turnNumber;
@@ -31,22 +31,18 @@ const GamePage: React.FunctionComponent = (): ReactElement => {
           </Link>
         </div>
         <PlayersInfo players={context?.allPlayersData} currentPlayer={currentPlayer} />
-        <GameTimer isTurnTimerVisible={false} turnLength={60} />
+        <GameTimer isTurnTimerVisible={false} turnLength={60} setEndOfTurn={setEndOfTurn} />
         <div className="w-[300px] mt-6 flex justify-end">
           <Legend />
         </div>
       </div>
       <div className="flex justify-center">
-        <GameBoard />
+        <GameBoard endOfTurn={endOfTurn} setEndOfTurn={setEndOfTurn} />
       </div>
       <div className="flex justify-around p-[10px]">
-        <button id="btn" className="bg-white text-black h-12" onClick={openInvalidMoveModal}>
-          Modal
-        </button>
-        <PlayersHand />
+        {!endOfTurn && <PlayersHand />}
         <DrawPile numberOfAvailableTiles={drawTilesLeft} />
       </div>
-      <InvalidMoveModal />
       <EndGameModal />
     </div>
   );

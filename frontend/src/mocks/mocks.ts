@@ -23,10 +23,10 @@ export const JSONData = [
   },
   {
     edges: {
-      bottom: Locations.MONASTERY,
-      left: Locations.MONASTERY,
-      right: Locations.MONASTERY,
-      top: Locations.MONASTERY,
+      bottom: Locations.ROAD,
+      left: Locations.FIELD,
+      right: Locations.FIELD,
+      top: Locations.FIELD,
     },
     isSpecial: true,
     middle: Locations.MONASTERY,
@@ -53,10 +53,10 @@ export const JSONData = [
   },
   {
     edges: {
-      bottom: Locations.MONASTERY,
-      left: Locations.MONASTERY,
-      right: Locations.MONASTERY,
-      top: Locations.MONASTERY,
+      bottom: Locations.ROAD,
+      left: Locations.FIELD,
+      right: Locations.FIELD,
+      top: Locations.FIELD,
     },
     isSpecial: true,
     middle: Locations.MONASTERY,
@@ -83,10 +83,10 @@ export const JSONData = [
   },
   {
     edges: {
-      bottom: Locations.MONASTERY,
-      left: Locations.MONASTERY,
-      right: Locations.MONASTERY,
-      top: Locations.MONASTERY,
+      bottom: Locations.ROAD,
+      left: Locations.FIELD,
+      right: Locations.FIELD,
+      top: Locations.FIELD,
     },
     isSpecial: true,
     middle: Locations.MONASTERY,
@@ -113,10 +113,10 @@ export const JSONData = [
   },
   {
     edges: {
-      bottom: Locations.MONASTERY,
-      left: Locations.MONASTERY,
-      right: Locations.MONASTERY,
-      top: Locations.MONASTERY,
+      bottom: Locations.ROAD,
+      left: Locations.FIELD,
+      right: Locations.FIELD,
+      top: Locations.FIELD,
     },
     isSpecial: true,
     middle: Locations.MONASTERY,

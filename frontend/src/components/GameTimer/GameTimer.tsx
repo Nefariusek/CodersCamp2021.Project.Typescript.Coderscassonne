@@ -8,6 +8,7 @@ const END_TURN_LABEL = 'End your turn';
 interface GameTimerProps {
   isTurnTimerVisible: boolean;
   turnLength: TurnLength;
+  setEndOfTurn: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 const GameTimer = (props: GameTimerProps) => {
@@ -32,6 +33,7 @@ const GameTimer = (props: GameTimerProps) => {
     if (context.setTurnNumber) {
       context.setTurnNumber((turnNumber) => turnNumber + 1);
     }
+    props.setEndOfTurn(false);
   };
 
   return (

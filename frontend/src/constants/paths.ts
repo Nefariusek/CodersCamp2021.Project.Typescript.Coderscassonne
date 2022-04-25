@@ -7,3 +7,4 @@ export const PATH_TO_INSTRUCTION = '/instruction';
 export const PATH_TO_SCOREBOARD = '/scoreboard';
 export const PATH_TO_CREATE_PLAYERS = '/players';
 export const PATH_TO_SETTINGS = '/settings';
+export const PATH_TO_CUSTOM_MODE_FORM = '/settings/custommode';

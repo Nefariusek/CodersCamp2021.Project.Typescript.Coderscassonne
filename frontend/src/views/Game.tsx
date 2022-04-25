@@ -5,7 +5,6 @@ import GameBoard from '../components/GameBoard/GameBoard';
 import PlayersHand from '../components/PlayersHand/PlayersHand';
 import DrawPile from '../components/DrawPile/DrawPile';
 import Legend from '../components/Legend/Legend';
-import { InvalidMoveModal } from '../components/Modal/InvalidMoveModal';
 import { MENU_TITLE_SOURCE } from '../constants/layoutElements';
 import { Link } from 'react-router-dom';
 import { PATH_TO_HOMEPAGE } from '../constants/paths';
@@ -44,7 +43,6 @@ const GamePage: React.FunctionComponent = (): ReactElement => {
         {!endOfTurn && <PlayersHand />}
         <DrawPile numberOfAvailableTiles={drawTilesLeft} />
       </div>
-      <InvalidMoveModal />
       <EndGameModal />
     </div>
   );

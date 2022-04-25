@@ -1,20 +1,23 @@
-import React, { useContext, useState } from 'react';
+import React, { useState } from 'react';
 import { PATH_TO_SETTINGS } from '../../constants/paths';
 import { useNavigate } from 'react-router-dom';
-import DataStoreContext, { drawnTiles } from '../DataStoreContext/DataStoreContext';
+
+export function openEndGameModal() {
+  const event = new Event('endGame');
+  window.dispatchEvent(event);
+}
 
 export const EndGameModal: React.FC = () => {
   const [isModalOn, setModalOn] = useState(false);
   const navigate = useNavigate();
-  const { turnNumber } = useContext(DataStoreContext);
   const handleEndGame = () => {
     navigate(PATH_TO_SETTINGS);
   };
-  let tilesLeft = drawnTiles.length - turnNumber;
-  console.log(tilesLeft);
-  if (tilesLeft <= 0) {
-    setModalOn((isModalOn) => !isModalOn);
-  }
+  React.useEffect(() => {
+    window.addEventListener('endGame', () => {
+      setModalOn(true);
+    });
+  }, []);
 
   return (
     <>

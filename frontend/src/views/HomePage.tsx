@@ -1,18 +1,14 @@
 import React, { ReactElement } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { openInvalidMoveModal } from '../components/Modal/InvalidMoveModal';
 
-import {
-  PATH_TO_CREDITS,
-  PATH_TO_HOWTOPLAYPAGE,
-  PATH_TO_LANDINGPAGE,
-  PATH_TO_CREATE_PLAYERS,
-} from '../constants/paths';
+import { PATH_TO_CREDITS, PATH_TO_HOWTOPLAYPAGE, PATH_TO_CREATE_PLAYERS } from '../constants/paths';
 
 const HomePage: React.FunctionComponent = (): ReactElement => {
   const navigate = useNavigate();
   const views: { name: string; url: string }[] = [
     { name: 'Play game', url: PATH_TO_CREATE_PLAYERS },
-    { name: 'Scoreboard', url: PATH_TO_LANDINGPAGE },
+    { name: 'Scoreboard', url: 'TODO' },
     { name: 'How to play', url: PATH_TO_HOWTOPLAYPAGE },
     { name: 'Credits', url: PATH_TO_CREDITS },
   ];
@@ -25,7 +21,11 @@ const HomePage: React.FunctionComponent = (): ReactElement => {
             type="button"
             className="bg-DARKTHEME_BACKGROUND_COLOR hover:bg-DARKTHEME_DARK_GREEN_COLOR border border-DARKTHEME_LIGHT_GREEN_COLOR font-ALMENDRA text-3xl text-DARKTHEME_LIGHT_GREEN_COLOR w-60 py-2 px-4 my-3 "
             onClick={() => {
-              navigate(view.url);
+              if (view.url === 'TODO') {
+                openInvalidMoveModal();
+              } else {
+                navigate(view.url);
+              }
             }}
           >
             {view.name}

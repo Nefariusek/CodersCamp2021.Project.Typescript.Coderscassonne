@@ -1,5 +1,4 @@
 import React, { ReactElement, useContext, useState } from 'react';
-import DataStoreContext, { drawnTiles } from '../components/DataStoreContext/DataStoreContext';
 import PlayersInfo from '../components/PlayersInfo/PlayersInfo';
 import GameTimer from '../components/GameTimer/GameTimer';
 import GameBoard from '../components/GameBoard/GameBoard';
@@ -10,11 +9,18 @@ import { openInvalidMoveModal, InvalidMoveModal } from '../components/Modal/Inva
 import { MENU_TITLE_SOURCE } from '../constants/layoutElements';
 import { Link } from 'react-router-dom';
 import { PATH_TO_HOMEPAGE } from '../constants/paths';
+import { openEndGameModal, EndGameModal } from '../components/Modal/EndGameModal';
+import DataStoreContext, { drawnTiles } from '../components/DataStoreContext/DataStoreContext';
 
 const GamePage: React.FunctionComponent = (): ReactElement => {
   const context = useContext(DataStoreContext);
   const [currentPlayer] = useState<number>(0);
-  const tilesLeft = drawnTiles.length - context.turnNumber > 0 ? drawnTiles.length - context.turnNumber : 0;
+  const drawTilesLeft = drawnTiles.length - context.turnNumber > 0 ? drawnTiles.length - context.turnNumber : 0;
+  const { turnNumber } = useContext(DataStoreContext);
+  let tilesLeft = drawnTiles.length - turnNumber;
+  if (tilesLeft == 1) {
+    openEndGameModal();
+  }
 
   return (
     <div>
@@ -38,9 +44,10 @@ const GamePage: React.FunctionComponent = (): ReactElement => {
           Modal
         </button>
         <PlayersHand />
-        <DrawPile numberOfAvailableTiles={tilesLeft} />
+        <DrawPile numberOfAvailableTiles={drawTilesLeft} />
       </div>
       <InvalidMoveModal />
+      <EndGameModal />
     </div>
   );
 };

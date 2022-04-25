@@ -7,6 +7,7 @@ import Tile from '../../model/Tile';
 import DataStoreContext, { drawnTiles } from '../DataStoreContext/DataStoreContext';
 import TileContainer from '../TileContainer/TileContainer';
 import { openInvalidMoveModal } from '../Modal/InvalidMoveModal';
+import { openEndTurnModal } from '../Modal/EndTurnModal';
 
 export interface BoardState {
   column: number;
@@ -122,7 +123,7 @@ const GameBoard = ({ endOfTurn, setEndOfTurn }: GameBoardProps): ReactElement =>
     const tileToChange = boardState.find((tile) => tile.row === row && tile.column === column);
     if (tileToChange && tileInHand) {
       if (endOfTurn) {
-        openInvalidMoveModal();
+        openEndTurnModal();
       } else {
         if (tilePlacementValidator(row, column)) {
           tileToChange.state = TileState.TAKEN;

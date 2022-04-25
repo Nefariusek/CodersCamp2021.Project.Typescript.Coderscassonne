@@ -31,7 +31,7 @@ const GamePage: React.FunctionComponent = (): ReactElement => {
         <GameBoard />
       </div>
       <div className="flex justify-around p-[10px]">
-        <button id="btn" className="bg-white text-black h-12" onClick={openEndGameModal}>
+        <button id="btn" className="bg-white text-black h-12" onClick={openInvalidMoveModal}>
           Modal
         </button>
         <PlayersHand />

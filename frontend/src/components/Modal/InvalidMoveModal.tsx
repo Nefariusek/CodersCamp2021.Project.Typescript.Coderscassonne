@@ -26,7 +26,7 @@ export const InvalidMoveModal: React.FC = () => {
           <div className="flex h-screen opacity-1 justify-center items-center ">
             <div className="flex-col justify-center  bg-DARKTHEME_BACKGROUND_COLOR  py-12 px-24 border-4 border-DARKTHEME_LIGHT_GREEN_COLOR rounded-xl ">
               <div className="flex font-ALMENDRA text-2xl  text-DARKTHEME_LIGHT_GREEN_COLOR  mb-10">
-                Sorry, you cannot do that!
+                Sorry, this tile can’t be placed here!
               </div>
               <div className="flex justify-center">
                 <button

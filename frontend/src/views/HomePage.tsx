@@ -1,6 +1,6 @@
 import React, { ReactElement } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { openInvalidMoveModal } from '../components/Modal/InvalidMoveModal';
+import { openWorkInProgressModal } from '../components/Modal/WorkInProgressModal';
 
 import { PATH_TO_CREDITS, PATH_TO_HOWTOPLAYPAGE, PATH_TO_CREATE_PLAYERS } from '../constants/paths';
 
@@ -22,7 +22,7 @@ const HomePage: React.FunctionComponent = (): ReactElement => {
             className="bg-DARKTHEME_BACKGROUND_COLOR hover:bg-DARKTHEME_DARK_GREEN_COLOR border border-DARKTHEME_LIGHT_GREEN_COLOR font-ALMENDRA text-3xl text-DARKTHEME_LIGHT_GREEN_COLOR w-60 py-2 px-4 my-3 "
             onClick={() => {
               if (view.url === 'TODO') {
-                openInvalidMoveModal();
+                openWorkInProgressModal();
               } else {
                 navigate(view.url);
               }

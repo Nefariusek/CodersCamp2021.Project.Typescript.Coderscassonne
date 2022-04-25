@@ -5,7 +5,7 @@ import GameBoard from '../components/GameBoard/GameBoard';
 import PlayersHand from '../components/PlayersHand/PlayersHand';
 import DrawPile from '../components/DrawPile/DrawPile';
 import Legend from '../components/Legend/Legend';
-import { openInvalidMoveModal, InvalidMoveModal } from '../components/Modal/InvalidMoveModal';
+import { InvalidMoveModal } from '../components/Modal/InvalidMoveModal';
 import { MENU_TITLE_SOURCE } from '../constants/layoutElements';
 import { Link } from 'react-router-dom';
 import { PATH_TO_HOMEPAGE } from '../constants/paths';

@@ -138,7 +138,6 @@ const GameBoard = ({ endOfTurn, setEndOfTurn }: GameBoardProps): ReactElement =>
   };
   return (
     <>
-      <InvalidMoveModal />
       <div id="gameBoard">
         <table>
           <tbody>

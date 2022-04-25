@@ -6,7 +6,7 @@ import TileState from '../../constants/tileState';
 import Tile from '../../model/Tile';
 import DataStoreContext, { drawnTiles } from '../DataStoreContext/DataStoreContext';
 import TileContainer from '../TileContainer/TileContainer';
-import { openInvalidMoveModal, InvalidMoveModal } from '../Modal/InvalidMoveModal';
+import { openInvalidMoveModal } from '../Modal/InvalidMoveModal';
 
 export interface BoardState {
   column: number;

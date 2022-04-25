@@ -6,3 +6,4 @@ export const IDLE_TILE_SOURCE = './Elements/Layout/Tile_board_dark.png';
 export const TILE_FAST_SOURCE = './Elements/Layout/Tile_fast.png';
 export const TILE_GAME_SOURCE = './Elements/Layout/Tile_game.png';
 export const TILE_TITLE_SOURCE = './Elements/Layout/Tile_title.png';
+export const MENU_TITLE_SOURCE = '../../public/Elements/Layout/Menu_tile.png';

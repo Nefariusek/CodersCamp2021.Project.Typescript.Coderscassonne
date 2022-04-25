@@ -6,12 +6,16 @@ import PlayersHand from '../components/PlayersHand/PlayersHand';
 import DrawPile from '../components/DrawPile/DrawPile';
 import Legend from '../components/Legend/Legend';
 import { openInvalidMoveModal, InvalidMoveModal } from '../components/Modal/InvalidMoveModal';
+import { MENU_TITLE_SOURCE } from '../constants/layoutElements';
+import { Link } from 'react-router-dom';
+import { PATH_TO_HOMEPAGE } from '../constants/paths';
 import { openEndGameModal, EndGameModal } from '../components/Modal/EndGameModal';
 import DataStoreContext, { drawnTiles } from '../components/DataStoreContext/DataStoreContext';
 
 const GamePage: React.FunctionComponent = (): ReactElement => {
   const context = useContext(DataStoreContext);
   const [currentPlayer] = useState<number>(0);
+  const drawTilesLeft = drawnTiles.length - context.turnNumber > 0 ? drawnTiles.length - context.turnNumber : 0;
   const { turnNumber } = useContext(DataStoreContext);
   let tilesLeft = drawnTiles.length - turnNumber;
   if (tilesLeft == 1) {
@@ -21,9 +25,14 @@ const GamePage: React.FunctionComponent = (): ReactElement => {
   return (
     <div>
       <div className="flex justify-between p-[10px] z-0">
+        <div className="mt-6">
+          <Link to={PATH_TO_HOMEPAGE}>
+            <img src={MENU_TITLE_SOURCE} alt="title_tile" className="w-30 h-30" />
+          </Link>
+        </div>
         <PlayersInfo players={context?.allPlayersData} currentPlayer={currentPlayer} />
         <GameTimer isTurnTimerVisible={false} turnLength={60} />
-        <div className="w-[300px] flex justify-end">
+        <div className="w-[300px] mt-6 flex justify-end">
           <Legend />
         </div>
       </div>
@@ -35,7 +44,7 @@ const GamePage: React.FunctionComponent = (): ReactElement => {
           Modal
         </button>
         <PlayersHand />
-        <DrawPile numberOfAvailableTiles={20} />
+        <DrawPile numberOfAvailableTiles={drawTilesLeft} />
       </div>
       <InvalidMoveModal />
       <EndGameModal />

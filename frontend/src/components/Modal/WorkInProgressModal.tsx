@@ -1,18 +1,18 @@
 import React, { useState } from 'react';
 
-export function openInvalidMoveModal() {
-  const event = new Event('invalidMove');
+export function openWorkInProgressModal() {
+  const event = new Event('workInProgress');
   window.dispatchEvent(event);
 }
 
-export const InvalidMoveModal: React.FC = () => {
+export const WorkInProgressModal: React.FC = () => {
   const [isModalOn, setModalOn] = useState(false);
 
   const handleClose = () => {
     setModalOn(false);
   };
   React.useEffect(() => {
-    window.addEventListener('invalidMove', () => {
+    window.addEventListener('workInProgress', () => {
       setModalOn(true);
     });
   }, []);
@@ -26,7 +26,7 @@ export const InvalidMoveModal: React.FC = () => {
           <div className="flex h-screen opacity-1 justify-center items-center ">
             <div className="flex-col justify-center  bg-DARKTHEME_BACKGROUND_COLOR  py-12 px-24 border-4 border-DARKTHEME_LIGHT_GREEN_COLOR rounded-xl ">
               <div className="flex font-ALMENDRA text-2xl  text-DARKTHEME_LIGHT_GREEN_COLOR  mb-10">
-                Sorry, this tile can’t be placed here!
+                Work in progress
               </div>
               <div className="flex justify-center">
                 <button

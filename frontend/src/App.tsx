@@ -7,6 +7,7 @@ import {
   PATH_TO_CREATE_PLAYERS,
   PATH_TO_GAMEPAGE,
   PATH_TO_HOMEPAGE,
+  PATH_TO_HOWTOPLAYPAGE,
   PATH_TO_LANDINGPAGE,
   PATH_TO_SETTINGS,
 } from './constants/paths';
@@ -14,6 +15,7 @@ import CreditsPage from './views/CreditsPage';
 import CreatePlayersPage from './views/CreatePlayersPage';
 import GamePage from './views/Game';
 import HomePage from './views/HomePage';
+import HowToPlayPage from './views/HowToPlayPage';
 import LandingPage from './views/LandingPage';
 import SettingsPage from './views/SettingsPage';
 
@@ -21,6 +23,7 @@ const paths = [
   { element: <HomePage />, url: PATH_TO_HOMEPAGE },
   { element: <LandingPage />, url: PATH_TO_LANDINGPAGE },
   { element: <GamePage />, url: PATH_TO_GAMEPAGE },
+  { element: <HowToPlayPage />, url: PATH_TO_HOWTOPLAYPAGE },
   { element: <CreatePlayersPage />, url: PATH_TO_CREATE_PLAYERS },
   { element: <CreditsPage />, url: PATH_TO_CREDITS },
   { element: <SettingsPage />, url: PATH_TO_SETTINGS },
@@ -33,7 +36,7 @@ const App: FC = (): ReactElement => {
   return (
     <div className="h-full min-h-screen bg-DARKTHEME_BACKGROUND_COLOR ">
       {pageValidation ? null : <AppHeaderSection />}
-      <div className="relative pt-10 z-50">
+      <div className="relative z-50">
         <Routes>
           {paths.map((path) => (
             <Route key={path.url} path={path.url} element={path.element} />

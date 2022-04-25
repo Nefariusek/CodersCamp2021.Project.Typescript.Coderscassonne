@@ -10,6 +10,8 @@ import { Link } from 'react-router-dom';
 import { PATH_TO_HOMEPAGE } from '../constants/paths';
 import { openEndGameModal, EndGameModal } from '../components/Modal/EndGameModal';
 import DataStoreContext, { drawnTiles } from '../components/DataStoreContext/DataStoreContext';
+import { InvalidMoveModal } from '../components/Modal/InvalidMoveModal';
+import { EndTurnModal } from '../components/Modal/EndTurnModal';
 
 const GamePage: React.FunctionComponent = (): ReactElement => {
   const context = useContext(DataStoreContext);
@@ -43,6 +45,8 @@ const GamePage: React.FunctionComponent = (): ReactElement => {
         {!endOfTurn && <PlayersHand />}
         <DrawPile numberOfAvailableTiles={drawTilesLeft} />
       </div>
+      <InvalidMoveModal />
+      <EndTurnModal />
       <EndGameModal />
     </div>
   );

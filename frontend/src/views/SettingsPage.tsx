@@ -35,7 +35,6 @@ const GameModeContainer = (props: GameModeContainerProps) => {
       localStorage.setItem('Game mode', JSON.stringify(mode));
       navigate(PATH_TO_GAMEPAGE);
     } else {
-      alert('Custom mode chosen');
       navigate(PATH_TO_CUSTOM_MODE_FORM);
     }
   };

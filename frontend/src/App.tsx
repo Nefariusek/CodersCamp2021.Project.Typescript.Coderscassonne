@@ -1,14 +1,55 @@
 import { FC, ReactElement } from 'react';
+import { Route, Routes, useLocation } from 'react-router-dom';
 
-import { APPLICATION_TITLE } from './constants/labels';
+import { AppHeaderSection, Castle } from './components/Layout';
+import {
+  PATH_TO_CREDITS,
+  PATH_TO_CREATE_PLAYERS,
+  PATH_TO_GAMEPAGE,
+  PATH_TO_HOMEPAGE,
+  PATH_TO_HOWTOPLAYPAGE,
+  PATH_TO_LANDINGPAGE,
+  PATH_TO_SETTINGS,
+  PATH_TO_CUSTOM_MODE_FORM,
+} from './constants/paths';
+import CreditsPage from './views/CreditsPage';
+import CreatePlayersPage from './views/CreatePlayersPage';
+import GamePage from './views/Game';
+import HomePage from './views/HomePage';
+import HowToPlayPage from './views/HowToPlayPage';
+import LandingPage from './views/LandingPage';
+import SettingsPage from './views/SettingsPage';
+import CustomModePage from './views/CustomModePage';
+import { WorkInProgressModal } from './components/Modal/WorkInProgressModal';
+
+
+const paths = [
+  { element: <HomePage />, url: PATH_TO_HOMEPAGE },
+  { element: <LandingPage />, url: PATH_TO_LANDINGPAGE },
+  { element: <GamePage />, url: PATH_TO_GAMEPAGE },
+  { element: <HowToPlayPage />, url: PATH_TO_HOWTOPLAYPAGE },
+  { element: <CreatePlayersPage />, url: PATH_TO_CREATE_PLAYERS },
+  { element: <CreditsPage />, url: PATH_TO_CREDITS },
+  { element: <SettingsPage />, url: PATH_TO_SETTINGS },
+  { element: <CustomModePage />, url: PATH_TO_CUSTOM_MODE_FORM },
+];
+const pathsWithoutHeader = [PATH_TO_GAMEPAGE];
 
 const App: FC = (): ReactElement => {
-  const testVar = 'test';
-
+  const { pathname } = useLocation();
+  const pageValidation = pathsWithoutHeader.includes(pathname);
   return (
-    <div className="flex justify-center">
-      <h1 className="font-bold text-2xl text-blue-900">{APPLICATION_TITLE}</h1>
-      <h1 className="font-bold text-2xl text-blue-900 bg-gray-200 text-red-300">{testVar}</h1>
+    <div className="h-full min-h-screen bg-DARKTHEME_BACKGROUND_COLOR ">
+      {pageValidation ? null : <AppHeaderSection />}
+      <div className="relative z-50">
+        <Routes>
+          {paths.map((path) => (
+            <Route key={path.url} path={path.url} element={path.element} />
+          ))}
+        </Routes>
+      </div>
+      {pageValidation ? <div className="bg-DARKTHEME_BACKGROUND_COLOR" /> : <Castle />}
+      <WorkInProgressModal />
     </div>
   );
 };

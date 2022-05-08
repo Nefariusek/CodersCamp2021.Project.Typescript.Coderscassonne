@@ -45,7 +45,7 @@ const PlayersInfo = ({ players }: PlayersInfoProps) => {
     <div className="flex items-center bg-DARKTHEME_BACKGROUND_COLOR">
       {players &&
         players.map((player, i) => (
-          <PlayersInfoItem key={player.name} player={player} isCurrent={i === (turnNumber + 1) % players.length} />
+          <PlayersInfoItem key={player.name} player={player} isCurrent={i === (turnNumber - 1) % players.length} />
         ))}
     </div>
   );

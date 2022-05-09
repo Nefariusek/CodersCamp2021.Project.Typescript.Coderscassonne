@@ -4,6 +4,7 @@ import GameMode from '../model/GameMode';
 import { BoardSize, TileAmount, TurnLength } from '../model/Settings';
 import { useNavigate } from 'react-router-dom';
 import { PATH_TO_GAMEPAGE } from '../constants/paths';
+import Button from '../components/Button/Button';
 
 const sizes: BoardSize[] = [4, 8, 16, 32, 64];
 const amounts: TileAmount[] = [16, 32, 64, 128];
@@ -69,13 +70,9 @@ const CustomModePage: FC = (): ReactElement => {
         <CustomModeForm values={amounts} property="Tile amount" setFunction={setTileAmount} />
         <CustomModeForm values={lengths} property="Turn Length" setFunction={setTurnLength} />
       </div>
-      <button
-        className="p-3 bg-DARKTHEME_LIGHT_GREEN_COLOR font-ALMENDRA font-bold text-4xl text-DARKTHEME_BACKGROUND_COLOR text-center w-[200px] rounded my-[50px]"
-        type="button"
-        onClick={handleGameModeSubmit}
-      >
-        Play Game
-      </button>
+      <div className="flex justify-center relative right-[15px]">
+        <Button text="Play Game" onClick={handleGameModeSubmit} colorVariant="light" />
+      </div>
       <img src="./Elements/Layout/castle.png" alt="Custom mode" className="w-full relative bottom-[0px]" />
     </div>
   );

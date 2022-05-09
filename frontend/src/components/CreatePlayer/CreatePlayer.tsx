@@ -1,6 +1,7 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
 import { useState } from 'react';
 
+import Button from '../Button/Button';
 import Technologies from '../../constants/technologies';
 
 interface CreatePlayerProps {
@@ -79,12 +80,10 @@ const CreatePlayer = ({ availableTechnologies, playersNames, addPlayer }: Create
         </div>
         <p className="font-ALMENDRA font-bold text-DARKTHEME_LIGHT_GREEN_COLOR p-3">Choose Meeple</p>
       </div>
-      <button
-        type="submit"
-        className="font-ALMENDRA font-bold text-DARKTHEME_LIGHT_GREEN_COLOR border-2 border-DARKTHEME_LIGHT_GREEN_COLOR w-44 h-10 m-10"
-      >
-        Add Player
-      </button>
+
+      <div className="m-10">
+        <Button type="submit" text="Add Player" colorVariant="light" />
+      </div>
     </form>
   );
 };

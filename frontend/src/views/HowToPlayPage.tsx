@@ -2,9 +2,10 @@ import React, { ReactElement } from 'react';
 import ReactPlayer from 'react-player';
 import { Link } from 'react-router-dom';
 import { PATH_TO_HOMEPAGE } from '../constants/paths';
+import Button from '../components/Button/Button';
 
 const HOW_TO_PLAY_TITLE = {
-  title: 'How to play',
+  title: 'Watch how to play',
 };
 
 const VideoPlayer = () => {
@@ -21,13 +22,17 @@ const HowToPlayPage: React.FunctionComponent = (): ReactElement => (
       <h2 className="text-2xl mb-2">{HOW_TO_PLAY_TITLE.title}</h2>
     </header>
     <VideoPlayer />
-    <footer className="text-center mt-3">
-      <div className="my-3">
+    <footer className="flex flex-row justify-between text-center mt-4 whitespace-pre-line">
+      <div className="mr-5">
         <a target="_blank" href="https://www.wikihow.com/Play-Carcassonne" rel="noreferrer">
-          Read how to play on wikihow.com
+          <Button text={`Read\n how to play`} />
         </a>
       </div>
-      <Link to={PATH_TO_HOMEPAGE}>Back to Homepage</Link>
+      <div>
+        <Link to={PATH_TO_HOMEPAGE}>
+          <Button text={`Back\n to Homepage`} />
+        </Link>
+      </div>
     </footer>
   </div>
 );

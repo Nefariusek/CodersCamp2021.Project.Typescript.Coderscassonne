@@ -12,6 +12,7 @@ const lengths: TurnLength[] = [5, 10, 15, 30, 60];
 interface CustomModeFormProps {
   values: BoardSize[] | TileAmount[] | TurnLength[];
   property: 'Board size' | 'Tile amount' | 'Turn Length';
+
   setFunction:
     | Dispatch<SetStateAction<BoardSize>>
     | Dispatch<SetStateAction<TileAmount>>
@@ -30,18 +31,36 @@ const CustomModeForm = (props: CustomModeFormProps) => {
   return (
     <div className="font-ALMENDRA font-bold text-3xl text-DARKTHEME_LIGHT_GREEN_COLOR p-3 text-center">
       <p className="text-4xl">{property}</p>
-      <p>{val}</p>
-      <div className="flex flex-col gap-[10px] py-[30px] items-center">
-        {values.map((value) => (
-          <button
-            className="p-3 bg-DARKTHEME_LIGHT_GREEN_COLOR font-ALMENDRA font-bold text-3xl text-DARKTHEME_BACKGROUND_COLOR text-center w-[60px] rounded"
-            type="button"
-            key={value}
-            onClick={handleOnClick}
-          >
-            {value}
-          </button>
-        ))}
+      <button
+        id="dropdownDefault"
+        data-dropdown-toggle="dropdown"
+        className="text-DARKTHEME_BACKGROUND_COLOR hover:text-white  font-ALMENDRA font-bold text-3xl bg-DARKTHEME_LIGHT_GREEN_COLOR hover:bg-DARKTHEME_DARK_GREEN_COLOR focus:ring-4 focus:outline-none rounded-lg px-4 py-2.5 mt-3 text-center inline-flex items-center"
+        type="button"
+      >
+        {val}
+        <svg
+          className="w-4 h-4 ml-2"
+          fill="none"
+          stroke="currentColor"
+          viewBox="0 0 24 24"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7"></path>
+        </svg>
+      </button>
+      <div id="dropdown" className="z-10 hidden bg-DARKTHEME_LIGHT_GREEN_COLOR divide-gray-100 rounded shadow w-44">
+        <ul className="py-1 text-sm text-DARKTHEME_BACKGROUND_COLOR" aria-labelledby="dropdownDefault">
+          {values.map((value) => (
+            <li key={value}>
+              <a
+                onClick={handleOnClick}
+                className="block px-4 py-2 hover:bg-DARKTHEME_DARK_GREEN_COLOR hover:text-white"
+              >
+                {value}
+              </a>
+            </li>
+          ))}
+        </ul>
       </div>
     </div>
   );

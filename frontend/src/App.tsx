@@ -22,7 +22,6 @@ import SettingsPage from './views/SettingsPage';
 import CustomModePage from './views/CustomModePage';
 import { WorkInProgressModal } from './components/Modal/WorkInProgressModal';
 
-
 const paths = [
   { element: <HomePage />, url: PATH_TO_HOMEPAGE },
   { element: <LandingPage />, url: PATH_TO_LANDINGPAGE },

@@ -1,14 +1,20 @@
 import { ReactElement } from 'react';
 
 interface ButtonProps {
-  type?: 'button' | 'submit' | 'reset' | undefined;
+  type?: 'button' | 'submit' | 'reset';
   text: string;
   onClick?: () => void;
   colorVariant?: 'dark' | 'light';
   disabled?: boolean;
 }
 
-const Button = (props: ButtonProps): ReactElement => {
+const Button = ({
+  type = 'button',
+  text,
+  onClick,
+  colorVariant = 'dark',
+  disabled = false,
+}: ButtonProps): ReactElement => {
   const commonClassName =
     'border border-DARKTHEME_LIGHT_GREEN_COLOR font-ALMENDRA font-bold text-3xl w-60 py-2 px-4 my-3 select-none';
   const darkVariant = `bg-DARKTHEME_BACKGROUND_COLOR hover:bg-DARKTHEME_DARK_GREEN_COLOR text-DARKTHEME_LIGHT_GREEN_COLOR ${commonClassName}`;
@@ -16,12 +22,12 @@ const Button = (props: ButtonProps): ReactElement => {
 
   return (
     <button
-      type={props.type ? props.type : 'button'}
-      className={props.colorVariant === 'light' ? lightVariant : darkVariant}
-      onClick={props.onClick}
-      disabled={props.disabled === true ? true : false}
+      type={type}
+      className={colorVariant === 'light' ? lightVariant : darkVariant}
+      onClick={onClick}
+      disabled={disabled}
     >
-      {props.text}
+      {text}
     </button>
   );
 };

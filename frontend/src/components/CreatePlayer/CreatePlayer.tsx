@@ -42,7 +42,7 @@ const CreatePlayer = ({ availableTechnologies, playersNames, addPlayer }: Create
 
   return (
     <form
-      className="bg-DARKTHEME_BACKGROUND_COLOR flex flex-col items-center justify-between w-96 h-[550px] border-4 border-DARKTHEME_LIGHT_GREEN_COLOR"
+      className="bg-DARKTHEME_BACKGROUND_COLOR flex flex-col items-center justify-between w-96 h-[580px] border-4 border-DARKTHEME_LIGHT_GREEN_COLOR"
       onSubmit={handleSubmit}
     >
       <p className="font-ALMENDRA font-bold text-4xl text-DARKTHEME_LIGHT_GREEN_COLOR p-3 mb-10">Create player</p>

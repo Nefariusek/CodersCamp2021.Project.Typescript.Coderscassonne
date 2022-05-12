@@ -1,7 +1,5 @@
 import { makeAutoObservable } from 'mobx';
-import { BoardState } from '../components/GameBoard/GameBoard';
 import Locations from '../constants/locations';
-import TileState from '../constants/tileState';
 import Project from '../model/Project';
 import Tile from '../model/Tile';
 import type { RootStore } from './RootStore';

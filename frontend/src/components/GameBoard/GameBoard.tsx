@@ -1,6 +1,6 @@
 /* eslint-disable sort-keys */
 import _ from 'lodash';
-import { ReactElement, useContext, useState } from 'react';
+import { ReactElement, useContext, useEffect, useState } from 'react';
 
 import TileState from '../../constants/tileState';
 import Tile from '../../model/Tile';
@@ -16,18 +16,7 @@ export interface BoardState {
   tile?: Tile;
 }
 
-export const initialBoardState: BoardState[] = [
-  { row: 1, column: 0, state: TileState.ACTIVE },
-  { row: 0, column: 0, state: TileState.IDLE },
-  { row: 0, column: 1, state: TileState.ACTIVE },
-  { row: 0, column: 2, state: TileState.IDLE },
-
-  { row: 1, column: 2, state: TileState.ACTIVE },
-  { row: 2, column: 0, state: TileState.IDLE },
-  { row: 2, column: 1, state: TileState.ACTIVE },
-  { row: 2, column: 2, state: TileState.IDLE },
-  { row: 1, column: 1, state: TileState.TAKEN, tile: drawnTiles[0] },
-];
+export const initialBoardState: BoardState[] = [{ row: 0, column: 0, state: TileState.ACTIVE }];
 
 interface GameBoardProps {
   endOfTurn: boolean;
@@ -119,7 +108,7 @@ const GameBoard = ({ endOfTurn, setEndOfTurn }: GameBoardProps): ReactElement =>
     return true;
   };
 
-  const handleChangeBoardState = (row: number, column: number) => {
+  const onTilePlacement = (row: number, column: number) => {
     const tileToChange = boardState.find((tile) => tile.row === row && tile.column === column);
     if (tileToChange && tileInHand) {
       if (endOfTurn) {
@@ -130,6 +119,7 @@ const GameBoard = ({ endOfTurn, setEndOfTurn }: GameBoardProps): ReactElement =>
           tileToChange.tile = tileInHand;
           extendBoard(row, column);
           activateAdjacentTiles(row, column);
+          //TODO: new/update Projects
           setEndOfTurn(true);
         } else {
           openInvalidMoveModal();
@@ -137,6 +127,11 @@ const GameBoard = ({ endOfTurn, setEndOfTurn }: GameBoardProps): ReactElement =>
       }
     }
   };
+
+  useEffect(() => {
+    onTilePlacement(0, 0);
+  }, []);
+
   return (
     <>
       <div id="gameBoard">
@@ -151,7 +146,7 @@ const GameBoard = ({ endOfTurn, setEndOfTurn }: GameBoardProps): ReactElement =>
                       <TileContainer
                         tile={element.tile || undefined}
                         initialState={element.state}
-                        onChange={handleChangeBoardState}
+                        onChange={onTilePlacement}
                         row={element.row}
                         column={element.column}
                       />

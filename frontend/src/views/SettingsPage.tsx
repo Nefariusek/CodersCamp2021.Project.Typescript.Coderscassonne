@@ -48,7 +48,7 @@ const GameModeContainer = (props: GameModeContainerProps) => {
         onMouseEnter={handleMouseOver}
         onMouseLeave={handleMouseOut}
       >
-        I
+        i
       </button>
       <p className="font-ALMENDRA font-bold text-5xl text-DARKTHEME_LIGHT_GREEN_COLOR p-3 text-center relative top-[50px]">
         {`${gameMode} mode`}

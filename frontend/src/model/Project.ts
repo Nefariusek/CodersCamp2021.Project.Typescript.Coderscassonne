@@ -3,7 +3,7 @@ import Locations from '../constants/locations';
 import Meeple from './Meeple';
 import Player from './Player';
 import Tile from './Tile';
-
+import { makeAutoObservable } from 'mobx';
 class Project {
   public meeples: Meeple[];
 
@@ -18,6 +18,7 @@ class Project {
     this.tiles = [tile];
     this.type = type;
     this.isFinished = false;
+    makeAutoObservable(this);
   }
 
   public get owner(): Player {

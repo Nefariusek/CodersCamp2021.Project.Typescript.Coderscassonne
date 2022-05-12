@@ -1,4 +1,5 @@
 import Player from '../../model/Player';
+import Button from '../Button/Button';
 
 interface AddedPlayersProps {
   players: Player[];
@@ -63,13 +64,9 @@ const AddedPlayers = ({ players, save, change }: AddedPlayersProps) => (
       ))}
     </div>
     {players.length > 1 ? (
-      <button
-        type="button"
-        className="font-ALMENDRA font-bold text-white bg-DARKTHEME_LIGHT_GREEN_COLOR w-44 h-10 m-10"
-        onClick={save}
-      >
-        Continue
-      </button>
+      <div className="m-10">
+        <Button text="Continue" onClick={save} colorVariant="light" />
+      </div>
     ) : (
       <div className="h-10 m-10 w-44" />
     )}

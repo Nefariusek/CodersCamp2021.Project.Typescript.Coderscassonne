@@ -1,5 +1,6 @@
 import { FC, ReactElement, useState } from 'react';
 import { PATH_TO_GAMEPAGE, PATH_TO_CUSTOM_MODE_FORM } from '../constants/paths';
+import Button from '../components/Button/Button';
 
 import { useNavigate } from 'react-router-dom';
 
@@ -52,15 +53,11 @@ const GameModeContainer = (props: GameModeContainerProps) => {
       <p className="font-ALMENDRA font-bold text-5xl text-DARKTHEME_LIGHT_GREEN_COLOR p-3 text-center relative top-[50px]">
         {`${gameMode} mode`}
       </p>
-      <button
-        type="button"
-        className="p-3 bg-DARKTHEME_LIGHT_GREEN_COLOR font-ALMENDRA font-bold text-4xl text-DARKTHEME_BACKGROUND_COLOR text-center relative top-[100px] left-[100px] rounded"
-        onClick={handlePlayGameButtonClick}
-      >
-        Play game
-      </button>
+      <div className="p-3 flex justify-center relative top-[100px]">
+        <Button text="Play game" onClick={handlePlayGameButtonClick} colorVariant="light" />
+      </div>
       {isHovering && (
-        <p className="font-ALMENDRA font-bold text-2xl text-center text-DARKTHEME_LIGHT_GREEN_COLOR p-3 relative top-[200px]">
+        <p className="font-ALMENDRA font-bold text-2xl text-center text-DARKTHEME_LIGHT_GREEN_COLOR p-3 relative top-[150px]">
           {infoText}
         </p>
       )}

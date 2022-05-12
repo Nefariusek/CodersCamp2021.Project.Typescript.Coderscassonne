@@ -1,6 +1,7 @@
 import React, { ReactElement } from 'react';
 import { Link } from 'react-router-dom';
 import { PATH_TO_HOMEPAGE } from '../constants/paths';
+import Button from '../components/Button/Button';
 
 type Authors = {
   name: string;
@@ -47,7 +48,11 @@ const CreditsPage: React.FunctionComponent = (): ReactElement => (
     </header>
     <CreditsButtons />
     <footer className="text-center mt-3">
-      <Link to={PATH_TO_HOMEPAGE}>Back to Homepage</Link>
+      <div>
+        <Link to={PATH_TO_HOMEPAGE}>
+          <Button text="Back to Homepage" />
+        </Link>
+      </div>
     </footer>
   </div>
 );

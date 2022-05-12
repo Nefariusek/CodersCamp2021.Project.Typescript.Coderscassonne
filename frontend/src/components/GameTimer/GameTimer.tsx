@@ -1,4 +1,5 @@
 import { useEffect, useState, useContext } from 'react';
+import Button from '../Button/Button';
 
 import { TurnLength } from '../../model/Settings';
 import DataStoreContext from '../DataStoreContext/DataStoreContext';
@@ -39,12 +40,7 @@ const GameTimer = (props: GameTimerProps) => {
   return (
     <div className="font-ALMENDRA font-bold text-3xl text-DARKTHEME_LIGHT_GREEN_COLOR p-3">
       <p>Turn number: {context.turnNumber}</p>
-      <button
-        className="bg-transparent hover:bg-DARKTHEME_DARK_GREEN_COLOR border border-DARKTHEME_LIGHT_GREEN_COLOR font-ALMENDRA text-3xl text-DARKTHEME_LIGHT_GREEN_COLOR w-60 py-2 px-4 my-3 "
-        onClick={handleTurnEnd}
-      >
-        {END_TURN_LABEL}
-      </button>
+      <Button text={END_TURN_LABEL} onClick={handleTurnEnd} colorVariant="light" />
 
       <p>
         Game time: {minutes}:{seconds > 9 ? seconds : `0${seconds}`}

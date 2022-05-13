@@ -61,6 +61,7 @@ const CreatePlayer = ({ availableTechnologies, playersNames, addPlayer }: Create
           onChange={(e: React.FormEvent<HTMLInputElement>) => {
             setPlayerName(e.currentTarget.value);
           }}
+          autoFocus
         />
         <p className="font-ALMENDRA font-bold text-DARKTHEME_LIGHT_GREEN_COLOR p-3">Player Name</p>
       </div>

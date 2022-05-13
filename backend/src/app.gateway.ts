@@ -1,0 +1,32 @@
+import {
+  SubscribeMessage,
+  WebSocketGateway,
+  OnGatewayInit,
+  OnGatewayConnection,
+  OnGatewayDisconnect,
+  WsResponse,
+} from '@nestjs/websockets';
+
+import { Socket, Server } from 'socket.io';
+
+@WebSocketGateway()
+export class AppGateway
+  implements OnGatewayInit, OnGatewayConnection, OnGatewayDisconnect
+{
+  afterInit(server: Server) {
+    console.log('initialized...');
+  }
+
+  handleConnection(client: Socket, ...args: any[]) {
+    console.log(`connected client ${client.id}`);
+  }
+
+  handleDisconnect(client: Socket) {
+    console.log(`disconnected client ${client.id}`);
+  }
+
+  @SubscribeMessage('message')
+  handleMessage(client: Socket, text: string): WsResponse<string> {
+    return { event: 'messageToClient', data: text };
+  }
+}

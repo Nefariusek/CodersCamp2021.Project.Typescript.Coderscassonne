@@ -44,11 +44,11 @@ const GameModeContainer = (props: GameModeContainerProps) => {
     <div className="bg-[url('../Elements/Layout/Tile_game.png')] w-380px h-380px">
       <button
         type="button"
-        className="p-3 bg-DARKTHEME_LIGHT_GREEN_COLOR font-ALMENDRA font-bold text-3xl text-DARKTHEME_BACKGROUND_COLOR text-center relative top-[20px] left-[320px] rounded-full"
+        className="px-4 py-1 bg-DARKTHEME_LIGHT_GREEN_COLOR font-ALMENDRA font-bold text-3xl text-DARKTHEME_BACKGROUND_COLOR text-center relative top-[20px] left-[320px] rounded-full"
         onMouseEnter={handleMouseOver}
         onMouseLeave={handleMouseOut}
       >
-        I
+        i
       </button>
       <p className="font-ALMENDRA font-bold text-5xl text-DARKTHEME_LIGHT_GREEN_COLOR p-3 text-center relative top-[50px]">
         {`${gameMode} mode`}

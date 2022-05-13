@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react';
 
 import Button from '../Button/Button';
 import Technologies from '../../constants/technologies';
+import Tooltip from '../Tooltip/Tooltip';
 
 interface CreatePlayerProps {
   availableTechnologies: Technologies[];
@@ -90,7 +91,9 @@ const CreatePlayer = ({ availableTechnologies, playersNames, addPlayer }: Create
       </div>
 
       <div className="m-10">
-        <Button type="submit" text="Add Player" colorVariant="light" disabled={!!errorMessage} />
+        <Tooltip message={errorMessage}>
+          <Button type="submit" text="Add Player" colorVariant="light" disabled={!!errorMessage} />
+        </Tooltip>
       </div>
     </form>
   );

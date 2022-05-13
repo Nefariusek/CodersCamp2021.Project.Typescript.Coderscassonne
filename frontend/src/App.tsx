@@ -42,8 +42,14 @@ const App: FC = (): ReactElement => {
   const pageValidation = pathsWithoutHeader.includes(pathname);
 
   useEffect(() => {
-    socket.emit('message', 'Hello');
+    socket.emit('message', 'Hello from Client');
   }, []);
+
+  useEffect(() => {
+    socket.on('messageToClient', (data) => {
+      console.log(data);
+    });
+  });
 
   return (
     <div className="h-full min-h-screen bg-DARKTHEME_BACKGROUND_COLOR ">

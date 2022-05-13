@@ -27,7 +27,8 @@ export class AppGateway
 
   @SubscribeMessage('message')
   handleMessage(client: Socket, text: string): WsResponse<string> {
-    console.log(`Client with id: ${client.id} send a message: ${text}`);
-    return { event: 'messageToClient', data: text };
+    const message = `Client with id: ${client.id} send a message: ${text}`;
+    console.log(message);
+    return { event: 'messageToClient', data: message };
   }
 }

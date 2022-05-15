@@ -4,7 +4,7 @@ import { ReactElement, useContext, useEffect, useState } from 'react';
 
 import TileState from '../../constants/tileState';
 import Tile from '../../model/Tile';
-import DataStoreContext, { drawnTiles } from '../DataStoreContext/DataStoreContext';
+import DataStoreContext from '../DataStoreContext/DataStoreContext';
 import TileContainer from '../TileContainer/TileContainer';
 import { openInvalidMoveModal } from '../Modal/InvalidMoveModal';
 import { openEndTurnModal } from '../Modal/EndTurnModal';

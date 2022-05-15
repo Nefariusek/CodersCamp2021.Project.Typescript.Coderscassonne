@@ -1,9 +1,10 @@
-import { useEffect, useState, useContext } from 'react';
+import { useEffect, useState } from 'react';
 import Button from '../Button/Button';
 
 import { TurnLength } from '../../model/Settings';
-import DataStoreContext from '../DataStoreContext/DataStoreContext';
+//import DataStoreContext from '../DataStoreContext/DataStoreContext';
 import TurnTimer from './TurnTimer';
+import rootStore from '../../stores/RootStore';
 
 const END_TURN_LABEL = 'End your turn';
 interface GameTimerProps {
@@ -13,7 +14,7 @@ interface GameTimerProps {
 }
 
 const GameTimer = (props: GameTimerProps) => {
-  const context = useContext(DataStoreContext);
+  // const context = useContext(DataStoreContext);
   const [seconds, setSeconds] = useState(0);
   const [minutes, setMinutes] = useState(0);
   const { isTurnTimerVisible, turnLength } = props;
@@ -31,15 +32,17 @@ const GameTimer = (props: GameTimerProps) => {
   }, [seconds, minutes]);
 
   const handleTurnEnd = () => {
-    if (context.setTurnNumber) {
-      context.setTurnNumber((turnNumber) => turnNumber + 1);
-    }
+    // if (context.setTurnNumber) {
+    //   context.setTurnNumber((turnNumber) => turnNumber + 1);
+    // }
+
+    rootStore.gameStore.increaseTurnNumber();
     props.setEndOfTurn(false);
   };
 
   return (
     <div className="font-ALMENDRA font-bold text-3xl text-DARKTHEME_LIGHT_GREEN_COLOR p-3">
-      <p>Turn number: {context.turnNumber}</p>
+      <p>Turn number: {rootStore.gameStore.turnNumber}</p>
       <Button text={END_TURN_LABEL} onClick={handleTurnEnd} colorVariant="light" />
 
       <p>

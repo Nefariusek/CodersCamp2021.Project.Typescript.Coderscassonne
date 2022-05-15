@@ -5,15 +5,19 @@ import TileState from '../constants/tileState';
 import Tile from '../model/Tile';
 
 class GameStore {
-  //tile in Hand
   tileInHand: Tile | undefined;
-  // boardState
+  turnNumber: number;
   initialBoardState: BoardState[] = [];
 
   constructor() {
     this.initialBoardState = [{ row: 0, column: 0, state: TileState.ACTIVE }];
     this.tileInHand = drawnTiles[0];
+    this.turnNumber = 1;
     makeAutoObservable(this);
+  }
+
+  increaseTurnNumber() {
+    this.turnNumber++;
   }
 }
 

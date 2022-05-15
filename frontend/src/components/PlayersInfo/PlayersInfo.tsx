@@ -1,6 +1,5 @@
-import { useContext } from 'react';
 import Player from '../../model/Player';
-import DataStoreContext from '../DataStoreContext/DataStoreContext';
+import rootStore from '../../stores/RootStore';
 
 interface PlayersInfoProps {
   players: Player[] | undefined;
@@ -40,7 +39,7 @@ const PlayersInfoItem = ({ player, isCurrent }: PlayersInfoItemProps) => {
 };
 
 const PlayersInfo = ({ players }: PlayersInfoProps) => {
-  const { turnNumber } = useContext(DataStoreContext);
+  const turnNumber = rootStore.gameStore.turnNumber;
   return (
     <div className="flex items-center bg-DARKTHEME_BACKGROUND_COLOR">
       {players &&

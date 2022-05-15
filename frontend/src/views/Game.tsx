@@ -12,13 +12,14 @@ import { openEndGameModal, EndGameModal } from '../components/Modal/EndGameModal
 import DataStoreContext, { drawnTiles } from '../components/DataStoreContext/DataStoreContext';
 import { InvalidMoveModal } from '../components/Modal/InvalidMoveModal';
 import { EndTurnModal } from '../components/Modal/EndTurnModal';
+import rootStore from '../stores/RootStore';
 
 const GamePage: React.FunctionComponent = (): ReactElement => {
   const context = useContext(DataStoreContext);
+  const turnNumber = rootStore.gameStore.turnNumber;
   const [currentPlayer] = useState<number>(0);
   const [endOfTurn, setEndOfTurn] = useState<boolean>(false);
-  const drawTilesLeft = drawnTiles.length - context.turnNumber > 0 ? drawnTiles.length - context.turnNumber : 0;
-  const { turnNumber } = useContext(DataStoreContext);
+  const drawTilesLeft = drawnTiles.length - turnNumber > 0 ? drawnTiles.length - turnNumber : 0;
   let tilesLeft = drawnTiles.length - turnNumber;
   if (tilesLeft == 1) {
     openEndGameModal();

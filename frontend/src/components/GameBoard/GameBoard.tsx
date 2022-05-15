@@ -1,14 +1,14 @@
 /* eslint-disable sort-keys */
 import _ from 'lodash';
-import { ReactElement, useContext, useEffect, useState } from 'react';
+import { ReactElement, useEffect, useState } from 'react';
 
 import TileState from '../../constants/tileState';
 import Tile from '../../model/Tile';
-import DataStoreContext from '../DataStoreContext/DataStoreContext';
 import TileContainer from '../TileContainer/TileContainer';
 import { openInvalidMoveModal } from '../Modal/InvalidMoveModal';
 import { openEndTurnModal } from '../Modal/EndTurnModal';
 import { manageProjects } from './GameBoard.functions';
+import rootStore from '../../stores/RootStore';
 
 export interface BoardState {
   column: number;
@@ -27,7 +27,8 @@ interface GameBoardProps {
 const GameBoard = ({ endOfTurn, setEndOfTurn }: GameBoardProps): ReactElement => {
   const [boardState, setBoardState] = useState<BoardState[]>(initialBoardState);
 
-  const { tileInHand } = useContext(DataStoreContext);
+  const tileInHand = rootStore.gameStore.tileInHand; // from store
+
   const sortedBoardState = _.orderBy(boardState, ['row', 'column'], ['asc', 'asc']);
   const tilesGroupedByRows = _.groupBy(sortedBoardState, 'row');
 
@@ -120,7 +121,9 @@ const GameBoard = ({ endOfTurn, setEndOfTurn }: GameBoardProps): ReactElement =>
           tileToChange.tile = tileInHand;
           extendBoard(row, column);
           activateAdjacentTiles(row, column);
+          console.log(`przed `, rootStore.projectStore.allProjects);
           manageProjects(row, column, boardState);
+          console.log(`po `, rootStore.projectStore.allProjects);
           setEndOfTurn(true);
         } else {
           openInvalidMoveModal();

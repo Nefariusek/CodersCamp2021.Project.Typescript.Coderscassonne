@@ -13,8 +13,8 @@ class ProjectStore {
     makeAutoObservable(this);
   }
 
-  addNewProject(tile: Tile, location: Locations) {
-    const newProject = new Project(tile, location);
+  addNewProject(location: Locations, tile?: Tile) {
+    const newProject = new Project(location, tile); //TODO: change tile <=> location after change of arguments order
     this.allProjects.push(newProject);
 
     return newProject;

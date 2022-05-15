@@ -13,9 +13,9 @@ class Project {
 
   public isFinished: boolean;
 
-  constructor(tile: Tile, type: Locations) {
+  constructor(type: Locations, tile?: Tile) {
     this.meeples = [];
-    this.tiles = [tile];
+    this.tiles = tile ? [tile] : [];
     this.type = type;
     this.isFinished = false;
     makeAutoObservable(this);

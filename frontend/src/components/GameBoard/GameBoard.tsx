@@ -8,6 +8,7 @@ import DataStoreContext, { drawnTiles } from '../DataStoreContext/DataStoreConte
 import TileContainer from '../TileContainer/TileContainer';
 import { openInvalidMoveModal } from '../Modal/InvalidMoveModal';
 import { openEndTurnModal } from '../Modal/EndTurnModal';
+import { manageProjects } from './GameBoard.functions';
 
 export interface BoardState {
   column: number;
@@ -119,7 +120,7 @@ const GameBoard = ({ endOfTurn, setEndOfTurn }: GameBoardProps): ReactElement =>
           tileToChange.tile = tileInHand;
           extendBoard(row, column);
           activateAdjacentTiles(row, column);
-          //TODO: new/update Projects
+          manageProjects(row, column, boardState);
           setEndOfTurn(true);
         } else {
           openInvalidMoveModal();

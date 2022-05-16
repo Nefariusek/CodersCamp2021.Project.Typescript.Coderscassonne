@@ -128,6 +128,12 @@ const GameBoard = ({ endOfTurn, setEndOfTurn }: GameBoardProps): ReactElement =>
     }
   };
 
+  const [windowHeight, setWindowHeight] = useState(window.innerHeight);
+
+  useEffect(() => {
+    window.addEventListener('resize', () => setWindowHeight(window.innerHeight));
+  }, []);
+
   useEffect(() => {
     onTilePlacement(0, 0);
   }, []);

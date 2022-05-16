@@ -6,6 +6,7 @@ import TileState from '../../constants/tileState';
 import Tile from '../../model/Tile';
 import DataStoreContext, { drawnTiles } from '../DataStoreContext/DataStoreContext';
 import TileContainer from '../TileContainer/TileContainer';
+import { GAMEBOARD_LAYOUT_PROPORTION, TILE_SIZE } from '../../constants/gameDefaults';
 import { openInvalidMoveModal } from '../Modal/InvalidMoveModal';
 import { openEndTurnModal } from '../Modal/EndTurnModal';
 
@@ -137,6 +138,16 @@ const GameBoard = ({ endOfTurn, setEndOfTurn }: GameBoardProps): ReactElement =>
   useEffect(() => {
     onTilePlacement(0, 0);
   }, []);
+
+  function gameBoardAutoScale(): number {
+    const rowsCount = Object.entries(tilesGroupedByRows).length;
+    const gameBoardWindowHeight = GAMEBOARD_LAYOUT_PROPORTION * windowHeight;
+    const gameBoardHeight = TILE_SIZE * rowsCount;
+
+    const scale = gameBoardWindowHeight / gameBoardHeight - 0.05 + 0.005 * (rowsCount - 3);
+
+    return scale;
+  }
 
   return (
     <>

@@ -14,7 +14,6 @@ interface GameTimerProps {
 }
 
 const GameTimer = (props: GameTimerProps) => {
-  // const context = useContext(DataStoreContext);
   const [seconds, setSeconds] = useState(0);
   const [minutes, setMinutes] = useState(0);
   const { isTurnTimerVisible, turnLength } = props;
@@ -32,10 +31,6 @@ const GameTimer = (props: GameTimerProps) => {
   }, [seconds, minutes]);
 
   const handleTurnEnd = () => {
-    // if (context.setTurnNumber) {
-    //   context.setTurnNumber((turnNumber) => turnNumber + 1);
-    // }
-
     rootStore.gameStore.increaseTurnNumber();
     props.setEndOfTurn(false);
   };

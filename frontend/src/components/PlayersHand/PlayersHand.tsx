@@ -1,12 +1,12 @@
 import { observer } from 'mobx-react-lite';
-import { ReactElement, useContext } from 'react';
+import { ReactElement } from 'react';
 import TileContainer from '../TileContainer/TileContainer';
 import ArrowButton from './ArrowButton';
-import DataStoreContext from '../DataStoreContext/DataStoreContext';
 import TileState from '../../constants/tileState';
+import rootStore from '../../stores/RootStore';
 
 const PlayersHand = observer((): ReactElement => {
-  const { tileInHand } = useContext(DataStoreContext);
+  const tileInHand = rootStore.gameStore.tileInHand;
 
   return (
     <div className="flex justify-center">

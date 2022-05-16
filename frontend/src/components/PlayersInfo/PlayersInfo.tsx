@@ -1,3 +1,4 @@
+import { observer } from 'mobx-react';
 import Player from '../../model/Player';
 import rootStore from '../../stores/RootStore';
 
@@ -38,7 +39,7 @@ const PlayersInfoItem = ({ player, isCurrent }: PlayersInfoItemProps) => {
   );
 };
 
-const PlayersInfo = ({ players }: PlayersInfoProps) => {
+const PlayersInfo = observer(({ players }: PlayersInfoProps) => {
   const turnNumber = rootStore.gameStore.turnNumber;
   return (
     <div className="flex items-center bg-DARKTHEME_BACKGROUND_COLOR">
@@ -48,6 +49,6 @@ const PlayersInfo = ({ players }: PlayersInfoProps) => {
         ))}
     </div>
   );
-};
+});
 
 export default PlayersInfo;

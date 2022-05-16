@@ -5,6 +5,7 @@ import { BoardState } from './GameBoard';
 import _ from 'lodash';
 import rootStore from '../../stores/RootStore';
 import Project from '../../model/Project';
+import TileState from '../../constants/tileState';
 
 export const manageProjects = (row: number, column: number, boardState: BoardState[]) => {
   const existingLocations: Locations[] = [];
@@ -59,6 +60,67 @@ function getAdjacentTiles(row: number, column: number, boardState: BoardState[])
   return adjacentTiles;
 }
 
+export const tilePlacementValidator = (row: number, column: number, boardState: BoardState[]): boolean => {
+  const upperTile = boardState.find((tile) => tile.column === column && tile.row === row - 1);
+  if (
+    upperTile &&
+    upperTile.state === TileState.TAKEN &&
+    upperTile.tile?.edges.bottom !== rootStore.gameStore.tileInHand?.edges.top
+  ) {
+    return false;
+  }
+
+  const lowerTile = boardState.find((tile) => tile.column === column && tile.row === row + 1);
+  if (
+    lowerTile &&
+    lowerTile.state === TileState.TAKEN &&
+    lowerTile.tile?.edges.top !== rootStore.gameStore.tileInHand?.edges.bottom
+  ) {
+    return false;
+  }
+
+  const rightTile = boardState.find((tile) => tile.column === column + 1 && tile.row === row);
+  if (
+    rightTile &&
+    rightTile.state === TileState.TAKEN &&
+    rightTile.tile?.edges.left !== rootStore.gameStore.tileInHand?.edges.right
+  ) {
+    return false;
+  }
+
+  const leftTile = boardState.find((tile) => tile.column === column - 1 && tile.row === row);
+  if (
+    leftTile &&
+    leftTile.state === TileState.TAKEN &&
+    leftTile.tile?.edges.right !== rootStore.gameStore.tileInHand?.edges.left
+  ) {
+    return false;
+  }
+  return true;
+};
+
+export const activateAdjacentTiles = (row: number, column: number, boardState: BoardState[]) => {
+  const upperTile = boardState.find((tile) => tile.column === column && tile.row === row - 1);
+  if (upperTile && upperTile.state === TileState.IDLE) {
+    upperTile.state = TileState.ACTIVE;
+  }
+
+  const lowerTile = boardState.find((tile) => tile.column === column && tile.row === row + 1);
+  if (lowerTile && lowerTile.state === TileState.IDLE) {
+    lowerTile.state = TileState.ACTIVE;
+  }
+
+  const rightTile = boardState.find((tile) => tile.column === column + 1 && tile.row === row);
+  if (rightTile && rightTile.state === TileState.IDLE) {
+    rightTile.state = TileState.ACTIVE;
+  }
+
+  const leftTile = boardState.find((tile) => tile.column === column - 1 && tile.row === row);
+  if (leftTile && leftTile.state === TileState.IDLE) {
+    leftTile.state = TileState.ACTIVE;
+  }
+};
+
 export const getAdjacentTopTile = (row: number, column: number, boardState: BoardState[]): Tile | undefined => {
   return boardState.find((tile) => tile.column === column && tile.row === row - 1)?.tile;
 };
@@ -112,3 +174,35 @@ function createNewProjects(existingLocations: Locations[]) {
 
   edges.filter((edge) => !existingLocations.includes(edge)).forEach((edge) => addNewProject(edge, tileInHand));
 }
+export const extendBoard = (row: number, column: number, boardState: BoardState[]) => {
+  let bottomRow = _.maxBy(boardState, 'row')!.row;
+  let topRow = _.minBy(boardState, 'row')!.row;
+  let leftColumn = _.minBy(boardState, 'column')!.column;
+  let rightColumn = _.maxBy(boardState, 'column')!.column;
+  if (row === bottomRow) {
+    for (let col = leftColumn; col <= rightColumn; col++) {
+      boardState.push({ row: row + 1, column: col, state: TileState.IDLE });
+    }
+    bottomRow += 1;
+  }
+
+  if (row === topRow) {
+    for (let col = leftColumn; col <= rightColumn; col++) {
+      boardState.unshift({ row: row - 1, column: col, state: TileState.IDLE });
+    }
+    topRow -= 1;
+  }
+  if (column === rightColumn) {
+    for (let row = topRow; row <= bottomRow; row++) {
+      boardState.push({ row: row, column: column + 1, state: TileState.IDLE });
+    }
+    rightColumn += 1;
+  }
+  if (column === leftColumn) {
+    for (let row = topRow; row <= bottomRow; row++) {
+      boardState.push({ row: row, column: column - 1, state: TileState.IDLE });
+    }
+    leftColumn -= 1;
+  }
+  rootStore.gameStore.setBoardState([...boardState]); //TODO: sprawdzic?
+};

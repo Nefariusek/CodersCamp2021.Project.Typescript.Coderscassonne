@@ -6,6 +6,7 @@ import TileState from '../../constants/tileState';
 import Tile from '../../model/Tile';
 import TileContainer from '../TileContainer/TileContainer';
 import rootStore from '../../stores/RootStore';
+import { observer } from 'mobx-react';
 
 export interface BoardState {
   column: number;
@@ -14,18 +15,20 @@ export interface BoardState {
   tile?: Tile;
 }
 
-const GameBoard = (): ReactElement => {
+const GameBoard = observer((): ReactElement => {
   const boardState = rootStore.gameStore.boardState;
 
   const sortedBoardState = _.orderBy(boardState, ['row', 'column'], ['asc', 'asc']);
   const tilesGroupedByRows = _.groupBy(sortedBoardState, 'row');
 
   const onTilePlacement = (row: number, column: number) => {
+    console.log(`tile placement`);
     rootStore.gameStore.placeTile(row, column);
   };
 
   useEffect(() => {
     onTilePlacement(0, 0);
+    rootStore.gameStore.endCurrentTurn();
   }, []);
 
   return (
@@ -55,6 +58,6 @@ const GameBoard = (): ReactElement => {
       </div>
     </>
   );
-};
+});
 
 export default GameBoard;

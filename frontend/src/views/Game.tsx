@@ -10,19 +10,16 @@ import { Link } from 'react-router-dom';
 import { PATH_TO_HOMEPAGE } from '../constants/paths';
 import { openEndGameModal, EndGameModal } from '../components/Modal/EndGameModal';
 import DataStoreContext from '../components/DataStoreContext/DataStoreContext';
-import { drawnTiles } from '../stores/GameStore';
 import { InvalidMoveModal } from '../components/Modal/InvalidMoveModal';
 import { EndTurnModal } from '../components/Modal/EndTurnModal';
 import rootStore from '../stores/RootStore';
+import { observer } from 'mobx-react';
 
-const GamePage: React.FunctionComponent = (): ReactElement => {
+const GamePage: React.FunctionComponent = observer((): ReactElement => {
   const context = useContext(DataStoreContext);
-  const turnNumber = rootStore.gameStore.turnNumber;
+  const drawPileLength = rootStore.gameStore.drawPile.length;
   const [currentPlayer] = useState<number>(0);
-  const [endOfTurn, setEndOfTurn] = useState<boolean>(false);
-  const drawTilesLeft = drawnTiles.length - turnNumber > 0 ? drawnTiles.length - turnNumber : 0;
-  let tilesLeft = drawnTiles.length - turnNumber;
-  if (tilesLeft === 1) {
+  if (drawPileLength === 1) {
     openEndGameModal(); //TODO: game summary view
   }
 
@@ -35,23 +32,23 @@ const GamePage: React.FunctionComponent = (): ReactElement => {
           </Link>
         </div>
         <PlayersInfo players={context?.allPlayersData} currentPlayer={currentPlayer} />
-        <GameTimer isTurnTimerVisible={false} turnLength={60} setEndOfTurn={setEndOfTurn} />
+        <GameTimer isTurnTimerVisible={false} turnLength={60} />
         <div className="w-[300px] mt-6 flex justify-end">
           <Legend />
         </div>
       </div>
       <div className="flex justify-center">
-        <GameBoard endOfTurn={endOfTurn} setEndOfTurn={setEndOfTurn} />
+        <GameBoard />
       </div>
       <div className="flex justify-around p-[10px]">
-        {!endOfTurn && <PlayersHand />}
-        <DrawPile numberOfAvailableTiles={drawTilesLeft} />
+        {<PlayersHand />}
+        <DrawPile numberOfAvailableTiles={drawPileLength} />
       </div>
       <InvalidMoveModal />
       <EndTurnModal />
       <EndGameModal />
     </div>
   );
-};
+});
 
 export default GamePage;

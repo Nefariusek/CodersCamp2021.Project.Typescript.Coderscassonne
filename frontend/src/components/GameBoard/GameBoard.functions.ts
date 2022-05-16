@@ -1,15 +1,14 @@
 import Locations from '../../constants/locations';
 import Tile from '../../model/Tile';
 import { Edges } from '../../model/Tile';
-import { BoardState } from './GameBoard';
 import _ from 'lodash';
-import rootStore from '../../stores/RootStore';
+import rootStore, { boardState } from '../../stores/RootStore';
 import Project from '../../model/Project';
 import TileState from '../../constants/tileState';
 
-export const manageProjects = (row: number, column: number, boardState: BoardState[]) => {
+export const manageProjects = (row: number, column: number) => {
   const existingLocations: Locations[] = [];
-  updateExistingProjects(existingLocations, row, column, boardState);
+  updateExistingProjects(existingLocations, row, column);
   createNewProjects(existingLocations);
   mergeProjects();
 };
@@ -50,18 +49,17 @@ function getProjectsOfType(type: Locations, projects: Project[]) {
   return projects.filter((project) => project.type === type);
 }
 
-function getAdjacentTiles(row: number, column: number, boardState: BoardState[]): Map<keyof Edges, Tile | undefined> {
+function getAdjacentTiles(row: number, column: number): Map<keyof Edges, Tile | undefined> {
   const adjacentTiles = new Map<keyof Edges, Tile | undefined>();
-  adjacentTiles.set('top', getAdjacentTopTile(row, column, boardState));
-  adjacentTiles.set('right', getAdjacentRightTile(row, column, boardState));
-  adjacentTiles.set('bottom', getAdjacentBottomTile(row, column, boardState));
-  adjacentTiles.set('left', getAdjacentLeftTile(row, column, boardState));
+  adjacentTiles.set('top', getAdjacentTopTile(row, column));
+  adjacentTiles.set('right', getAdjacentRightTile(row, column));
+  adjacentTiles.set('bottom', getAdjacentBottomTile(row, column));
+  adjacentTiles.set('left', getAdjacentLeftTile(row, column));
 
   return adjacentTiles;
 }
 
 export function validateTilePlacement(row: number, column: number): boolean {
-  const boardState = rootStore.gameStore.boardState;
   const upperTile = boardState.find((tile) => tile.column === column && tile.row === row - 1);
   if (
     upperTile &&
@@ -100,7 +98,7 @@ export function validateTilePlacement(row: number, column: number): boolean {
   return true;
 }
 
-export const activateAdjacentTiles = (row: number, column: number, boardState: BoardState[]) => {
+export const activateAdjacentTiles = (row: number, column: number) => {
   const upperTile = boardState.find((tile) => tile.column === column && tile.row === row - 1);
   if (upperTile && upperTile.state === TileState.IDLE) {
     upperTile.state = TileState.ACTIVE;
@@ -121,26 +119,25 @@ export const activateAdjacentTiles = (row: number, column: number, boardState: B
     leftTile.state = TileState.ACTIVE;
   }
 };
-//TODO: move boardState to store ...
+
 export const getAdjacentTopTile = (row: number, column: number): Tile | undefined => {
-  const boardState = rootStore.gameStore.boardState;
   return boardState.find((tile) => tile.column === column && tile.row === row - 1)?.tile;
 };
 
-export const getAdjacentBottomTile = (row: number, column: number, boardState: BoardState[]): Tile | undefined => {
+export const getAdjacentBottomTile = (row: number, column: number): Tile | undefined => {
   return boardState.find((tile) => tile.column === column && tile.row === row + 1)?.tile;
 };
 
-export const getAdjacentRightTile = (row: number, column: number, boardState: BoardState[]): Tile | undefined => {
+export const getAdjacentRightTile = (row: number, column: number): Tile | undefined => {
   return boardState.find((tile) => tile.column === column + 1 && tile.row === row)?.tile;
 };
 
-export const getAdjacentLeftTile = (row: number, column: number, boardState: BoardState[]): Tile | undefined => {
+export const getAdjacentLeftTile = (row: number, column: number): Tile | undefined => {
   return boardState.find((tile) => tile.column === column - 1 && tile.row === row)?.tile;
 };
 
-function updateExistingProjects(existingLocations: Locations[], row: number, column: number, boardState: BoardState[]) {
-  const adjacentTiles = getAdjacentTiles(row, column, boardState);
+function updateExistingProjects(existingLocations: Locations[], row: number, column: number) {
+  const adjacentTiles = getAdjacentTiles(row, column);
   adjacentTiles.forEach((adjacentTile, edge) => {
     if (adjacentTile) {
       const adjacentTileProject = rootStore.projectStore.allProjects.find(
@@ -176,7 +173,7 @@ function createNewProjects(existingLocations: Locations[]) {
 
   edges.filter((edge) => !existingLocations.includes(edge)).forEach((edge) => addNewProject(edge, tileInHand));
 }
-export const extendBoard = (row: number, column: number, boardState: BoardState[]) => {
+export const extendBoard = (row: number, column: number) => {
   let bottomRow = _.maxBy(boardState, 'row')!.row;
   let topRow = _.minBy(boardState, 'row')!.row;
   let leftColumn = _.minBy(boardState, 'column')!.column;
@@ -206,5 +203,4 @@ export const extendBoard = (row: number, column: number, boardState: BoardState[
     }
     leftColumn -= 1;
   }
-  rootStore.gameStore.setBoardState([...boardState]); //TODO: sprawdzic?
 };

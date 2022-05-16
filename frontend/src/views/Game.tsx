@@ -34,7 +34,7 @@ const GamePage: React.FunctionComponent = (): ReactElement => {
   return (
     <div style={{ height: '97vh' }}>
       <div
-        className="flex justify-between items-center z-50"
+        className="flex justify-between items-center z-0"
         style={{ height: playersInfoLayoutProportion, maxHeight: playersInfoLayoutProportion, minHeight: '128px' }}
       >
         <div className="flex justify-center">

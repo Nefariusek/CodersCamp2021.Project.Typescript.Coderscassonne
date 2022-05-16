@@ -17,17 +17,18 @@ const HomePage: React.FunctionComponent = (): ReactElement => {
     <div className="flex justify-center mt-30 pt-10">
       <div className="flex flex-col">
         {views.map((view) => (
-          <Button
-            key={view.name}
-            text={view.name}
-            onClick={() => {
-              if (view.url === 'TODO') {
-                openWorkInProgressModal();
-              } else {
-                navigate(view.url);
-              }
-            }}
-          />
+          <div key={view.name} className="my-2">
+            <Button
+              text={view.name}
+              onClick={() => {
+                if (view.url === 'TODO') {
+                  openWorkInProgressModal();
+                } else {
+                  navigate(view.url);
+                }
+              }}
+            />
+          </div>
         ))}
       </div>
     </div>

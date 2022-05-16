@@ -9,14 +9,14 @@ const sizes: BoardSize[] = [4, 8, 16, 32, 64];
 const amounts: TileAmount[] = [16, 32, 64, 128];
 const lengths: TurnLength[] = [5, 10, 15, 30, 60];
 
-interface CustomModeFormProps {
+interface NumberDropdown {
   options: BoardSize[] | TileAmount[] | TurnLength[];
   property: 'Board size' | 'Tile amount' | 'Turn Length';
   value: number;
   setFunction: Dispatch<SetStateAction<number>>;
 }
 
-const CustomModeForm = (props: CustomModeFormProps) => {
+const CustomModeForm = (props: NumberDropdown) => {
   const { options, property, value, setFunction } = props;
 
   const handleOnClick = (e: any) => {

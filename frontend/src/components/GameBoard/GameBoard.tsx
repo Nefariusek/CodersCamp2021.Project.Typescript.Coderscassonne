@@ -151,7 +151,7 @@ const GameBoard = ({ endOfTurn, setEndOfTurn }: GameBoardProps): ReactElement =>
 
   return (
     <>
-      <div id="gameBoard">
+      <div id="gameBoard" style={{ zoom: `${gameBoardAutoScale()}` }}>
         <table>
           <tbody>
             {Object.entries(tilesGroupedByRows)

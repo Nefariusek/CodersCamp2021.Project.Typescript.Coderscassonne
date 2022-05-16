@@ -8,6 +8,7 @@ import {
 } from '../components/GameBoard/GameBoard.functions';
 import GameModeParser from '../components/GameModeParser';
 import { openInvalidMoveModal } from '../components/Modal/InvalidMoveModal';
+import { GamePhases } from '../components/NextPhaseButton/NextPhaseButton';
 import TileState from '../constants/tileState';
 import { JSONData } from '../mocks/mocks';
 import Tile from '../model/Tile';
@@ -18,14 +19,14 @@ class GameStore {
   drawPile: Tile[];
   recentlyPlacedTile: Tile | undefined;
   tileInHand: Tile | undefined;
-  currentPhase: 'tilePlacement' | 'meeplePlacement' | 'scorePhase';
+  currentPhase: GamePhases;
 
   constructor() {
     this.boardState = [{ row: 0, column: 0, state: TileState.ACTIVE }];
     this.tileInHand = GameModeParser(JSONData)[0];
     this.turnNumber = 0;
     this.drawPile = GameModeParser(JSONData);
-    this.currentPhase = 'tilePlacement';
+    this.currentPhase = GamePhases.TILE_PLACEMENT;
     makeAutoObservable(this);
   }
 
@@ -43,11 +44,20 @@ class GameStore {
         manageProjects(row, column);
         this.recentlyPlacedTile = this.tileInHand;
         this.tileInHand = undefined;
-        this.currentPhase = 'meeplePlacement';
+        this.currentPhase = GamePhases.MEEPLE_PLACEMENT;
       } else {
         openInvalidMoveModal();
       }
     }
+  }
+
+  setNextPhase() {
+    if ((this.currentPhase = GamePhases.TILE_PLACEMENT)) {
+      this.currentPhase = GamePhases.MEEPLE_PLACEMENT;
+    } else if ((this.currentPhase = GamePhases.MEEPLE_PLACEMENT)) {
+      this.currentPhase = GamePhases.SCORE_PHASE;
+    }
+    console.log('game store setNextPhase');
   }
 
   placeMeeple() {
@@ -71,6 +81,7 @@ class GameStore {
     this.tileInHand = GameModeParser(JSONData)[0];
     this.turnNumber = 0;
     this.drawPile = GameModeParser(JSONData);
+    this.currentPhase = GamePhases.TILE_PLACEMENT;
   }
 }
 

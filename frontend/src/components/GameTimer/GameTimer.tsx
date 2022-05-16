@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react';
 import { TurnLength } from '../../model/Settings';
-import NextPhaseButton from '../NextPhaseButton/NextPhaseButton';
 
 import TurnTimer from './TurnTimer';
 import rootStore from '../../stores/RootStore';
@@ -31,11 +30,9 @@ const GameTimer = observer((props: GameTimerProps) => {
   const handleTurnEnd = () => {
     rootStore.gameStore.endCurrentTurn();
   };
-
   return (
     <div className="font-ALMENDRA font-bold text-3xl text-DARKTHEME_LIGHT_GREEN_COLOR p-3">
       <div className="flex">
-        <NextPhaseButton />
         <div className="flex-column ml-5 mt-1"></div>
         <p>Turn number: {rootStore.gameStore.turnNumber}</p>
         <p>

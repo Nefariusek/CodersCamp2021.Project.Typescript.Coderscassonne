@@ -14,6 +14,7 @@ import { InvalidMoveModal } from '../components/Modal/InvalidMoveModal';
 import { EndTurnModal } from '../components/Modal/EndTurnModal';
 import rootStore from '../stores/RootStore';
 import { observer } from 'mobx-react';
+import NextPhaseButton from '../components/NextPhaseButton/NextPhaseButton';
 
 const GamePage: React.FunctionComponent = observer((): ReactElement => {
   const context = useContext(DataStoreContext);
@@ -33,6 +34,7 @@ const GamePage: React.FunctionComponent = observer((): ReactElement => {
         </div>
         <PlayersInfo players={context?.allPlayersData} currentPlayer={currentPlayer} />
         <GameTimer isTurnTimerVisible={false} turnLength={60} />
+        <NextPhaseButton />
         <div className="w-[300px] mt-6 flex justify-end">
           <Legend />
         </div>

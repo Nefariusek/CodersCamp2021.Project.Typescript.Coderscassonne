@@ -1,13 +1,12 @@
 /* eslint-disable sort-keys */
 import _ from 'lodash';
-import { ReactElement, useContext, useEffect, useState } from 'react';
+import { ReactElement, useEffect } from 'react';
 
 import TileState from '../../constants/tileState';
 import Tile from '../../model/Tile';
-import DataStoreContext, { drawnTiles } from '../DataStoreContext/DataStoreContext';
 import TileContainer from '../TileContainer/TileContainer';
-import { openInvalidMoveModal } from '../Modal/InvalidMoveModal';
-import { openEndTurnModal } from '../Modal/EndTurnModal';
+import rootStore from '../../stores/RootStore';
+import { observer } from 'mobx-react';
 
 export interface BoardState {
   column: number;
@@ -16,120 +15,20 @@ export interface BoardState {
   tile?: Tile;
 }
 
-export const initialBoardState: BoardState[] = [{ row: 0, column: 0, state: TileState.ACTIVE }];
+const GameBoard = observer((): ReactElement => {
+  const boardState = rootStore.gameStore.boardState;
 
-interface GameBoardProps {
-  endOfTurn: boolean;
-  setEndOfTurn: React.Dispatch<React.SetStateAction<boolean>>;
-}
-
-const GameBoard = ({ endOfTurn, setEndOfTurn }: GameBoardProps): ReactElement => {
-  const [boardState, setBoardState] = useState<BoardState[]>(initialBoardState);
-
-  const { tileInHand } = useContext(DataStoreContext);
   const sortedBoardState = _.orderBy(boardState, ['row', 'column'], ['asc', 'asc']);
   const tilesGroupedByRows = _.groupBy(sortedBoardState, 'row');
 
-  const extendBoard = (row: number, column: number) => {
-    let bottomRow = _.maxBy(boardState, 'row')!.row;
-    let topRow = _.minBy(boardState, 'row')!.row;
-    let leftColumn = _.minBy(boardState, 'column')!.column;
-    let rightColumn = _.maxBy(boardState, 'column')!.column;
-    if (row === bottomRow) {
-      for (let col = leftColumn; col <= rightColumn; col++) {
-        boardState.push({ row: row + 1, column: col, state: TileState.IDLE });
-      }
-      bottomRow += 1;
-    }
-
-    if (row === topRow) {
-      for (let col = leftColumn; col <= rightColumn; col++) {
-        boardState.unshift({ row: row - 1, column: col, state: TileState.IDLE });
-      }
-      topRow -= 1;
-    }
-    if (column === rightColumn) {
-      for (let row = topRow; row <= bottomRow; row++) {
-        boardState.push({ row: row, column: column + 1, state: TileState.IDLE });
-      }
-      rightColumn += 1;
-    }
-    if (column === leftColumn) {
-      for (let row = topRow; row <= bottomRow; row++) {
-        boardState.push({ row: row, column: column - 1, state: TileState.IDLE });
-      }
-      leftColumn -= 1;
-    }
-    setBoardState([...boardState]);
-  };
-
-  const activateAdjacentTiles = (row: number, column: number) => {
-    const upperTile = boardState.find((tile) => tile.column === column && tile.row === row - 1);
-    if (upperTile && upperTile.state === TileState.IDLE) {
-      upperTile.state = TileState.ACTIVE;
-    }
-
-    const lowerTile = boardState.find((tile) => tile.column === column && tile.row === row + 1);
-    if (lowerTile && lowerTile.state === TileState.IDLE) {
-      lowerTile.state = TileState.ACTIVE;
-    }
-
-    const rightTile = boardState.find((tile) => tile.column === column + 1 && tile.row === row);
-    if (rightTile && rightTile.state === TileState.IDLE) {
-      rightTile.state = TileState.ACTIVE;
-    }
-
-    const leftTile = boardState.find((tile) => tile.column === column - 1 && tile.row === row);
-    if (leftTile && leftTile.state === TileState.IDLE) {
-      leftTile.state = TileState.ACTIVE;
-    }
-  };
-
-  const tilePlacementValidator = (row: number, column: number): boolean => {
-    const upperTile = boardState.find((tile) => tile.column === column && tile.row === row - 1);
-    if (upperTile && upperTile.state === TileState.TAKEN && upperTile.tile?.edges.bottom !== tileInHand?.edges.top) {
-      return false;
-    }
-
-    const lowerTile = boardState.find((tile) => tile.column === column && tile.row === row + 1);
-    if (lowerTile && lowerTile.state === TileState.TAKEN && lowerTile.tile?.edges.top !== tileInHand?.edges.bottom) {
-      return false;
-    }
-
-    const rightTile = boardState.find((tile) => tile.column === column + 1 && tile.row === row);
-    if (rightTile && rightTile.state === TileState.TAKEN && rightTile.tile?.edges.left !== tileInHand?.edges.right) {
-      return false;
-    }
-
-    const leftTile = boardState.find((tile) => tile.column === column - 1 && tile.row === row);
-    if (leftTile && leftTile.state === TileState.TAKEN && leftTile.tile?.edges.right !== tileInHand?.edges.left) {
-      return false;
-    }
-    return true;
-  };
-
   const onTilePlacement = (row: number, column: number) => {
-    const tileToChange = boardState.find((tile) => tile.row === row && tile.column === column);
-    if (tileToChange && tileInHand) {
-      if (endOfTurn) {
-        openEndTurnModal();
-      } else {
-        if (tilePlacementValidator(row, column)) {
-          tileToChange.state = TileState.TAKEN;
-          tileToChange.tile = tileInHand;
-          extendBoard(row, column);
-          activateAdjacentTiles(row, column);
-          //TODO: new/update Projects
-          setEndOfTurn(true);
-        } else {
-          openInvalidMoveModal();
-        }
-      }
-    }
+    console.log(`tile placement`);
+    rootStore.gameStore.placeTile(row, column);
   };
 
   useEffect(() => {
     onTilePlacement(0, 0);
+    rootStore.gameStore.endCurrentTurn();
   }, []);
 
   return (
@@ -159,6 +58,6 @@ const GameBoard = ({ endOfTurn, setEndOfTurn }: GameBoardProps): ReactElement =>
       </div>
     </>
   );
-};
+});
 
 export default GameBoard;

@@ -17,6 +17,7 @@ describe('Player model', () => {
     },
     Locations.TAVERN,
     false,
+    'first',
   );
   const testPointsToAdd = 2;
 

@@ -16,6 +16,8 @@ export type Edges = {
 class Tile {
   public edges: Edges;
 
+  public id: string;
+
   public middle: Locations;
 
   public placedBy: Player;
@@ -28,7 +30,8 @@ class Tile {
 
   private readonly originalEdges: Edges;
 
-  constructor(edges: Edges, middle: Locations, isSpecial = false) {
+  constructor(edges: Edges, middle: Locations, isSpecial = false, id: string) {
+    this.id = id;
     this.edges = edges;
     this.middle = middle;
     this.originalEdges = edges;

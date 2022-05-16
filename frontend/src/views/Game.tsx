@@ -1,4 +1,5 @@
 import React, { ReactElement, useContext, useState } from 'react';
+import { MapInteractionCSS } from 'react-map-interaction';
 import PlayersInfo from '../components/PlayersInfo/PlayersInfo';
 import GameTimer from '../components/GameTimer/GameTimer';
 import GameBoard from '../components/GameBoard/GameBoard';
@@ -47,12 +48,18 @@ const GamePage: React.FunctionComponent = (): ReactElement => {
           <Legend />
         </div>
       </div>
+
       <div
         className="flex justify-center items-center"
         style={{ height: gamebordLayoutProportion, maxHeight: gamebordLayoutProportion, overflow: 'auto' }}
       >
-        <GameBoard endOfTurn={endOfTurn} setEndOfTurn={setEndOfTurn} />
+        <MapInteractionCSS minScale={0.5} maxScale={3}>
+          <div className={`flex justify-center items-center w-screen`} style={{ height: gamebordLayoutProportion }}>
+            <GameBoard endOfTurn={endOfTurn} setEndOfTurn={setEndOfTurn} />
+          </div>
+        </MapInteractionCSS>
       </div>
+
       <div
         className="flex justify-around"
         style={{ bottom: 0, height: drawPileLayoutProportion, maxHeight: drawPileLayoutProportion }}

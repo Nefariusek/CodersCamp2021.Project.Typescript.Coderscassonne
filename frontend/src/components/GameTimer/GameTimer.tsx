@@ -1,11 +1,10 @@
 import { useEffect, useState, useContext } from 'react';
-import Button from '../Button/Button';
 
 import { TurnLength } from '../../model/Settings';
 import DataStoreContext from '../DataStoreContext/DataStoreContext';
+import NextPhaseButton from '../NextPhaseButton/NextPhaseButton';
 import TurnTimer from './TurnTimer';
 
-const END_TURN_LABEL = 'End your turn';
 interface GameTimerProps {
   isTurnTimerVisible: boolean;
   turnLength: TurnLength;
@@ -30,22 +29,26 @@ const GameTimer = (props: GameTimerProps) => {
     return () => clearInterval(interval);
   }, [seconds, minutes]);
 
-  const handleTurnEnd = () => {
-    if (context.setTurnNumber) {
-      context.setTurnNumber((turnNumber) => turnNumber + 1);
-    }
-    props.setEndOfTurn(false);
-  };
+  // const handleTurnEnd = () => {
+  //   if (context.setTurnNumber) {
+  //     context.setTurnNumber((turnNumber) => turnNumber + 1);
+  //   }
+  //   props.setEndOfTurn(false);
+  // };
 
   return (
-    <div className="font-ALMENDRA font-bold text-3xl text-DARKTHEME_LIGHT_GREEN_COLOR p-3">
-      <p>Turn number: {context.turnNumber}</p>
-      <Button text={END_TURN_LABEL} onClick={handleTurnEnd} colorVariant="light" />
-
-      <p>
-        Game time: {minutes}:{seconds > 9 ? seconds : `0${seconds}`}
-      </p>
-      {isTurnTimerVisible && <TurnTimer turnLength={turnLength} />}
+    <div className="font-ALMENDRA font-bold text-3xl w-max text-DARKTHEME_LIGHT_GREEN_COLOR p-3">
+      <div className="flex">
+        <NextPhaseButton />
+        <div className="flex-column ml-5 mt-1">
+          <p>Turn number: {context.turnNumber}</p>
+          <p>
+            Game time: {minutes}:{seconds > 9 ? seconds : `0${seconds}`}
+          </p>
+          {isTurnTimerVisible && <TurnTimer turnLength={turnLength} />}
+        </div>
+      </div>
+      <div className="flex"></div>
     </div>
   );
 };

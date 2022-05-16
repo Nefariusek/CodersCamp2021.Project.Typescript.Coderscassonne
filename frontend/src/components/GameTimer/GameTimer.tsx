@@ -1,19 +1,18 @@
-import { useEffect, useState, useContext } from 'react';
+import { useEffect, useState } from 'react';
 import Button from '../Button/Button';
 
 import { TurnLength } from '../../model/Settings';
-import DataStoreContext from '../DataStoreContext/DataStoreContext';
 import TurnTimer from './TurnTimer';
+import rootStore from '../../stores/RootStore';
+import { observer } from 'mobx-react';
 
 const END_TURN_LABEL = 'End your turn';
 interface GameTimerProps {
   isTurnTimerVisible: boolean;
   turnLength: TurnLength;
-  setEndOfTurn: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-const GameTimer = (props: GameTimerProps) => {
-  const context = useContext(DataStoreContext);
+const GameTimer = observer((props: GameTimerProps) => {
   const [seconds, setSeconds] = useState(0);
   const [minutes, setMinutes] = useState(0);
   const { isTurnTimerVisible, turnLength } = props;
@@ -31,15 +30,12 @@ const GameTimer = (props: GameTimerProps) => {
   }, [seconds, minutes]);
 
   const handleTurnEnd = () => {
-    if (context.setTurnNumber) {
-      context.setTurnNumber((turnNumber) => turnNumber + 1);
-    }
-    props.setEndOfTurn(false);
+    rootStore.gameStore.endCurrentTurn();
   };
 
   return (
     <div className="font-ALMENDRA font-bold text-2xl text-DARKTHEME_LIGHT_GREEN_COLOR">
-      <p>Turn number: {context.turnNumber}</p>
+      <p>Turn number: {rootStore.gameStore.turnNumber}</p>
       <Button text={END_TURN_LABEL} onClick={handleTurnEnd} colorVariant="light" />
 
       <p>
@@ -48,6 +44,6 @@ const GameTimer = (props: GameTimerProps) => {
       {isTurnTimerVisible && <TurnTimer turnLength={turnLength} />}
     </div>
   );
-};
+});
 
 export default GameTimer;

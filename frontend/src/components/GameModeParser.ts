@@ -12,7 +12,7 @@ const GameModeParser = (jsonData: TileType[]): Tile[] => {
   jsonData.toString();
   jsonData.forEach((element) => {
     const { edges, middle, isSpecial } = element;
-    const tile = new Tile(edges, middle, isSpecial);
+    const tile = new Tile(edges, middle, isSpecial, 'first');
     tileArray.push(tile);
   });
   return tileArray;

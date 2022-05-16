@@ -1,7 +1,5 @@
 import { makeAutoObservable } from 'mobx';
-import { BoardState } from '../components/GameBoard/GameBoard';
 import Locations from '../constants/locations';
-import TileState from '../constants/tileState';
 import Project from '../model/Project';
 import Tile from '../model/Tile';
 import type { RootStore } from './RootStore';
@@ -15,8 +13,8 @@ class ProjectStore {
     makeAutoObservable(this);
   }
 
-  addNewProject(tile: Tile, location: Locations) {
-    const newProject = new Project(tile, location);
+  addNewProject(location: Locations, tile?: Tile) {
+    const newProject = new Project(location, tile); //TODO: change tile <=> location after change of arguments order
     this.allProjects.push(newProject);
 
     return newProject;

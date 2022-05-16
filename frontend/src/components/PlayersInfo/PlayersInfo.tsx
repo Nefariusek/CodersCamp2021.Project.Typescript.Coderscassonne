@@ -1,6 +1,6 @@
-import { useContext } from 'react';
+import { observer } from 'mobx-react';
 import Player from '../../model/Player';
-import DataStoreContext from '../DataStoreContext/DataStoreContext';
+import rootStore from '../../stores/RootStore';
 
 interface PlayersInfoProps {
   players: Player[] | undefined;
@@ -39,8 +39,8 @@ const PlayersInfoItem = ({ player, isCurrent }: PlayersInfoItemProps) => {
   );
 };
 
-const PlayersInfo = ({ players }: PlayersInfoProps) => {
-  const { turnNumber } = useContext(DataStoreContext);
+const PlayersInfo = observer(({ players }: PlayersInfoProps) => {
+  const turnNumber = rootStore.gameStore.turnNumber;
   return (
     <div className="flex items-center bg-DARKTHEME_BACKGROUND_COLOR">
       {players &&
@@ -49,6 +49,6 @@ const PlayersInfo = ({ players }: PlayersInfoProps) => {
         ))}
     </div>
   );
-};
+});
 
 export default PlayersInfo;

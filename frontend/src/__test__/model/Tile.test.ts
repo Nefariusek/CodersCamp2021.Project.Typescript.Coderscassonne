@@ -11,6 +11,7 @@ test('new Tile is created', () => {
     },
     Locations.TAVERN,
     false,
+    'first',
   );
   expect(newTile.edges.left).toBe(Locations.FIELD);
   expect(newTile.edges.right).toBe(Locations.MONASTERY);
@@ -30,6 +31,7 @@ test('Tile is rotated left', () => {
     },
     Locations.FIELD,
     false,
+    'first',
   );
   newTile.rotateLeft();
   expect(newTile.edges.left).toBe(Locations.ROAD);
@@ -48,6 +50,7 @@ test('Tile is rotated right', () => {
     },
     Locations.FIELD,
     false,
+    'first',
   );
   newTile.rotateRight();
   expect(newTile.edges.left).toBe(Locations.CITY);

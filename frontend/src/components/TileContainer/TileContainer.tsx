@@ -33,12 +33,12 @@ const TileContainer = observer((props: TileInterface): ReactElement => {
       {initialState === TileState.TAKEN && (
         <img
           id="taken"
-          src={tile!.getTileImageSource()}
+          src={tile?.getTileImageSource()}
           alt={TileState.TAKEN}
           className={`hover: cursor-not-allowed
-      ${tile!.rotation === 90 ? 'rotate-90' : ''}
-      ${tile!.rotation === 180 ? 'rotate-180' : ''}
-      ${tile!.rotation === 270 ? 'rotate-270' : ''}`}
+      ${tile?.rotation === 90 ? 'rotate-90' : ''}
+      ${tile?.rotation === 180 ? 'rotate-180' : ''}
+      ${tile?.rotation === 270 ? 'rotate-270' : ''}`}
         />
       )}
     </div>

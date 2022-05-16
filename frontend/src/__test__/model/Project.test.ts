@@ -13,10 +13,11 @@ const tile = new Tile(
   },
   Locations.FIELD,
   false,
+  'first',
 );
 let city: Project;
 if (meeple) {
-  city = new Project(tile, Locations.CITY);
+  city = new Project(Locations.CITY, tile);
   city.meeples.push(meeple);
 }
 
@@ -48,6 +49,7 @@ test('Score is calculated correctly', () => {
     },
     Locations.FIELD,
     false,
+    'first',
   );
   city.tiles.push(tile1);
   const tile2 = new Tile(
@@ -59,6 +61,7 @@ test('Score is calculated correctly', () => {
     },
     Locations.FIELD,
     true,
+    'second',
   );
   city.tiles.push(tile2);
   expect(city.getCurrentScore()).toBe(4);

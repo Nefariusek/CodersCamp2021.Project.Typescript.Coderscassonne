@@ -3,7 +3,7 @@ import { createContext, useMemo, useState } from 'react';
 import type Player from '../../model/Player';
 import type Settings from '../../model/Settings';
 
-interface DataStoreContextInterface {
+export interface DataStoreContextInterface {
   playersData: Player | null;
   setPlayersData?: React.Dispatch<React.SetStateAction<Player | null>>;
   gameSettings: Settings | null;

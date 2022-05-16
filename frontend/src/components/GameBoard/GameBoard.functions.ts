@@ -60,7 +60,8 @@ function getAdjacentTiles(row: number, column: number, boardState: BoardState[])
   return adjacentTiles;
 }
 
-export const tilePlacementValidator = (row: number, column: number, boardState: BoardState[]): boolean => {
+export function validateTilePlacement(row: number, column: number): boolean {
+  const boardState = rootStore.gameStore.boardState;
   const upperTile = boardState.find((tile) => tile.column === column && tile.row === row - 1);
   if (
     upperTile &&
@@ -97,7 +98,7 @@ export const tilePlacementValidator = (row: number, column: number, boardState: 
     return false;
   }
   return true;
-};
+}
 
 export const activateAdjacentTiles = (row: number, column: number, boardState: BoardState[]) => {
   const upperTile = boardState.find((tile) => tile.column === column && tile.row === row - 1);
@@ -120,8 +121,9 @@ export const activateAdjacentTiles = (row: number, column: number, boardState: B
     leftTile.state = TileState.ACTIVE;
   }
 };
-
-export const getAdjacentTopTile = (row: number, column: number, boardState: BoardState[]): Tile | undefined => {
+//TODO: move boardState to store ...
+export const getAdjacentTopTile = (row: number, column: number): Tile | undefined => {
+  const boardState = rootStore.gameStore.boardState;
   return boardState.find((tile) => tile.column === column && tile.row === row - 1)?.tile;
 };
 

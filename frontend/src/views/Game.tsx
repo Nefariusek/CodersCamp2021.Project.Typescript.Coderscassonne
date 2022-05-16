@@ -22,8 +22,8 @@ const GamePage: React.FunctionComponent = (): ReactElement => {
   const [endOfTurn, setEndOfTurn] = useState<boolean>(false);
   const drawTilesLeft = drawnTiles.length - turnNumber > 0 ? drawnTiles.length - turnNumber : 0;
   let tilesLeft = drawnTiles.length - turnNumber;
-  if (tilesLeft == 1) {
-    openEndGameModal();
+  if (tilesLeft === 1) {
+    openEndGameModal(); //TODO: game summary view
   }
 
   return (

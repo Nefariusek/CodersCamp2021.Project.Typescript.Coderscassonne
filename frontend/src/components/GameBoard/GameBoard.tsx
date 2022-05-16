@@ -5,12 +5,8 @@ import { ReactElement, useEffect } from 'react';
 import TileState from '../../constants/tileState';
 import Tile from '../../model/Tile';
 import TileContainer from '../TileContainer/TileContainer';
-import { openInvalidMoveModal } from '../Modal/InvalidMoveModal';
-import { openEndTurnModal } from '../Modal/EndTurnModal';
-import { manageProjects } from './GameBoard.functions';
 import rootStore from '../../stores/RootStore';
 
-import { tilePlacementValidator, activateAdjacentTiles, extendBoard } from './GameBoard.functions';
 export interface BoardState {
   column: number;
   row: number;
@@ -18,36 +14,14 @@ export interface BoardState {
   tile?: Tile;
 }
 
-interface GameBoardProps {
-  endOfTurn: boolean;
-  setEndOfTurn: React.Dispatch<React.SetStateAction<boolean>>;
-}
-
-const GameBoard = ({ endOfTurn, setEndOfTurn }: GameBoardProps): ReactElement => {
+const GameBoard = (): ReactElement => {
   const boardState = rootStore.gameStore.boardState;
-  const tileInHand = rootStore.gameStore.tileInHand;
 
   const sortedBoardState = _.orderBy(boardState, ['row', 'column'], ['asc', 'asc']);
   const tilesGroupedByRows = _.groupBy(sortedBoardState, 'row');
 
   const onTilePlacement = (row: number, column: number) => {
-    const tileToChange = boardState.find((tile) => tile.row === row && tile.column === column);
-    if (tileToChange && tileInHand) {
-      if (endOfTurn) {
-        openEndTurnModal();
-      } else {
-        if (tilePlacementValidator(row, column, boardState)) {
-          tileToChange.state = TileState.TAKEN;
-          tileToChange.tile = tileInHand;
-          extendBoard(row, column, boardState);
-          activateAdjacentTiles(row, column, boardState);
-          manageProjects(row, column, boardState);
-          setEndOfTurn(true);
-        } else {
-          openInvalidMoveModal();
-        }
-      }
-    }
+    rootStore.gameStore.placeTile(row, column);
   };
 
   useEffect(() => {

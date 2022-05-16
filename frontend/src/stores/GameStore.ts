@@ -18,12 +18,14 @@ class GameStore {
   drawPile: Tile[];
   recentlyPlacedTile: Tile | undefined;
   tileInHand: Tile | undefined;
+  currentPhase: 'tilePlacement' | 'meeplePlacement' | 'scorePhase';
 
   constructor() {
     this.boardState = [{ row: 0, column: 0, state: TileState.ACTIVE }];
     this.tileInHand = GameModeParser(JSONData)[0];
     this.turnNumber = 0;
     this.drawPile = GameModeParser(JSONData);
+    this.currentPhase = 'tilePlacement';
     makeAutoObservable(this);
   }
 
@@ -41,10 +43,15 @@ class GameStore {
         manageProjects(row, column);
         this.recentlyPlacedTile = this.tileInHand;
         this.tileInHand = undefined;
+        this.currentPhase = 'meeplePlacement';
       } else {
         openInvalidMoveModal();
       }
     }
+  }
+
+  placeMeeple() {
+    console.log('placeMeeple');
   }
 
   increaseTurnNumber() {

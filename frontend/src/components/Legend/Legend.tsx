@@ -70,6 +70,10 @@ const Legend: React.FunctionComponent = (): ReactElement => {
               description="Scores like monastery"
               imgURL="./Elements/Tiles/Monastery/Garden.png"
             />
+            <Description
+              name="Zoom and move gameboard"
+              description="You can zoom and move your gameboard (pinch/wheel scroll to zoom, drag to pan)"
+            />
           </div>
         </div>
       )}

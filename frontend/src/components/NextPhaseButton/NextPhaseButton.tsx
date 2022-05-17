@@ -1,7 +1,8 @@
 import rootStore from '../../stores/RootStore';
 import Button from '../Button/Button';
+import { observer } from 'mobx-react';
 
-const NEXT_PHASE_LABEL = 'Next phase';
+let buttonLabel = 'Next phase';
 
 export enum GamePhases {
   TILE_PLACEMENT = 1,
@@ -9,21 +10,24 @@ export enum GamePhases {
   SCORE_PHASE,
 }
 
-export const NextPhaseButton = () => {
+export const NextPhaseButton = observer(() => {
   const currentPhase = rootStore.gameStore.currentPhase;
   const numbers = [1, 2, 3];
-  console.log(currentPhase);
   const handleNextPhase = () => {
     rootStore.gameStore.setNextPhase();
-    console.log(currentPhase);
-    console.log('nextPhaseButton');
+    if (currentPhase === 2) {
+      buttonLabel = 'End turn';
+    } else {
+      buttonLabel = 'Next phase';
+    }
   };
-  const active = 'rounded-full mt-1 mr-3 border-2 border-solid bg-DARKTHEME_LIGHT_GREEN_COLOR h-8 w-8';
+  const active =
+    'rounded-full mt-1 mr-3 border-2 border-solid border-DARKTHEME_LIGHT_GREEN_COLOR bg-DARKTHEME_LIGHT_GREEN_COLOR h-8 w-8';
   const inactive = 'rounded-full mt-1 mr-3 border-2 border-solid border-DARKTHEME_LIGHT_GREEN_COLOR h-8 w-8';
 
   return (
-    <div className="flex flex-col">
-      <Button text={NEXT_PHASE_LABEL} colorVariant="light" onClick={handleNextPhase} />
+    <div className="flex flex-col mt-2">
+      <Button text={buttonLabel} colorVariant="light" onClick={handleNextPhase} />
       <div className="flex">
         {numbers.map((number) => (
           <div key={number} className={currentPhase >= number ? active : inactive} />
@@ -31,6 +35,6 @@ export const NextPhaseButton = () => {
       </div>
     </div>
   );
-};
+});
 
 export default NextPhaseButton;

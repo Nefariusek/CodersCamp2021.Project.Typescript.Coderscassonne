@@ -27,17 +27,15 @@ const GameTimer = observer((props: GameTimerProps) => {
     return () => clearInterval(interval);
   }, [seconds, minutes]);
 
-  const handleTurnEnd = () => {
-    rootStore.gameStore.endCurrentTurn();
-  };
   return (
     <div className="font-ALMENDRA font-bold text-3xl text-DARKTHEME_LIGHT_GREEN_COLOR p-3">
       <div className="flex">
-        <div className="flex-column ml-5 mt-1"></div>
-        <p>Turn number: {rootStore.gameStore.turnNumber}</p>
-        <p>
-          Game time: {minutes}:{seconds > 9 ? seconds : `0${seconds}`}
-        </p>
+        <div className="flex-column ml-5 mt-1">
+          <p>Turn number: {rootStore.gameStore.turnNumber}</p>
+          <p>
+            Game time: {minutes}:{seconds > 9 ? seconds : `0${seconds}`}
+          </p>
+        </div>
         {isTurnTimerVisible && <TurnTimer turnLength={turnLength} />}
       </div>
     </div>

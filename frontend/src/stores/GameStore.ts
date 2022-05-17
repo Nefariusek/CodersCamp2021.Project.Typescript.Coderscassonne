@@ -44,7 +44,9 @@ class GameStore {
         manageProjects(row, column);
         this.recentlyPlacedTile = this.tileInHand;
         this.tileInHand = undefined;
-        this.currentPhase = GamePhases.MEEPLE_PLACEMENT;
+        if (this.boardState.length > 9) {
+          this.currentPhase = GamePhases.MEEPLE_PLACEMENT;
+        }
       } else {
         openInvalidMoveModal();
       }
@@ -52,12 +54,14 @@ class GameStore {
   }
 
   setNextPhase() {
-    if ((this.currentPhase = GamePhases.TILE_PLACEMENT)) {
+    if (this.currentPhase === GamePhases.TILE_PLACEMENT) {
       this.currentPhase = GamePhases.MEEPLE_PLACEMENT;
-    } else if ((this.currentPhase = GamePhases.MEEPLE_PLACEMENT)) {
+    } else if (this.currentPhase === GamePhases.MEEPLE_PLACEMENT) {
       this.currentPhase = GamePhases.SCORE_PHASE;
+    } else if (this.currentPhase === GamePhases.SCORE_PHASE) {
+      this.endCurrentTurn();
+      this.currentPhase = GamePhases.TILE_PLACEMENT;
     }
-    console.log('game store setNextPhase');
   }
 
   placeMeeple() {

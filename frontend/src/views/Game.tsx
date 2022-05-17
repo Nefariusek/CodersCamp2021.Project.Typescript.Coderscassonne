@@ -33,8 +33,8 @@ const GamePage: React.FunctionComponent = observer((): ReactElement => {
           </Link>
         </div>
         <PlayersInfo players={context?.allPlayersData} currentPlayer={currentPlayer} />
-        <GameTimer isTurnTimerVisible={false} turnLength={60} />
         <NextPhaseButton />
+        <GameTimer isTurnTimerVisible={false} turnLength={60} />
         <div className="w-[300px] mt-6 flex justify-end">
           <Legend />
         </div>

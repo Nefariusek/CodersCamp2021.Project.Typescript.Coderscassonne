@@ -1,4 +1,5 @@
 import React, { ReactElement, useContext, useState } from 'react';
+// @ts-ignore
 import { MapInteractionCSS } from 'react-map-interaction';
 import PlayersInfo from '../components/PlayersInfo/PlayersInfo';
 import GameTimer from '../components/GameTimer/GameTimer';

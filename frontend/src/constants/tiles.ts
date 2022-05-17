@@ -5,7 +5,7 @@ type PredefinedTile = {
   imageSource: string;
   top: Locations;
   left: Locations;
-  middle: Locations;
+  middle: Locations | Locations[];
   right: Locations;
   bottom: Locations;
   name: string;
@@ -37,7 +37,7 @@ export const PREDEFINED_TILES: PredefinedTile[] = [
     imageSource: './Elements/Tiles/Joiners/Joiner_3.png', // image
     top: Locations.CITY,
     left: Locations.CITY,
-    middle: Locations.CITY,
+    middle: [Locations.CITY, Locations.ROAD],
     right: Locations.ROAD,
     bottom: Locations.ROAD,
     isSpecial: false,

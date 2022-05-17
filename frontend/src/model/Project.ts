@@ -3,7 +3,7 @@ import Locations from '../constants/locations';
 import Meeple from './Meeple';
 import Player from './Player';
 import Tile from './Tile';
-
+import { makeAutoObservable } from 'mobx';
 class Project {
   public meeples: Meeple[];
 
@@ -13,11 +13,12 @@ class Project {
 
   public isFinished: boolean;
 
-  constructor(tile: Tile, type: Locations) {
+  constructor(type: Locations, tile?: Tile) {
     this.meeples = [];
-    this.tiles = [tile];
+    this.tiles = tile ? [tile] : [];
     this.type = type;
     this.isFinished = false;
+    makeAutoObservable(this);
   }
 
   public get owner(): Player {

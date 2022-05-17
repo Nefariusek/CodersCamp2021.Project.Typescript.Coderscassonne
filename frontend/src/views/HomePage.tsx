@@ -33,26 +33,27 @@ const HomePage: React.FunctionComponent = observer((): ReactElement => {
         />
 
         {views.map((view) => (
-          <Button
-            key={view.name}
-            text={view.name}
-            onClick={async () => {
-              if (view.url === 'TODO') {
-                openWorkInProgressModal();
-              } else {
-                if (rootStore.isDevelopmentMode && view.url === PATH_TO_CREATE_PLAYERS) {
-                  initDevelopmentPreset(context);
-                  await rootStore.gameStore.initGameStore();
-                  navigate(PATH_TO_GAMEPAGE);
-                } else if (view.url === PATH_TO_CREATE_PLAYERS) {
-                  await rootStore.gameStore.initGameStore();
-                  navigate(PATH_TO_GAMEPAGE);
+          <div key={view.name} className="my-2">
+            <Button
+              text={view.name}
+              onClick={async () => {
+                if (view.url === 'TODO') {
+                  openWorkInProgressModal();
                 } else {
-                  navigate(view.url);
+                  if (rootStore.isDevelopmentMode && view.url === PATH_TO_CREATE_PLAYERS) {
+                    initDevelopmentPreset(context);
+                    await rootStore.gameStore.initGameStore();
+                    navigate(PATH_TO_GAMEPAGE);
+                  } else if (view.url === PATH_TO_CREATE_PLAYERS) {
+                    await rootStore.gameStore.initGameStore();
+                    navigate(PATH_TO_GAMEPAGE);
+                  } else {
+                    navigate(view.url);
+                  }
                 }
-              }
-            }}
-          />
+              }}
+            />
+          </div>
         ))}
       </div>
     </div>

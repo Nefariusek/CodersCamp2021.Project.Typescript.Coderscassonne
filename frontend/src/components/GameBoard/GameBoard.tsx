@@ -1,10 +1,11 @@
 /* eslint-disable sort-keys */
 import _ from 'lodash';
-import { ReactElement, useEffect } from 'react';
+import { ReactElement, useEffect, useState } from 'react';
 
 import TileState from '../../constants/tileState';
 import Tile from '../../model/Tile';
 import TileContainer from '../TileContainer/TileContainer';
+import { GAMEBOARD_LAYOUT_PROPORTION, TILE_SIZE } from '../../constants/gameDefaults';
 import rootStore from '../../stores/RootStore';
 import { observer } from 'mobx-react';
 
@@ -26,14 +27,30 @@ const GameBoard = observer((): ReactElement => {
     rootStore.gameStore.placeTile(row, column);
   };
 
+  const [windowHeight, setWindowHeight] = useState(window.innerHeight);
+
+  useEffect(() => {
+    window.addEventListener('resize', () => setWindowHeight(window.innerHeight));
+  }, []);
+
   useEffect(() => {
     onTilePlacement(0, 0);
     rootStore.gameStore.endCurrentTurn();
   }, []);
 
+  function gameBoardAutoScale(): number {
+    const rowsCount = Object.entries(tilesGroupedByRows).length;
+    const gameBoardWindowHeight = GAMEBOARD_LAYOUT_PROPORTION * windowHeight;
+    const gameBoardHeight = TILE_SIZE * rowsCount;
+
+    const scale = gameBoardWindowHeight / gameBoardHeight - 0.05 + 0.005 * (rowsCount - 3);
+
+    return scale;
+  }
+
   return (
     <>
-      <div id="gameBoard">
+      <div id="gameBoard" style={{ zoom: `${gameBoardAutoScale()}` }}>
         <table>
           <tbody>
             {Object.entries(tilesGroupedByRows)

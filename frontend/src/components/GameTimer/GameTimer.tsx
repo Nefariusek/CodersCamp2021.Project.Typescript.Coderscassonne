@@ -34,7 +34,7 @@ const GameTimer = observer((props: GameTimerProps) => {
   };
 
   return (
-    <div className="font-ALMENDRA font-bold text-3xl text-DARKTHEME_LIGHT_GREEN_COLOR p-3">
+    <div className="font-ALMENDRA font-bold text-2xl text-DARKTHEME_LIGHT_GREEN_COLOR">
       <p>Turn number: {rootStore.gameStore.turnNumber}</p>
       <Button text={END_TURN_LABEL} onClick={handleTurnEnd} colorVariant="light" />
 

@@ -1,8 +1,9 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import Button from '../Button/Button';
 import Technologies from '../../constants/technologies';
+import Tooltip from '../Tooltip/Tooltip';
 
 interface CreatePlayerProps {
   availableTechnologies: Technologies[];
@@ -13,25 +14,32 @@ interface CreatePlayerProps {
 const CreatePlayer = ({ availableTechnologies, playersNames, addPlayer }: CreatePlayerProps) => {
   const [playerName, setPlayerName] = useState('');
   const [playerMeeple, setPlayerMeeple] = useState<Technologies>();
+  const [errorMessage, setErrorMessage] = useState("Choose the player's name and choose a meeple");
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
+  useEffect(() => {
+    setErrorMessage('');
+
     if (!playerName) {
-      alert('Choose player name!');
+      setErrorMessage("Choose player's name!");
       return;
     }
     if (playerName.length < 3 || playerName.length > 12) {
-      alert('Choose name between 3 and 12 characters long!');
+      setErrorMessage('Choose name between 3 and 12 characters long!');
       return;
     }
     if (playersNames.includes(playerName)) {
-      alert('Name is taken! Choose different one!');
+      setErrorMessage('Name is taken! Choose different one!');
       return;
     }
     if (!playerMeeple) {
-      alert('Choose meeple!');
+      setErrorMessage('Choose a meeple!');
       return;
     }
+  }, [playerName, playerMeeple]);
+
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    if (!playerName || !playerMeeple) return;
     addPlayer(playerName, playerMeeple);
     setPlayerName('');
     const radio: HTMLInputElement | null = document.querySelector('input[type=radio]:checked');
@@ -54,6 +62,7 @@ const CreatePlayer = ({ availableTechnologies, playersNames, addPlayer }: Create
           onChange={(e: React.FormEvent<HTMLInputElement>) => {
             setPlayerName(e.currentTarget.value);
           }}
+          autoFocus
         />
         <p className="font-ALMENDRA font-bold text-DARKTHEME_LIGHT_GREEN_COLOR p-3">Player Name</p>
       </div>
@@ -82,7 +91,9 @@ const CreatePlayer = ({ availableTechnologies, playersNames, addPlayer }: Create
       </div>
 
       <div className="m-10">
-        <Button type="submit" text="Add Player" colorVariant="light" />
+        <Tooltip message={errorMessage}>
+          <Button type="submit" text="Add Player" colorVariant="light" disabled={!!errorMessage} />
+        </Tooltip>
       </div>
     </form>
   );

@@ -12,12 +12,14 @@ export const AppHeaderSection: FC = () => (
       <div className="absolute top-5 right-7 ">
         <img src={SETTINGS_ICON_SOURCE} onClick={openWorkInProgressModal} alt="titile_tile" className="w-30 h-30" />
       </div>
-      <div className="absolute">
-        <img src={TILE_TITLE_SOURCE} alt="title_tile" className="w-30 h-30" />
-      </div>
-      <div className="font-ALMENDRA text-DARKTHEME_LIGHT_GREEN_COLOR font-regular mt-1 text-9xl ml-3 select-none">
-        <Link to={PATH_TO_HOMEPAGE}>{APPLICATION_TITLE}</Link>
-      </div>
+      <Link to={PATH_TO_HOMEPAGE}>
+        <div className="absolute">
+          <img src={TILE_TITLE_SOURCE} alt="title_tile" className="w-30 h-30" />
+        </div>
+        <div className="font-ALMENDRA text-DARKTHEME_LIGHT_GREEN_COLOR font-regular mt-1 text-9xl ml-3 select-none">
+          {APPLICATION_TITLE}
+        </div>
+      </Link>
     </div>
   </div>
 );

@@ -21,7 +21,7 @@ export const Modal = (props: ModalProps): React.ReactElement => {
   let eventText, closeText;
   switch (eventType) {
     case 'endGame':
-      eventText = 'The game ends here. More in module No. 5';
+      eventText = 'End of the game!';
       closeText = 'Play new game';
       break;
     case 'endTurn':

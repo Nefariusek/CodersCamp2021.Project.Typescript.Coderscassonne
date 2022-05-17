@@ -45,7 +45,7 @@ class GameStore {
         this.recentlyPlacedTile = this.tileInHand;
         this.tileInHand = undefined;
         if (this.boardState.length > 9) {
-          this.currentPhase = GamePhases.MEEPLE_PLACEMENT;
+          this.setNextPhase();
         }
       } else {
         openInvalidMoveModal();

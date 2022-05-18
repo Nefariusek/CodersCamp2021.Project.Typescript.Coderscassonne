@@ -1,7 +1,7 @@
 import { makeAutoObservable } from 'mobx';
 
 import Locations from '../constants/locations';
-import { PREDEFINED_TILES } from '../constants/tiles';
+import { PREDEFINED_TILE_IMAGES } from '../constants/tileImages';
 import type Player from './Player';
 
 export type Rotation = 0 | 90 | 180 | 270;
@@ -72,8 +72,18 @@ class Tile {
     };
   }
 
-  public getTileImageSource(): string | undefined {
-    const foundTile = PREDEFINED_TILES.find(
+  public getTileImageSourceById(): string | undefined {
+    const splitIdArray = this.id.split('_');
+    const tileImageId = splitIdArray[0];
+    const foundTile = PREDEFINED_TILE_IMAGES.find((tileImage) => tileImage.id === tileImageId);
+    if (foundTile) {
+      return foundTile.imageSource;
+    }
+    return undefined;
+  }
+
+  public getTileImageSourceByLocations(): string | undefined {
+    const foundTile = PREDEFINED_TILE_IMAGES.find(
       (tile) =>
         tile.middle === this.middle &&
         tile.bottom === this.originalEdges.bottom &&

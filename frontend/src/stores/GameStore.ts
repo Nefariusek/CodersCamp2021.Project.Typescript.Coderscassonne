@@ -9,7 +9,7 @@ import {
 import GameModeParser from '../components/GameModeParser';
 import { openInvalidMoveModal } from '../components/Modal/InvalidMoveModal';
 import TileState from '../constants/tileState';
-import { JSONData } from '../mocks/mocks';
+import { JSONData } from '../mocks/mocksTiles';
 import Tile from '../model/Tile';
 
 class GameStore {

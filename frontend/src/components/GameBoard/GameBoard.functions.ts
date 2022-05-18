@@ -209,9 +209,9 @@ export const placeMeeple = (location: Locations, tile: Tile) => {
   const currentPlayer = rootStore.playersStore.getCurrentPlayer()!;
   const availableProjects = rootStore.projectStore.getAvailableProjects(tile);
   if (currentPlayer.getMeepleCount() > 0 && availableProjects) {
-    const meeple = currentPlayer.getMeeple();
+    const meeple = currentPlayer.getMeeple()!;
     const projectOfLocation = availableProjects.find((p: Project) => p.type === location);
-    if (meeple && projectOfLocation) {
+    if (projectOfLocation) {
       projectOfLocation.meeples.push(meeple);
     }
   } else if (availableProjects) {

@@ -19,7 +19,8 @@ import rootStore from '../stores/RootStore';
 import { observer } from 'mobx-react';
 
 const GamePage: React.FunctionComponent = observer((): ReactElement => {
-  const context = useContext(DataStoreContext);
+  //const context = useContext(DataStoreContext);
+  const players = rootStore.playersStore.players;
   const drawPileLength = rootStore.gameStore.drawPile.length;
   const [currentPlayer] = useState<number>(0);
 
@@ -42,7 +43,7 @@ const GamePage: React.FunctionComponent = observer((): ReactElement => {
             <img src={MENU_TITLE_SOURCE} alt="title_tile" className="w-30 h-30" />
           </Link>
         </div>
-        <PlayersInfo players={context?.allPlayersData} currentPlayer={currentPlayer} />
+        <PlayersInfo players={players} currentPlayer={currentPlayer} />
         <GameTimer isTurnTimerVisible={false} turnLength={60} />
         <div className="flex justify-end">
           <Legend />

@@ -8,6 +8,7 @@ import TileContainer from '../TileContainer/TileContainer';
 import { GAMEBOARD_LAYOUT_PROPORTION, TILE_SIZE } from '../../constants/gameDefaults';
 import rootStore from '../../stores/RootStore';
 import { observer } from 'mobx-react';
+import DropDown from '../DropDown/DropDown';
 
 export interface BoardState {
   column: number;
@@ -73,6 +74,7 @@ const GameBoard = observer((): ReactElement => {
           </tbody>
         </table>
       </div>
+      <DropDown />
     </>
   );
 });

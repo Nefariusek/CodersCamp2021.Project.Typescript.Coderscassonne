@@ -1,0 +1,84 @@
+import { FunctionComponent } from 'react';
+import './DropDown.css';
+
+interface DropDownProps {}
+
+const DropDown: FunctionComponent<DropDownProps> = () => {
+  return (
+    <div className="p-10">
+      <div className="group inline-block">
+        <button className="outline-none focus:outline-none font-ALMENDRA  px-3 py-1 bg-DARKTHEME_LIGHT_GREEN_COLOR rounded-sm flex items-center min-w-32">
+          <span className="pr-1 font-semibold flex-1">Dropdown</span>
+          <span>
+            <svg
+              className="fill-current h-4 w-4 transform group-hover:-rotate-180
+                transition duration-150 ease-in-out"
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 20 20"
+            >
+              <path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z" />
+            </svg>
+          </span>
+        </button>
+        <ul
+          className="bg-DARKTHEME_LIGHT_GREEN_COLOR font-ALMENDRA rounded-sm transform scale-0 group-hover:scale-100 absolute 
+          transition duration-400 ease-in-out origin-top min-w-32"
+        >
+          <li className="rounded-sm px-3 py-1 hover:bg-DARKTHEME_DARK_GREEN_COLOR hover:text-white">Programming</li>
+          <li className="rounded-sm px-3 py-1 hover:bg-DARKTHEME_DARK_GREEN_COLOR hover:text-white">DevOps</li>
+          <li className="rounded-sm relative px-3 py-1 hover:bg-DARKTHEME_DARK_GREEN_COLOR hover:text-white">
+            <button className="w-full text-left flex items-center outline-none focus:outline-none">
+              <span className="pr-1 flex-1">Langauges</span>
+              <span className="mr-auto">
+                <svg
+                  className="fill-current h-4 w-4
+                    transition duration-400 ease-in-out"
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 20 20"
+                >
+                  <path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z" />
+                </svg>
+              </span>
+            </button>
+            <ul
+              className="bg-DARKTHEME_LIGHT_GREEN_COLOR text-black  rounded-sm absolute top-0 right-0 
+          transition duration-400 ease-in-out origin-top-left
+          min-w-32
+          "
+            >
+              <li className="px-3 py-1 text-black hover:bg-DARKTHEME_DARK_GREEN_COLOR hover:text-white">Javascript</li>
+              <li className="rounded-sm relative px-3 py-1 hover:bg-DARKTHEME_DARK_GREEN_COLOR hover:text-white">
+                <button className="w-full text-left flex items-center outline-none focus:outline-none">
+                  <span className="pr-1 flex-1">Python</span>
+                  <span className="mr-auto">
+                    <svg
+                      className="fill-current h-4 w-4
+                        transition duration-150 ease-in-out"
+                      xmlns="http://www.w3.org/2000/svg"
+                      viewBox="0 0 20 20"
+                    >
+                      <path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z" />
+                    </svg>
+                  </span>
+                </button>
+                <ul
+                  className="bg-DARKTHEME_LIGHT_GREEN_COLOR text-black rounded-sm absolute top-0 right-0 
+              transition duration-150 ease-in-out origin-top-left
+              min-w-32
+              "
+                >
+                  <li className="px-3 py-1 hover:bg-DARKTHEME_DARK_GREEN_COLOR hover:text-white">2.7</li>
+                  <li className="px-3 py-1 hover:bg-DARKTHEME_DARK_GREEN_COLOR hover:text-white">3+</li>
+                </ul>
+              </li>
+              <li className="px-3 py-1 hover:bg-DARKTHEME_DARK_GREEN_COLOR hover:text-white">Go</li>
+              <li className="px-3 py-1 hover:bg-DARKTHEME_DARK_GREEN_COLOR hover:text-white">Rust</li>
+            </ul>
+          </li>
+          <li className="rounded-sm px-3 py-1 hover:bg-DARKTHEME_DARK_GREEN_COLOR hover:text-white">Testing</li>
+        </ul>
+      </div>
+    </div>
+  );
+};
+export default DropDown;

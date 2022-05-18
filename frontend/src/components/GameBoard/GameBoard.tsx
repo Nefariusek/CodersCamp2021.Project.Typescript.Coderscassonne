@@ -8,6 +8,7 @@ import TileContainer from '../TileContainer/TileContainer';
 import { GAMEBOARD_LAYOUT_PROPORTION, TILE_SIZE } from '../../constants/gameDefaults';
 import rootStore from '../../stores/RootStore';
 import { observer } from 'mobx-react';
+import { socket } from '../../App';
 
 export interface BoardState {
   column: number;
@@ -36,6 +37,16 @@ const GameBoard = observer((): ReactElement => {
   useEffect(() => {
     onTilePlacement(0, 0);
     rootStore.gameStore.endCurrentTurn();
+  }, []);
+
+  useEffect(() => {
+    socket.on('receiveTilePlaced', (data) => {
+      const { tileData, clientId } = data;
+      const splitMessageArray = tileData.split('_');
+      console.log(
+        `Tile with id ${splitMessageArray[0]}_${splitMessageArray[1]} is placed in ${splitMessageArray[2]} row and ${splitMessageArray[3]} column rotated ${splitMessageArray[4]} degrees by client with id ${clientId}`,
+      );
+    });
   }, []);
 
   function gameBoardAutoScale(): number {

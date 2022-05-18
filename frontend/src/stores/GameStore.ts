@@ -12,6 +12,7 @@ import TileState from '../constants/tileState';
 import { JSONData } from '../mocks/mocks';
 import Tile from '../model/Tile';
 
+import { socket } from '../App';
 class GameStore {
   turnNumber: number;
   boardState: BoardState[] = [];
@@ -34,6 +35,8 @@ class GameStore {
       if (validateTilePlacement(row, column)) {
         tileToChange.state = TileState.TAKEN;
         tileToChange.tile = this.tileInHand;
+        socket.emit('sendTilePlaced', `${this.tileInHand.id}_${row}_${column}_${this.tileInHand.rotation}`);
+
         extendBoard(row, column);
         console.log(`extend board `, this.boardState);
         activateAdjacentTiles(row, column);

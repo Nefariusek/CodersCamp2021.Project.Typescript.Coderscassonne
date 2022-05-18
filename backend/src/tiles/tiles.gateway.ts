@@ -1,14 +1,12 @@
 import { SubscribeMessage, WebSocketGateway } from '@nestjs/websockets';
 
-import { Socket, Server } from 'socket.io';
+import { Socket } from 'socket.io';
 
 @WebSocketGateway(5001, { cors: true })
 export class TilesGateway {
   @SubscribeMessage('sendTilePlaced')
   handleTilePlacementMessage(client: Socket, text: string): void {
-    client.broadcast.emit('receiveTilePlaced', {
-      tileData: text,
-      clientId: client.id,
-    });
+    const message = { tileData: text, clientId: client.id };
+    client.broadcast.emit('receiveTilePlaced', message);
   }
 }

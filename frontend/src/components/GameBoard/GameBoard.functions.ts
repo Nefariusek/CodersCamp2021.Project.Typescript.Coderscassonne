@@ -205,4 +205,6 @@ export const extendBoard = (row: number, column: number) => {
 
 //================== MEEPLE PLACEMENT =====================//
 
-export const placeMeeple = () => {};
+export const placeMeeple = (row: number, column: number) => {
+  const allProjects = rootStore.projectStore.allProjects;
+};

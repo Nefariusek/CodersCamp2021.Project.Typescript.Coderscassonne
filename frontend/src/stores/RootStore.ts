@@ -1,15 +1,19 @@
 import { makeAutoObservable } from 'mobx';
 import ProjectStore from './ProjectStore';
 import GameStore from './GameStore';
+import PlayersStore from './PlayersStore';
 
 class RootStore {
-  projectStore: ProjectStore;
   gameStore: GameStore;
+  playersStore: PlayersStore;
+  projectStore: ProjectStore;
   isDevelopmentMode = false;
 
   constructor() {
-    this.projectStore = new ProjectStore(this);
     this.gameStore = new GameStore();
+    this.playersStore = new PlayersStore();
+    this.projectStore = new ProjectStore(this);
+
     makeAutoObservable(this);
   }
 

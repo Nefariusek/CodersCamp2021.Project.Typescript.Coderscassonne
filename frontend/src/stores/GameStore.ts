@@ -21,9 +21,9 @@ class GameStore {
 
   constructor() {
     this.boardState = [{ row: 0, column: 0, state: TileState.ACTIVE }];
-    this.tileInHand = GameModeParser(JSONData)[0];
     this.turnNumber = 0;
     this.drawPile = GameModeParser(JSONData);
+    this.tileInHand = this.drawPile.shift();
     makeAutoObservable(this);
   }
 

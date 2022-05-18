@@ -1,4 +1,3 @@
-import { UsePipes } from '@nestjs/common';
 import {
   OnGatewayConnection,
   OnGatewayDisconnect,

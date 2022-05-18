@@ -6,6 +6,9 @@ import { Socket, Server } from 'socket.io';
 export class TilesGateway {
   @SubscribeMessage('sendTilePlaced')
   handleTilePlacementMessage(client: Socket, text: string): void {
-    client.broadcast.emit('receiveTilePlaced', text);
+    client.broadcast.emit('receiveTilePlaced', {
+      tileData: text,
+      clientId: client.id,
+    });
   }
 }

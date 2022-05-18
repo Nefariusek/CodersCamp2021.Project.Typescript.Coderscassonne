@@ -25,10 +25,9 @@ export class AppGateway
     console.log(`disconnected client ${client.id}`);
   }
 
-  @SubscribeMessage('message')
+  @SubscribeMessage('sendMessage')
   handleMessage(client: Socket, text: string): WsResponse<string> {
     const message = `Client with id: ${client.id} send a message: ${text}`;
-    console.log(message);
-    return { event: 'messageToClient', data: message };
+    return { event: 'receiveMessage', data: message };
   }
 }

@@ -1,7 +1,7 @@
 import { makeAutoObservable } from 'mobx';
 
 import Locations from '../constants/locations';
-import { PREDEFINED_TILES } from '../constants/tiles';
+import { PREDEFINED_TILE_IMAGES } from '../constants/tileImages';
 import type Player from './Player';
 
 export type Rotation = 0 | 90 | 180 | 270;
@@ -73,7 +73,7 @@ class Tile {
   }
 
   public getTileImageSource(): string | undefined {
-    const foundTile = PREDEFINED_TILES.find(
+    const foundTile = PREDEFINED_TILE_IMAGES.find(
       (tile) =>
         tile.middle === this.middle &&
         tile.bottom === this.originalEdges.bottom &&

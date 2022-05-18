@@ -13,8 +13,6 @@ export const manageProjects = (row: number, column: number) => {
   mergeProjects();
 };
 
-// TODO: remove boardState from context and move to separate store
-
 function mergeProjects() {
   const allProjects = rootStore.projectStore.allProjects;
   const currentTileProjects = allProjects.filter((project) => project.tiles.includes(rootStore.gameStore.tileInHand!));
@@ -204,3 +202,7 @@ export const extendBoard = (row: number, column: number) => {
     leftColumn -= 1;
   }
 };
+
+//================== MEEPLE PLACEMENT =====================//
+
+export const placeMeeple = () => {};

@@ -72,7 +72,17 @@ class Tile {
     };
   }
 
-  public getTileImageSource(): string | undefined {
+  public getTileImageSourceById(): string | undefined {
+    const splitIdArray = this.id.split('_');
+    const tileImageId = splitIdArray[0];
+    const foundTile = PREDEFINED_TILE_IMAGES.find((tileImage) => tileImage.id === tileImageId);
+    if (foundTile) {
+      return foundTile.imageSource;
+    }
+    return undefined;
+  }
+
+  public getTileImageSourceByLocations(): string | undefined {
     const foundTile = PREDEFINED_TILE_IMAGES.find(
       (tile) =>
         tile.middle === this.middle &&

@@ -11,7 +11,7 @@ class RootStore {
 
   constructor() {
     this.gameStore = new GameStore();
-    this.playersStore = new PlayersStore();
+    this.playersStore = new PlayersStore(this);
     this.projectStore = new ProjectStore(this);
 
     makeAutoObservable(this);

@@ -1,4 +1,4 @@
-import React, { ReactElement, useContext, useState } from 'react';
+import React, { ReactElement, useState } from 'react';
 // @ts-ignore
 import { MapInteractionCSS } from 'react-map-interaction';
 import PlayersInfo from '../components/PlayersInfo/PlayersInfo';
@@ -12,7 +12,7 @@ import { MENU_TITLE_SOURCE } from '../constants/layoutElements';
 import { Link } from 'react-router-dom';
 import { PATH_TO_HOMEPAGE } from '../constants/paths';
 import { openEndGameModal, EndGameModal } from '../components/Modal/EndGameModal';
-import DataStoreContext from '../components/DataStoreContext/DataStoreContext';
+//import DataStoreContext from '../components/DataStoreContext/DataStoreContext';
 import { InvalidMoveModal } from '../components/Modal/InvalidMoveModal';
 import { EndTurnModal } from '../components/Modal/EndTurnModal';
 import rootStore from '../stores/RootStore';

@@ -205,6 +205,19 @@ export const extendBoard = (row: number, column: number) => {
 
 //================== MEEPLE PLACEMENT =====================//
 
-export const placeMeeple = (row: number, column: number) => {
-  const allProjects = rootStore.projectStore.allProjects;
+export const placeMeeple = (location: Locations, tile: Tile) => {
+  const currentPlayer = rootStore.playersStore.getCurrentPlayer()!;
+  const availableProjects = rootStore.projectStore.getAvailableProjects(tile);
+  if (currentPlayer.getMeepleCount() > 0 && availableProjects) {
+    const meeple = currentPlayer.getMeeple();
+    const projectOfLocation = availableProjects.find((p: Project) => p.type === location);
+    if (meeple && projectOfLocation) {
+      projectOfLocation.meeples.push(meeple);
+    }
+  } else if (availableProjects) {
+    console.log('no meeples available');
+    //end of turn
+  } else {
+    console.log('no available projects');
+  }
 };

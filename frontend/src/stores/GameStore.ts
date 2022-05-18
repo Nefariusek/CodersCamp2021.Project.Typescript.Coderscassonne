@@ -8,8 +8,9 @@ import {
 } from '../components/GameBoard/GameBoard.functions';
 import GameModeParser from '../components/GameModeParser';
 import { openInvalidMoveModal } from '../components/Modal/InvalidMoveModal';
+import { GamePhases } from '../components/NextPhaseButton/NextPhaseButton';
 import TileState from '../constants/tileState';
-import { JSONData } from '../mocks/mocks';
+import { JSONData } from '../mocks/mocksTiles';
 import Tile from '../model/Tile';
 
 import { socket } from '../App';
@@ -19,12 +20,14 @@ class GameStore {
   drawPile: Tile[];
   recentlyPlacedTile: Tile | undefined;
   tileInHand: Tile | undefined;
+  currentPhase: GamePhases;
 
   constructor() {
     this.boardState = [{ row: 0, column: 0, state: TileState.ACTIVE }];
-    this.tileInHand = GameModeParser(JSONData)[0];
     this.turnNumber = 0;
     this.drawPile = GameModeParser(JSONData);
+    this.currentPhase = GamePhases.TILE_PLACEMENT;
+    this.tileInHand = this.drawPile.shift();
     makeAutoObservable(this);
   }
 
@@ -44,10 +47,28 @@ class GameStore {
         manageProjects(row, column);
         this.recentlyPlacedTile = this.tileInHand;
         this.tileInHand = undefined;
+        if (this.boardState.length > 9) {
+          this.setNextPhase();
+        }
       } else {
         openInvalidMoveModal();
       }
     }
+  }
+
+  setNextPhase() {
+    if (this.currentPhase === GamePhases.TILE_PLACEMENT) {
+      this.currentPhase = GamePhases.MEEPLE_PLACEMENT;
+    } else if (this.currentPhase === GamePhases.MEEPLE_PLACEMENT) {
+      this.currentPhase = GamePhases.SCORE_PHASE;
+    } else if (this.currentPhase === GamePhases.SCORE_PHASE) {
+      this.endCurrentTurn();
+      this.currentPhase = GamePhases.TILE_PLACEMENT;
+    }
+  }
+
+  placeMeeple() {
+    console.log('placeMeeple');
   }
 
   increaseTurnNumber() {
@@ -67,6 +88,7 @@ class GameStore {
     this.tileInHand = GameModeParser(JSONData)[0];
     this.turnNumber = 0;
     this.drawPile = GameModeParser(JSONData);
+    this.currentPhase = GamePhases.TILE_PLACEMENT;
   }
 }
 

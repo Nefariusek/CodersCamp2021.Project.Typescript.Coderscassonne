@@ -6,7 +6,7 @@ interface DropDownProps {}
 const DropDown: FunctionComponent<DropDownProps> = () => {
   return (
     <div className="p-10">
-      <div className="group inline-block">
+      <div className="group inline-block z-50">
         <button className="outline-none focus:outline-none font-ALMENDRA  px-3 py-1 bg-DARKTHEME_LIGHT_GREEN_COLOR rounded-sm flex items-center min-w-32">
           <span className="pr-1 font-semibold flex-1">Dropdown</span>
           <span>

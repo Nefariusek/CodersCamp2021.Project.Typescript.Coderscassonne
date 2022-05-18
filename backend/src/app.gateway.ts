@@ -1,13 +1,13 @@
+import { UsePipes } from '@nestjs/common';
 import {
-  SubscribeMessage,
-  WebSocketGateway,
-  OnGatewayInit,
   OnGatewayConnection,
   OnGatewayDisconnect,
+  OnGatewayInit,
+  SubscribeMessage,
+  WebSocketGateway,
   WsResponse,
 } from '@nestjs/websockets';
-
-import { Socket, Server } from 'socket.io';
+import { Server, Socket } from 'socket.io';
 
 @WebSocketGateway(5001, { cors: true })
 export class AppGateway
@@ -26,9 +26,16 @@ export class AppGateway
   }
 
   @SubscribeMessage('message')
-  handleMessage(client: Socket, text: string): WsResponse<string> {
+  handleEvent(client: Socket, text: string): WsResponse<string> {
     const message = `Client with id: ${client.id} send a message: ${text}`;
     console.log(message);
     return { event: 'messageToClient', data: message };
+  }
+
+  @SubscribeMessage('meeplePlacementMessage')
+  handleMessage(client: Socket, text: string): WsResponse<string> {
+    const message = `Client with id: ${client.id} put a meeple: ${text}`;
+    console.log(message);
+    return { event: 'messageToClientAfterMeeplePlacement', data: message };
   }
 }

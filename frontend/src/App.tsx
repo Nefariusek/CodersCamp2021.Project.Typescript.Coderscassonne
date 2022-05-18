@@ -1,29 +1,28 @@
 import { FC, ReactElement, useEffect } from 'react';
 import { Route, Routes, useLocation } from 'react-router-dom';
 import io from 'socket.io-client';
-
 import { AppHeaderSection, Castle } from './components/Layout';
+import { WorkInProgressModal } from './components/Modal/WorkInProgressModal';
 import {
-  PATH_TO_CREDITS,
   PATH_TO_CREATE_PLAYERS,
+  PATH_TO_CREDITS,
+  PATH_TO_CUSTOM_MODE_FORM,
   PATH_TO_GAMEPAGE,
   PATH_TO_HOMEPAGE,
   PATH_TO_HOWTOPLAYPAGE,
   PATH_TO_LANDINGPAGE,
   PATH_TO_SETTINGS,
-  PATH_TO_CUSTOM_MODE_FORM,
 } from './constants/paths';
-import CreditsPage from './views/CreditsPage';
 import CreatePlayersPage from './views/CreatePlayersPage';
+import CreditsPage from './views/CreditsPage';
+import CustomModePage from './views/CustomModePage';
 import GamePage from './views/Game';
 import HomePage from './views/HomePage';
 import HowToPlayPage from './views/HowToPlayPage';
 import LandingPage from './views/LandingPage';
 import SettingsPage from './views/SettingsPage';
-import CustomModePage from './views/CustomModePage';
-import { WorkInProgressModal } from './components/Modal/WorkInProgressModal';
 
-const socket = io('http://localhost:5001');
+export const socket = io('http://localhost:5001');
 
 const paths = [
   { element: <HomePage />, url: PATH_TO_HOMEPAGE },
@@ -47,6 +46,9 @@ const App: FC = (): ReactElement => {
 
   useEffect(() => {
     socket.on('messageToClient', (data) => {
+      console.log(data);
+    });
+    socket.on('messageToClientAfterMeeplePlacement', (data) => {
       console.log(data);
     });
   });

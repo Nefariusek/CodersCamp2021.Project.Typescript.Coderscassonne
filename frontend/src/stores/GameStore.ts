@@ -10,7 +10,7 @@ import GameModeParser from '../components/GameModeParser';
 import { openInvalidMoveModal } from '../components/Modal/InvalidMoveModal';
 import { GamePhases } from '../components/NextPhaseButton/NextPhaseButton';
 import TileState from '../constants/tileState';
-import { JSONData } from '../mocks/mocks';
+import { JSONData } from '../mocks/mocksTiles';
 import Tile from '../model/Tile';
 
 class GameStore {
@@ -23,10 +23,10 @@ class GameStore {
 
   constructor() {
     this.boardState = [{ row: 0, column: 0, state: TileState.ACTIVE }];
-    this.tileInHand = GameModeParser(JSONData)[0];
     this.turnNumber = 0;
     this.drawPile = GameModeParser(JSONData);
     this.currentPhase = GamePhases.TILE_PLACEMENT;
+    this.tileInHand = this.drawPile.shift();
     makeAutoObservable(this);
   }
 

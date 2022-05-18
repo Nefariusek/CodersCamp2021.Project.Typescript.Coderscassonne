@@ -8,8 +8,9 @@ import CreatePlayer from '../components/CreatePlayer/CreatePlayer';
 import Technologies from '../constants/technologies';
 //import Player from '../model/Player';
 import rootStore from '../stores/RootStore';
+import { observer } from 'mobx-react';
 
-const CreatePlayersPage = () => {
+const CreatePlayersPage = observer(() => {
   const players = rootStore.playersStore.players;
   const setPlayer = rootStore.playersStore.setPlayer;
   const changeOrderOfPlayers = rootStore.playersStore.changeOrderOfPlayers;
@@ -56,6 +57,6 @@ const CreatePlayersPage = () => {
       {players.length > 0 && <AddedPlayers players={players} save={savePlayers} change={changeOrderOfPlayers} />}
     </div>
   );
-};
+});
 
 export default CreatePlayersPage;

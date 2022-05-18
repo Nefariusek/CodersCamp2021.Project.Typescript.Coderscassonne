@@ -5,6 +5,7 @@ import _ from 'lodash';
 import rootStore, { boardState } from '../../stores/RootStore';
 import Project from '../../model/Project';
 import TileState from '../../constants/tileState';
+import { GamePhases } from '../NextPhaseButton/NextPhaseButton';
 
 export const manageProjects = (row: number, column: number) => {
   const existingLocations: Locations[] = [];
@@ -208,7 +209,11 @@ export const extendBoard = (row: number, column: number) => {
 export const placeMeeple = (location: Locations, tile: Tile) => {
   const currentPlayer = rootStore.playersStore.getCurrentPlayer()!;
   const availableProjects = rootStore.projectStore.getAvailableProjects(tile);
-  if (currentPlayer.getMeepleCount() > 0 && availableProjects) {
+  if (
+    rootStore.gameStore.currentPhase === GamePhases.MEEPLE_PLACEMENT &&
+    currentPlayer.getMeepleCount() > 0 &&
+    availableProjects
+  ) {
     const meeple = currentPlayer.getMeeple()!;
     const projectOfLocation = availableProjects.find((p: Project) => p.type === location);
     if (projectOfLocation) {

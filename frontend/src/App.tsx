@@ -43,10 +43,18 @@ const App: FC = (): ReactElement => {
 
   useEffect(() => {
     socket.emit('message', 'Hello from Client');
+    socket.emit('createRoom', 'pokoj');
+    socket.emit('messageToRoom', { sender: 'imie', room: 'pokoj', message: 'Hello from Client' });
   }, []);
 
   useEffect(() => {
     socket.on('messageToClient', (data) => {
+      console.log(data);
+    });
+    socket.on('joinedRoom', (data) => {
+      console.log(data);
+    });
+    socket.on('messageToRoom', (data) => {
       console.log(data);
     });
   });

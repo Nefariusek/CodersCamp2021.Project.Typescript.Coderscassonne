@@ -17,11 +17,17 @@ function WebsocketMessageParser(message: string, eventType: 'tilePlaced'): TileP
 
 function WebsocketMessageParser(message: string, eventType: 'meeplePlaced'): MeeplePlacementMessage;
 
+function WebsocketMessageParser(message: TilePlacementMessage, eventType: 'tilePlaced'): string;
+
+function WebsocketMessageParser(message: MeeplePlacementMessage, eventType: 'meeplePlaced'): string;
+
 function WebsocketMessageParser(
-  message: string,
+  message: string | TilePlacementMessage | MeeplePlacementMessage,
   eventType: 'tilePlaced' | 'meeplePlaced',
-): TilePlacementMessage | MeeplePlacementMessage {
-  if (eventType === 'tilePlaced') {
+): TilePlacementMessage | MeeplePlacementMessage | string {
+  if (typeof message !== 'string') {
+    return Object.values(message).join('_');
+  } else if (eventType === 'tilePlaced') {
     const splitMessageArray = message.split('_');
     const tilePlacementMessage = Object.assign(
       {},

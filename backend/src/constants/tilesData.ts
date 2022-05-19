@@ -1,4 +1,4 @@
-import Locations from '../constants/locations';
+import Locations from './locations';
 
 export const tilesData = [
   {

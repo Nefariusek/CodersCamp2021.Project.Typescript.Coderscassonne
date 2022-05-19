@@ -8,6 +8,7 @@ import TileState from '../../constants/tileState';
 import { GamePhases } from '../NextPhaseButton/NextPhaseButton';
 import { BoardState } from './GameBoard';
 
+//--------------------------PLACE TILE-----------------------//
 export const manageProjects = (row: number, column: number) => {
   const existingLocations: Locations[] = [Locations.FIELD];
   updateExistingProjects(existingLocations, row, column);

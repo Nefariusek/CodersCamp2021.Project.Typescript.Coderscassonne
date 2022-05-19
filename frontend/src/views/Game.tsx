@@ -12,7 +12,6 @@ import { MENU_TITLE_SOURCE } from '../constants/layoutElements';
 import { Link } from 'react-router-dom';
 import { PATH_TO_HOMEPAGE } from '../constants/paths';
 import { openEndGameModal, EndGameModal } from '../components/Modal/EndGameModal';
-//import DataStoreContext from '../components/DataStoreContext/DataStoreContext';
 import { InvalidMoveModal } from '../components/Modal/InvalidMoveModal';
 import { EndTurnModal } from '../components/Modal/EndTurnModal';
 import rootStore from '../stores/RootStore';
@@ -20,7 +19,6 @@ import { observer } from 'mobx-react';
 import NextPhaseButton from '../components/NextPhaseButton/NextPhaseButton';
 
 const GamePage: React.FunctionComponent = observer((): ReactElement => {
-  //const context = useContext(DataStoreContext);
   const players = rootStore.playersStore.players;
   const drawPileLength = rootStore.gameStore.drawPile.length;
   const [currentPlayer] = useState<number>(0);

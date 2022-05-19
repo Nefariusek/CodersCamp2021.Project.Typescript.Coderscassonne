@@ -8,12 +8,10 @@ import rootStore from '../stores/RootStore';
 import { observer } from 'mobx-react-lite';
 import Technologies from '../constants/technologies';
 import Player from '../model/Player';
-//import DataStoreContext, { DataStoreContextInterface } from '../components/DataStoreContext/DataStoreContext';
 import GameMode from '../model/GameMode';
 
 const HomePage: React.FunctionComponent = observer((): ReactElement => {
   const navigate = useNavigate();
-  //const context = useContext(DataStoreContext);
   const views: { name: string; url: string }[] = [
     { name: 'Play game', url: PATH_TO_CREATE_PLAYERS },
     { name: 'Scoreboard', url: 'TODO' },
@@ -65,9 +63,6 @@ function initDevelopmentPreset() {
   const playerTwo: Player = new Player('Tac', Technologies.JS);
   const playerThree: Player = new Player('Toe', Technologies.TS);
   rootStore.playersStore.players.push(playerOne, playerTwo, playerThree);
-  // if (context.setAllPlayersData) {
-  //   context.setAllPlayersData([playerOne, playerTwo, playerThree]);
-  // }
 
   const mode = new GameMode(60, 128, 64, 64, 'Classic');
   localStorage.setItem('Game mode', JSON.stringify(mode));

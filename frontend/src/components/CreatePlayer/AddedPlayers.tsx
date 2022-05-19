@@ -16,7 +16,7 @@ interface AddedPlayersItemProps {
 
 const AddedPlayersItem = observer(({ player, number, last }: AddedPlayersItemProps) => {
   const playerImage = `./Elements/Meeple/${player.technology}_meeple.png`;
-  const changeOrderOfPlayers = rootStore.playersStore.changeOrderOfPlayers;
+  const changeOrderOfPlayers = (num: number) => rootStore.playersStore.changeOrderOfPlayers(num);
 
   return (
     <div className="flex items-center justify-between w-80">

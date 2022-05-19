@@ -16,8 +16,6 @@ interface CreatePlayerProps {
 
 const CreatePlayer = observer(
   ({ availableTechnologies, setAvailableTechnologies, playersNames }: CreatePlayerProps) => {
-    //const addPlayer = rootStore.playersStore.addPlayer;
-
     const [playerName, setPlayerName] = useState('');
     const [playerMeeple, setPlayerMeeple] = useState<Technologies>();
     const [errorMessage, setErrorMessage] = useState("Choose the player's name and choose a meeple");
@@ -46,13 +44,8 @@ const CreatePlayer = observer(
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
       e.preventDefault();
       if (!playerName || !playerMeeple) return;
-      //addPlayer(playerName, playerMeeple);
 
       rootStore.playersStore.addPlayer(playerName, playerMeeple);
-      // const newPlayer = new Player(playerName, playerMeeple);
-      // console.log(newPlayer);
-      // console.log(rootStore.playersStore.players);
-      // rootStore.playersStore.players.push(newPlayer);
       setAvailableTechnologies(availableTechnologies.filter((tech) => tech !== playerMeeple));
       setPlayerName('');
       const radio: HTMLInputElement | null = document.querySelector('input[type=radio]:checked');

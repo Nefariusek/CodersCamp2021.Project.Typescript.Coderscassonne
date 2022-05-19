@@ -31,14 +31,15 @@ class GameStore {
     makeAutoObservable(this);
   }
 
-  placeTile(row: number, column: number) {
+  placeTile(row: number, column: number, fromWebsocket: boolean) {
     const tileToChange = this.boardState.find((tile) => tile.row === row && tile.column === column);
     console.log(`tile to change: `, tileToChange);
     if (tileToChange && this.tileInHand) {
       if (validateTilePlacement(row, column)) {
         tileToChange.state = TileState.TAKEN;
         tileToChange.tile = this.tileInHand;
-        socket.emit('sendTilePlaced', `${this.tileInHand.id}_${row}_${column}_${this.tileInHand.rotation}`);
+        !fromWebsocket &&
+          socket.emit('sendTilePlaced', `${this.tileInHand.id}_${row}_${column}_${this.tileInHand.rotation}`);
 
         extendBoard(row, column);
         console.log(`extend board `, this.boardState);
@@ -46,6 +47,12 @@ class GameStore {
 
         manageProjects(row, column);
         this.recentlyPlacedTile = this.tileInHand;
+
+        if (fromWebsocket) {
+          const indexOfTileInHand = this.drawPile.findIndex((tile) => tile.id === this.tileInHand?.id);
+          this.drawPile.splice(indexOfTileInHand, 1);
+        }
+
         this.tileInHand = undefined;
         if (this.boardState.length > 9) {
           this.setNextPhase();

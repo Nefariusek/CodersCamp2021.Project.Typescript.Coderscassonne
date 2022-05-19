@@ -23,9 +23,9 @@ const GameBoard = observer((): ReactElement => {
   const sortedBoardState = _.orderBy(boardState, ['row', 'column'], ['asc', 'asc']);
   const tilesGroupedByRows = _.groupBy(sortedBoardState, 'row');
 
-  const onTilePlacement = (row: number, column: number) => {
+  const onTilePlacement = (row: number, column: number, fromWebsocket: boolean) => {
     console.log(`tile placement`);
-    rootStore.gameStore.placeTile(row, column);
+    rootStore.gameStore.placeTile(row, column, fromWebsocket);
   };
 
   const [windowHeight, setWindowHeight] = useState(window.innerHeight);
@@ -35,7 +35,7 @@ const GameBoard = observer((): ReactElement => {
   }, []);
 
   useEffect(() => {
-    onTilePlacement(0, 0);
+    onTilePlacement(0, 0, false);
     rootStore.gameStore.endCurrentTurn();
   }, []);
 
@@ -56,7 +56,7 @@ const GameBoard = observer((): ReactElement => {
       );
 
       if (row !== 0 || column !== 0) {
-        onTilePlacement(row, column);
+        onTilePlacement(row, column, true);
       }
     });
   }, []);

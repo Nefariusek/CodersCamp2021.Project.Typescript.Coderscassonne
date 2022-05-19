@@ -1,6 +1,7 @@
+import { TileType } from '../components/GameModeParser';
 import Locations from '../constants/locations';
 
-export const JSONData = [
+export const JSONData: TileType[] = [
   {
     edges: {
       bottom: Locations.FIELD,
@@ -10,7 +11,7 @@ export const JSONData = [
     },
     isSpecial: false,
     id: '001_1',
-    middle: Locations.ROAD,
+    middle: [Locations.ROAD],
   },
   {
     edges: {
@@ -21,7 +22,7 @@ export const JSONData = [
     },
     id: '021_1',
     isSpecial: false,
-    middle: Locations.MONASTERY,
+    middle: [Locations.MONASTERY],
   },
   {
     edges: {
@@ -32,7 +33,7 @@ export const JSONData = [
     },
     id: '002_1',
     isSpecial: false,
-    middle: Locations.ROAD,
+    middle: [Locations.ROAD],
   },
   {
     edges: {
@@ -43,7 +44,7 @@ export const JSONData = [
     },
     isSpecial: false,
     id: '003_1',
-    middle: Locations.TAVERN,
+    middle: [Locations.TAVERN],
   },
   {
     edges: {
@@ -54,7 +55,7 @@ export const JSONData = [
     },
     id: '001_2',
     isSpecial: false,
-    middle: Locations.ROAD,
+    middle: [Locations.ROAD],
   },
   {
     edges: {
@@ -65,7 +66,7 @@ export const JSONData = [
     },
     id: '002_2',
     isSpecial: false,
-    middle: Locations.ROAD,
+    middle: [Locations.ROAD],
   },
   {
     edges: {
@@ -76,7 +77,7 @@ export const JSONData = [
     },
     isSpecial: false,
     id: '021_2',
-    middle: Locations.MONASTERY,
+    middle: [Locations.MONASTERY],
   },
   {
     edges: {
@@ -87,7 +88,7 @@ export const JSONData = [
     },
     isSpecial: false,
     id: '002_3',
-    middle: Locations.ROAD,
+    middle: [Locations.ROAD],
   },
   {
     edges: {
@@ -98,7 +99,7 @@ export const JSONData = [
     },
     id: '001_3',
     isSpecial: false,
-    middle: Locations.ROAD,
+    middle: [Locations.ROAD],
   },
   {
     edges: {
@@ -109,7 +110,7 @@ export const JSONData = [
     },
     isSpecial: false,
     id: '002_3',
-    middle: Locations.ROAD,
+    middle: [Locations.ROAD],
   },
   {
     edges: {
@@ -120,6 +121,6 @@ export const JSONData = [
     },
     isSpecial: false,
     id: '003_2',
-    middle: Locations.TAVERN,
+    middle: [Locations.TAVERN],
   },
 ];

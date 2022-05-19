@@ -15,7 +15,7 @@ describe('Player model', () => {
       right: Locations.MONASTERY,
       top: Locations.ROAD,
     },
-    Locations.TAVERN,
+    [Locations.TAVERN],
     false,
     'first',
   );

@@ -46,7 +46,7 @@ const HomePage: React.FunctionComponent = observer((): ReactElement => {
                     navigate(PATH_TO_GAMEPAGE);
                   } else if (view.url === PATH_TO_CREATE_PLAYERS) {
                     await rootStore.gameStore.initGameStore();
-                    navigate(PATH_TO_GAMEPAGE);
+                    navigate(view.url);
                   } else {
                     navigate(view.url);
                   }

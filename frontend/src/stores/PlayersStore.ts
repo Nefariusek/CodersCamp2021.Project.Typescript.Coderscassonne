@@ -9,14 +9,12 @@ class PlayersStore {
 
   constructor(rootStore: RootStore) {
     this.players = [];
-    console.log(this.players);
     this.rootStore = rootStore;
     makeAutoObservable(this);
   }
 
   addPlayer(playerName: string, technology: Technologies) {
     const newPlayer = new Player(playerName, technology);
-    console.log(newPlayer);
     this.players.push(newPlayer);
   }
 

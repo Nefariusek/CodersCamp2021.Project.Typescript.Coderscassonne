@@ -1,9 +1,14 @@
 import { FunctionComponent } from 'react';
 import './DropDown.css';
+import rootStore from '../../stores/RootStore';
+import { observer } from 'mobx-react-lite';
 
 interface DropDownProps {}
 
-const DropDown: FunctionComponent<DropDownProps> = () => {
+const DropDown: FunctionComponent<DropDownProps> = observer(() => {
+  const availableProjects = rootStore.projectStore.getAvailableProjects();
+  console.log(availableProjects);
+
   return (
     <div className="p-10">
       <div className="group inline-block z-50">
@@ -21,7 +26,7 @@ const DropDown: FunctionComponent<DropDownProps> = () => {
           </span>
         </button>
         <ul
-          className="bg-DARKTHEME_LIGHT_GREEN_COLOR font-ALMENDRA rounded-sm transform scale-0 group-hover:scale-100 absolute 
+          className="bg-DARKTHEME_LIGHT_GREEN_COLOR font-ALMENDRA z-50 rounded-sm transform scale-0 group-hover:scale-100 absolute 
           transition duration-400 ease-in-out origin-top min-w-32"
         >
           <li className="rounded-sm px-3 py-1 hover:bg-DARKTHEME_DARK_GREEN_COLOR hover:text-white">Programming</li>
@@ -41,7 +46,7 @@ const DropDown: FunctionComponent<DropDownProps> = () => {
               </span>
             </button>
             <ul
-              className="bg-DARKTHEME_LIGHT_GREEN_COLOR text-black  rounded-sm absolute top-0 right-0 
+              className="bg-DARKTHEME_LIGHT_GREEN_COLOR text-black z-50 rounded-sm absolute top-0 right-0 
           transition duration-400 ease-in-out origin-top-left
           min-w-32
           "
@@ -62,7 +67,7 @@ const DropDown: FunctionComponent<DropDownProps> = () => {
                   </span>
                 </button>
                 <ul
-                  className="bg-DARKTHEME_LIGHT_GREEN_COLOR text-black rounded-sm absolute top-0 right-0 
+                  className="bg-DARKTHEME_LIGHT_GREEN_COLOR text-black z-50 rounded-sm absolute top-0 right-0 
               transition duration-150 ease-in-out origin-top-left
               min-w-32
               "
@@ -80,5 +85,5 @@ const DropDown: FunctionComponent<DropDownProps> = () => {
       </div>
     </div>
   );
-};
+});
 export default DropDown;

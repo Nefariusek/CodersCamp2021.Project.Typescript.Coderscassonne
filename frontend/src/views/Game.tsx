@@ -18,6 +18,7 @@ import { EndTurnModal } from '../components/Modal/EndTurnModal';
 import rootStore from '../stores/RootStore';
 import { observer } from 'mobx-react';
 import NextPhaseButton from '../components/NextPhaseButton/NextPhaseButton';
+import DropDown from '../components/DropDown/DropDown';
 
 const GamePage: React.FunctionComponent = observer((): ReactElement => {
   const context = useContext(DataStoreContext);
@@ -45,6 +46,7 @@ const GamePage: React.FunctionComponent = observer((): ReactElement => {
         </div>
         <PlayersInfo players={context?.allPlayersData} currentPlayer={currentPlayer} />
         <NextPhaseButton />
+        <DropDown />
         <GameTimer isTurnTimerVisible={false} turnLength={60} />
         <div className="flex justify-end">
           <Legend />

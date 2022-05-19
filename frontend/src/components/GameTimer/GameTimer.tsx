@@ -1,10 +1,10 @@
-import { useEffect, useState } from 'react';
-import Button from '../Button/Button';
-
-import { TurnLength } from '../../model/Settings';
-import TurnTimer from './TurnTimer';
-import rootStore from '../../stores/RootStore';
 import { observer } from 'mobx-react';
+import { useEffect, useState } from 'react';
+import { socket } from '../../App';
+import { TurnLength } from '../../model/Settings';
+import rootStore from '../../stores/RootStore';
+import Button from '../Button/Button';
+import TurnTimer from './TurnTimer';
 
 const END_TURN_LABEL = 'End your turn';
 interface GameTimerProps {
@@ -31,6 +31,7 @@ const GameTimer = observer((props: GameTimerProps) => {
 
   const handleTurnEnd = () => {
     rootStore.gameStore.endCurrentTurn();
+    socket.emit('meeplePlacementMessage', 'Meeple placed!');
   };
 
   return (

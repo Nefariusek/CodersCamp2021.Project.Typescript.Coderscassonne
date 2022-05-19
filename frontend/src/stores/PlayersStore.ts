@@ -4,21 +4,29 @@ import Player from '../model/Player';
 import { RootStore } from './RootStore';
 
 class PlayersStore {
-  players: Player[];
+  players: Array<Player>;
   rootStore: RootStore;
 
   constructor(rootStore: RootStore) {
     this.players = [];
+    console.log(this.players);
     this.rootStore = rootStore;
     makeAutoObservable(this);
   }
 
-  setPlayer(playerName: string, technology: Technologies) {
+  addPlayer(playerName: string, technology: Technologies) {
+    // if (!this.players) {
+    //   this.players = [];
+    // }
     const newPlayer = new Player(playerName, technology);
+    console.log(newPlayer);
     this.players.push(newPlayer);
   }
 
   changeOrderOfPlayers(i: number) {
+    if (!this.players) {
+      this.players = [];
+    }
     [this.players[i - 1], this.players[i]] = [this.players[i], this.players[i - 1]];
   }
   getCurrentPlayer() {

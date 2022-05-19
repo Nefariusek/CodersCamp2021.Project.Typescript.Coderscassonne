@@ -3,7 +3,7 @@ import _ from 'lodash';
 import { ReactElement, useEffect, useState } from 'react';
 
 import TileState from '../../constants/tileState';
-import Tile from '../../model/Tile';
+import Tile, { Rotation } from '../../model/Tile';
 import TileContainer from '../TileContainer/TileContainer';
 import { GAMEBOARD_LAYOUT_PROPORTION, TILE_SIZE } from '../../constants/gameDefaults';
 import rootStore from '../../stores/RootStore';
@@ -41,11 +41,23 @@ const GameBoard = observer((): ReactElement => {
 
   useEffect(() => {
     socket.on('receiveTilePlaced', (data) => {
-      const { tileData, clientId } = data;
+      // const { tileData, clientId } = data;
+      const tileData = data;
       const splitMessageArray = tileData.split('_');
+
+      const id: string = `${splitMessageArray[0]}_${splitMessageArray[1]}`;
+      const row: number = +splitMessageArray[2];
+      const column: number = +splitMessageArray[3];
+      const rotation = +splitMessageArray[4] as Rotation;
+
       console.log(
-        `Tile with id ${splitMessageArray[0]}_${splitMessageArray[1]} is placed in ${splitMessageArray[2]} row and ${splitMessageArray[3]} column rotated ${splitMessageArray[4]} degrees by client with id ${clientId}`,
+        `Tile with id ${id} is placed in ${row} row and ${column} column rotated ${rotation} degrees`,
+        // `Tile with id ${id} is placed in ${row} row and ${column} column rotated ${rotation} degrees by client with id ${clientId}`,
       );
+
+      if (row !== 0 || column !== 0) {
+        onTilePlacement(row, column);
+      }
     });
   }, []);
 

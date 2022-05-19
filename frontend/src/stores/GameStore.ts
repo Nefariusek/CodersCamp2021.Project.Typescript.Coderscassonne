@@ -81,6 +81,11 @@ class GameStore {
     this.tileInHand = undefined;
   }
 
+  setRotationFromWebSocket(rotationString: string) {
+    const rotation = +rotationString as Rotation;
+    this.tileInHand?.setRotation(rotation);
+  }
+
   setNextPhase() {
     if (this.currentPhase === GamePhases.TILE_PLACEMENT) {
       this.currentPhase = GamePhases.MEEPLE_PLACEMENT;

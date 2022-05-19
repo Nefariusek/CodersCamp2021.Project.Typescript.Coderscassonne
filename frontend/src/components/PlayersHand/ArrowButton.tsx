@@ -1,5 +1,5 @@
 import { observer } from 'mobx-react-lite';
-
+import { socket } from '../../App';
 import Tile from '../../model/Tile';
 
 interface ArrowButtonInterface {
@@ -10,15 +10,25 @@ interface ArrowButtonInterface {
 const ArrowButton = observer((props: ArrowButtonInterface) => {
   const { tile, direction } = props;
 
+  function handleRotateLeft() {
+    tile?.rotateLeft();
+    socket.emit('sendTileRotated', '-90');
+  }
+
+  function handleRotateRight() {
+    tile?.rotateRight();
+    socket.emit('sendTileRotated', '90');
+  }
+
   return (
     <div>
       {direction === 'left' && (
-        <button type="button" onClick={() => tile?.rotateLeft()}>
+        <button type="button" onClick={handleRotateLeft}>
           <img src="./Elements/Layout/Left_arrow.png" alt="left arrow" />
         </button>
       )}
       {direction === 'right' && (
-        <button type="button" onClick={() => tile?.rotateRight()}>
+        <button type="button" onClick={handleRotateRight}>
           <img src="./Elements/Layout/Right_arrow.png" alt="right arrow" />
         </button>
       )}

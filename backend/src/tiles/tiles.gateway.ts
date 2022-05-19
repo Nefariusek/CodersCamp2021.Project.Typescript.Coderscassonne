@@ -10,4 +10,11 @@ export class TilesGateway {
     const message = text;
     client.broadcast.emit('receiveTilePlaced', message);
   }
+
+  @SubscribeMessage('sendTileRotated')
+  handleTileInHandRotated(client: Socket, text: string): void {
+    // const message = { tileData: text, clientId: client.id };
+    const message = text;
+    client.broadcast.emit('receiveTileRotated', message);
+  }
 }

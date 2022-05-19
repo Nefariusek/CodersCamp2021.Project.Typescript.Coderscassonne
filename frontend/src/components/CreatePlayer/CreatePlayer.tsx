@@ -6,7 +6,6 @@ import Technologies from '../../constants/technologies';
 import Tooltip from '../Tooltip/Tooltip';
 import { observer } from 'mobx-react';
 import rootStore from '../../stores/RootStore';
-import Player from '../../model/Player';
 
 interface CreatePlayerProps {
   availableTechnologies: Technologies[];

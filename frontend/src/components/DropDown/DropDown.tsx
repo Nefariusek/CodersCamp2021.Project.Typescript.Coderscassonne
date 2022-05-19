@@ -7,13 +7,14 @@ interface DropDownProps {}
 
 const DropDown: FunctionComponent<DropDownProps> = observer(() => {
   const availableProjects = rootStore.projectStore.getAvailableProjects();
-  console.log(availableProjects);
+
+  console.log(availableProjects + 'kupka');
 
   return (
     <div className="p-10">
       <div className="group inline-block z-50">
         <button className="outline-none focus:outline-none font-ALMENDRA  px-3 py-1 bg-DARKTHEME_LIGHT_GREEN_COLOR rounded-sm flex items-center min-w-32">
-          <span className="pr-1 font-semibold flex-1">Dropdown</span>
+          <span className="pr-1 font-semibold flex-1">Place meeple</span>
           <span>
             <svg
               className="fill-current h-4 w-4 transform group-hover:-rotate-180
@@ -29,8 +30,11 @@ const DropDown: FunctionComponent<DropDownProps> = observer(() => {
           className="bg-DARKTHEME_LIGHT_GREEN_COLOR font-ALMENDRA z-50 rounded-sm transform scale-0 group-hover:scale-100 absolute 
           transition duration-400 ease-in-out origin-top min-w-32"
         >
-          <li className="rounded-sm px-3 py-1 hover:bg-DARKTHEME_DARK_GREEN_COLOR hover:text-white">Programming</li>
-          <li className="rounded-sm px-3 py-1 hover:bg-DARKTHEME_DARK_GREEN_COLOR hover:text-white">DevOps</li>
+          {availableProjects?.map((project) => (
+            <li className="rounded-sm px-3 py-1 hover:bg-DARKTHEME_DARK_GREEN_COLOR hover:text-white">
+              {project.type}
+            </li>
+          ))}
           <li className="rounded-sm relative px-3 py-1 hover:bg-DARKTHEME_DARK_GREEN_COLOR hover:text-white">
             <button className="w-full text-left flex items-center outline-none focus:outline-none">
               <span className="pr-1 flex-1">Langauges</span>

@@ -56,6 +56,7 @@ const GameBoard = observer((): ReactElement => {
       );
 
       if (row !== 0 || column !== 0) {
+        rootStore.gameStore.setTileInHandFromWebSocket(id, rotation);
         onTilePlacement(row, column, true);
       }
     });

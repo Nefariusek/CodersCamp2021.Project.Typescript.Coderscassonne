@@ -15,9 +15,6 @@ class PlayersStore {
   }
 
   addPlayer(playerName: string, technology: Technologies) {
-    // if (!this.players) {
-    //   this.players = [];
-    // }
     const newPlayer = new Player(playerName, technology);
     console.log(newPlayer);
     this.players.push(newPlayer);

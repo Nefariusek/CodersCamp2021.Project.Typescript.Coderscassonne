@@ -212,23 +212,22 @@ export const extendBoard = (row: number, column: number) => {
 
 //================== MEEPLE PLACEMENT =====================//
 
-export const placeMeeple = (location: Locations, tile: Tile) => {
+export const placeMeeple = (tile: Tile, projectId: number) => {
   const currentPlayer = rootStore.playersStore.getCurrentPlayer()!;
   const availableProjects = rootStore.projectStore.getAvailableProjects(tile);
-  if (
-    rootStore.gameStore.currentPhase === GamePhases.MEEPLE_PLACEMENT &&
-    currentPlayer.getMeepleCount() > 0 &&
-    availableProjects
-  ) {
-    const meeple = currentPlayer.getMeeple()!;
-    const projectOfLocation = availableProjects.find((p: Project) => p.type === location);
-    if (projectOfLocation) {
-      projectOfLocation.meeples.push(meeple);
-    }
-  } else if (availableProjects) {
-    console.log('no meeples available');
-    //end of turn
-  } else {
+
+  if ((availableProjects && !availableProjects.length) || !availableProjects) {
     console.log('no available projects');
+  }
+  if (!currentPlayer.getMeepleCount()) {
+    console.log('no meeples available');
+  }
+  if (rootStore.gameStore.currentPhase !== GamePhases.MEEPLE_PLACEMENT) {
+    console.log('wrong game phase');
+  }
+  const meeple = currentPlayer.getMeeple()!;
+  const selectedProject = availableProjects!.find((p: Project) => p.id === projectId);
+  if (selectedProject) {
+    selectedProject.meeples.push(meeple);
   }
 };

@@ -55,7 +55,7 @@ class GameStore {
 
         this.tileInHand = undefined;
         if (this.boardState.length > 9) {
-          this.setNextPhase();
+          !fromWebsocket && this.setNextPhase();
         }
       } else {
         openInvalidMoveModal();
@@ -86,7 +86,7 @@ class GameStore {
     this.tileInHand?.setRotation(rotation);
   }
 
-  setNextPhase() {
+  setNextPhase(fromWebsocket: boolean = false) {
     if (this.currentPhase === GamePhases.TILE_PLACEMENT) {
       this.currentPhase = GamePhases.MEEPLE_PLACEMENT;
     } else if (this.currentPhase === GamePhases.MEEPLE_PLACEMENT) {
@@ -95,6 +95,7 @@ class GameStore {
       this.endCurrentTurn();
       this.currentPhase = GamePhases.TILE_PLACEMENT;
     }
+    !fromWebsocket && socket.emit('sendNextPhase', true);
   }
 
   placeMeeple() {

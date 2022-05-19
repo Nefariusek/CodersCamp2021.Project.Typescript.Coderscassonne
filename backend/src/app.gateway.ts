@@ -10,7 +10,7 @@ import {
 import { Socket, Server } from 'socket.io';
 
 @WebSocketGateway(5001, { cors: true })
-export class AppGateway
+export class GameGateway
   implements OnGatewayInit, OnGatewayConnection, OnGatewayDisconnect
 {
   afterInit(server: Server) {
@@ -29,5 +29,10 @@ export class AppGateway
   handleMessage(client: Socket, text: string): WsResponse<string> {
     const message = `Client with id: ${client.id} send a message: ${text}`;
     return { event: 'receiveMessage', data: message };
+  }
+
+  @SubscribeMessage('sendNextPhase')
+  handleEndOfTurn(client: Socket, text: string): void {
+    client.broadcast.emit('receiveNextPhase', text);
   }
 }

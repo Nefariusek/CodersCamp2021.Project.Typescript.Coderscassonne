@@ -68,6 +68,12 @@ const GameBoard = observer((): ReactElement => {
     });
   }, []);
 
+  useEffect(() => {
+    socket.on('receiveNextPhase', (nextPhase) => {
+      nextPhase && rootStore.gameStore.setNextPhase(true);
+    });
+  }, []);
+
   function gameBoardAutoScale(): number {
     const rowsCount = Object.entries(tilesGroupedByRows).length;
     const gameBoardWindowHeight = GAMEBOARD_LAYOUT_PROPORTION * windowHeight;

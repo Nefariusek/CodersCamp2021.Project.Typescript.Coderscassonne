@@ -6,32 +6,85 @@ import rootStore, { boardState } from '../../stores/RootStore';
 import Project from '../../model/Project';
 import TileState from '../../constants/tileState';
 import { GamePhases } from '../NextPhaseButton/NextPhaseButton';
+import { BoardState } from './GameBoard';
 
 export const manageProjects = (row: number, column: number) => {
-  const existingLocations: Locations[] = [];
+  const existingLocations: Locations[] = [Locations.FIELD];
   updateExistingProjects(existingLocations, row, column);
   createNewProjects(existingLocations);
   mergeProjects();
 };
 
+function updateExistingProjects(existingLocations: Locations[], row: number, column: number) {
+  const adjacentTiles = getAdjacentTiles(row, column);
+  adjacentTiles.forEach((adjacentTile, edge) => {
+    if (adjacentTile) {
+      const adjacentTileProject = rootStore.projectStore.allProjects.find(
+        (project) =>
+          project.tiles.includes(adjacentTile) && project.type === rootStore.gameStore.tileInHand?.edges[edge],
+      );
+      if (adjacentTileProject) {
+        adjacentTileProject.tiles.push(adjacentTile);
+        existingLocations.push(adjacentTileProject.type);
+      }
+    }
+  });
+}
+
+function getAdjacentTiles(row: number, column: number): Map<keyof Edges, Tile | undefined> {
+  const adjacentTiles = new Map<keyof Edges, Tile | undefined>();
+  adjacentTiles.set('top', getAdjacentTopBoardState(row, column)?.tile);
+  adjacentTiles.set('right', getAdjacentRightBoardState(row, column)?.tile);
+  adjacentTiles.set('bottom', getAdjacentBottomBoardState(row, column)?.tile);
+  adjacentTiles.set('left', getAdjacentLeftBoardState(row, column)?.tile);
+
+  return adjacentTiles;
+}
+
+function createNewProjects(existingLocations: Locations[]) {
+  const tileInHand = rootStore.gameStore.tileInHand!;
+  const addNewProject = (l: Locations, t: Tile) => rootStore.projectStore.addNewProject(l, t);
+  if (!existingLocations.includes(Locations.ROAD) && tileInHand.middle.includes(Locations.ROAD)) {
+    const roadProject = addNewProject(Locations.ROAD, tileInHand);
+    existingLocations.push(roadProject.type);
+  }
+  if (!existingLocations.includes(Locations.CITY) && tileInHand.middle.includes(Locations.CITY)) {
+    const cityProject = addNewProject(Locations.CITY, tileInHand);
+    existingLocations.push(cityProject.type);
+  }
+  if (tileInHand.middle.includes(Locations.MONASTERY)) {
+    const monasteryProject = addNewProject(Locations.MONASTERY, tileInHand);
+    existingLocations.push(monasteryProject.type);
+  }
+  const edges = Object.values(tileInHand.edges);
+
+  edges.filter((edge) => !existingLocations.includes(edge)).forEach((edge) => addNewProject(edge, tileInHand));
+}
+
 function mergeProjects() {
   const allProjects = rootStore.projectStore.allProjects;
-  const currentTileProjects = allProjects.filter((project) => project.tiles.includes(rootStore.gameStore.tileInHand!));
-  const oldRoadProjects = getProjectsOfType(Locations.ROAD, currentTileProjects);
-  const oldCityProjects = getProjectsOfType(Locations.ROAD, currentTileProjects);
-  const projectsToRemove = [...oldRoadProjects, ...oldCityProjects];
-  const mergedRoadProject = createMergedProject(Locations.ROAD, currentTileProjects);
-  const mergedCityProject = createMergedProject(Locations.CITY, currentTileProjects);
 
-  _.remove(allProjects, () => projectsToRemove.length);
-  allProjects.push(mergedCityProject, mergedRoadProject);
+  const currentTileProjects = allProjects.filter((project) => project.tiles.includes(rootStore.gameStore.tileInHand!));
+
+  const oldRoadProjects = getProjectsOfType(Locations.ROAD, currentTileProjects);
+  const oldCityProjects = getProjectsOfType(Locations.CITY, currentTileProjects);
+
+  if (oldRoadProjects.length) {
+    createMergedProject(Locations.ROAD, currentTileProjects);
+  }
+
+  if (oldCityProjects.length) {
+    createMergedProject(Locations.CITY, currentTileProjects);
+  }
+
+  const projectsToRemove = [...oldRoadProjects, ...oldCityProjects];
+  _.pullAll(allProjects, projectsToRemove);
 }
 
 function createMergedProject(type: Locations, projects: Project[]) {
-  const joinedProjectOfType = new Project(type);
+  const joinedProjectOfType = rootStore.projectStore.addNewProject(type);
   const tilesOfType = getTilesToMerge(type, projects);
   joinedProjectOfType.tiles.push(...tilesOfType);
-  return joinedProjectOfType;
 }
 
 function getTilesToMerge(type: Locations, projects: Project[]) {
@@ -46,16 +99,6 @@ function getTilesToMerge(type: Locations, projects: Project[]) {
 
 function getProjectsOfType(type: Locations, projects: Project[]) {
   return projects.filter((project) => project.type === type);
-}
-
-function getAdjacentTiles(row: number, column: number): Map<keyof Edges, Tile | undefined> {
-  const adjacentTiles = new Map<keyof Edges, Tile | undefined>();
-  adjacentTiles.set('top', getAdjacentTopTile(row, column));
-  adjacentTiles.set('right', getAdjacentRightTile(row, column));
-  adjacentTiles.set('bottom', getAdjacentBottomTile(row, column));
-  adjacentTiles.set('left', getAdjacentLeftTile(row, column));
-
-  return adjacentTiles;
 }
 
 export function validateTilePlacement(row: number, column: number): boolean {
@@ -119,59 +162,22 @@ export const activateAdjacentTiles = (row: number, column: number) => {
   }
 };
 
-export const getAdjacentTopTile = (row: number, column: number): Tile | undefined => {
-  return boardState.find((tile) => tile.column === column && tile.row === row - 1)?.tile;
+export const getAdjacentTopBoardState = (row: number, column: number): BoardState | undefined => {
+  return boardState.find((tile) => tile.column === column && tile.row === row - 1);
 };
 
-export const getAdjacentBottomTile = (row: number, column: number): Tile | undefined => {
-  return boardState.find((tile) => tile.column === column && tile.row === row + 1)?.tile;
+export const getAdjacentBottomBoardState = (row: number, column: number): BoardState | undefined => {
+  return boardState.find((tile) => tile.column === column && tile.row === row + 1);
 };
 
-export const getAdjacentRightTile = (row: number, column: number): Tile | undefined => {
-  return boardState.find((tile) => tile.column === column + 1 && tile.row === row)?.tile;
+export const getAdjacentRightBoardState = (row: number, column: number): BoardState | undefined => {
+  return boardState.find((tile) => tile.column === column + 1 && tile.row === row);
 };
 
-export const getAdjacentLeftTile = (row: number, column: number): Tile | undefined => {
-  return boardState.find((tile) => tile.column === column - 1 && tile.row === row)?.tile;
+export const getAdjacentLeftBoardState = (row: number, column: number): BoardState | undefined => {
+  return boardState.find((tile) => tile.column === column - 1 && tile.row === row);
 };
 
-function updateExistingProjects(existingLocations: Locations[], row: number, column: number) {
-  const adjacentTiles = getAdjacentTiles(row, column);
-  adjacentTiles.forEach((adjacentTile, edge) => {
-    if (adjacentTile) {
-      const adjacentTileProject = rootStore.projectStore.allProjects.find(
-        (project) =>
-          project.tiles.includes(adjacentTile) && project.type === rootStore.gameStore.tileInHand?.edges[edge],
-      );
-      if (adjacentTileProject) {
-        adjacentTileProject.tiles.push(adjacentTile);
-        existingLocations.push(adjacentTileProject.type);
-      }
-    }
-  });
-}
-
-function createNewProjects(existingLocations: Locations[]) {
-  const tileInHand = rootStore.gameStore.tileInHand!;
-  const addNewProject = (l: Locations, t: Tile) => rootStore.projectStore.addNewProject(l, t);
-  if (!existingLocations.includes(Locations.ROAD) && tileInHand.middle.includes(Locations.ROAD)) {
-    const roadProject = addNewProject(Locations.ROAD, tileInHand);
-    existingLocations.push(roadProject.type);
-  }
-
-  if (!existingLocations.includes(Locations.CITY) && tileInHand.middle.includes(Locations.CITY)) {
-    const cityProject = addNewProject(Locations.CITY, tileInHand);
-    existingLocations.push(cityProject.type);
-  }
-
-  if (tileInHand.middle === Locations.MONASTERY) {
-    const monasteryProject = addNewProject(Locations.MONASTERY, tileInHand);
-    existingLocations.push(monasteryProject.type);
-  }
-  const edges = Object.values(tileInHand.edges);
-
-  edges.filter((edge) => !existingLocations.includes(edge)).forEach((edge) => addNewProject(edge, tileInHand));
-}
 export const extendBoard = (row: number, column: number) => {
   let bottomRow = _.maxBy(boardState, 'row')!.row;
   let topRow = _.minBy(boardState, 'row')!.row;

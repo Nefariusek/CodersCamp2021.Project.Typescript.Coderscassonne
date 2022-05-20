@@ -66,7 +66,7 @@ const Legend: React.FunctionComponent = (): ReactElement => {
               imgURL="./Elements/Tiles/Monastery/Monastery_1.png"
             />
             <Description
-              name="Garden"
+              name="Monastery with a road"
               description="Scores like monastery"
               imgURL="./Elements/Tiles/Monastery/Monastery_2.png"
             />

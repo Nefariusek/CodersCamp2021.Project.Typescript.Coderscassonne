@@ -9,9 +9,10 @@ import {
 import GameModeParser from '../components/GameModeParser';
 import { openInvalidMoveModal } from '../components/Modal/InvalidMoveModal';
 import { GamePhases } from '../components/NextPhaseButton/NextPhaseButton';
+import TileState from '../constants/tileState';
 import { JSONData } from '../mocks/mocksTiles';
 import Tile, { Rotation } from '../model/Tile';
-import TileState from '../constants/tileState';
+import rootStore from './RootStore';
 
 import { socket } from '../App';
 class GameStore {
@@ -42,10 +43,10 @@ class GameStore {
           socket.emit('sendTilePlaced', `${this.tileInHand.id}_${row}_${column}_${this.tileInHand.rotation}`);
 
         extendBoard(row, column);
-        console.log(`extend board `, this.boardState);
         activateAdjacentTiles(row, column);
-
         manageProjects(row, column);
+        console.log(rootStore.projectStore.allProjects);
+
         this.recentlyPlacedTile = this.tileInHand;
 
         if (fromWebsocket) {

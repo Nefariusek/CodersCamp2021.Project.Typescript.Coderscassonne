@@ -18,7 +18,7 @@ class Tile {
 
   public id: string;
 
-  public middle: Locations;
+  public middle: Locations[];
 
   public placedBy: Player;
 
@@ -30,10 +30,10 @@ class Tile {
 
   private readonly originalEdges: Edges;
 
-  constructor(edges: Edges, middle: Locations, isSpecial = false, id: string) {
+  constructor(edges: Edges, middle: Locations[], isSpecial = false, id: string) {
     this.id = id;
     this.edges = edges;
-    this.middle = middle;
+    this.middle = [...middle];
     this.originalEdges = edges;
     this.isSpecial = isSpecial;
     this.rotation = 0;
@@ -92,7 +92,6 @@ class Tile {
   public getTileImageSourceByLocations(): string | undefined {
     const foundTile = PREDEFINED_TILE_IMAGES.find(
       (tile) =>
-        tile.middle === this.middle &&
         tile.bottom === this.originalEdges.bottom &&
         tile.right === this.originalEdges.right &&
         tile.left === this.originalEdges.left &&

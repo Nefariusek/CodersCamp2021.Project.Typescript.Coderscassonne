@@ -4,6 +4,7 @@ import Meeple from './Meeple';
 import Player from './Player';
 import Tile from './Tile';
 import { makeAutoObservable } from 'mobx';
+import rootStore from '../stores/RootStore';
 class Project {
   public meeples: Meeple[];
 
@@ -13,8 +14,11 @@ class Project {
 
   public isFinished: boolean;
 
+  public id: number;
+
   constructor(type: Locations, tile?: Tile) {
     this.meeples = [];
+    this.id = rootStore.projectStore.allProjects.length;
     this.tiles = tile ? [tile] : [];
     this.type = type;
     this.isFinished = false;

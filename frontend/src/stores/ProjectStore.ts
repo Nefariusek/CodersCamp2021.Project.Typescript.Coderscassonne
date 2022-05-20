@@ -30,6 +30,16 @@ class ProjectStore {
     return;
   }
 
+  get availableProjects() {
+    const recentlyPlacedTile = this.rootStore.gameStore.recentlyPlacedTile;
+    if (recentlyPlacedTile) {
+      return this.allProjects.filter(
+        (project) => project.tiles.includes(recentlyPlacedTile) && project.meeples.length === 0,
+      );
+    }
+    return;
+  }
+
   // updateProject(adjacentTile: BoardState, project: Project) {
   //   const projectToUpdate = this.allProjects.find((project) => project.tiles.includes(adjacentTile.tile!));
   //   const tileInHand = this.rootStore.gameStore.tileInHand;

@@ -6,7 +6,7 @@ import { observer } from 'mobx-react-lite';
 interface DropDownProps {}
 
 const DropDown: FunctionComponent<DropDownProps> = observer(() => {
-  const availableProjects = rootStore.projectStore.getAvailableProjects();
+  const availableProjects = rootStore.projectStore.availableProjects;
 
   console.log(availableProjects + 'kupka');
 

@@ -12,6 +12,7 @@ import { GamePhases } from '../components/NextPhaseButton/NextPhaseButton';
 import TileState from '../constants/tileState';
 import { JSONData } from '../mocks/mocksTiles';
 import Tile from '../model/Tile';
+import rootStore from './RootStore';
 
 class GameStore {
   turnNumber: number;
@@ -38,10 +39,10 @@ class GameStore {
         tileToChange.state = TileState.TAKEN;
         tileToChange.tile = this.tileInHand;
         extendBoard(row, column);
-        console.log(`extend board `, this.boardState);
         activateAdjacentTiles(row, column);
-
         manageProjects(row, column);
+        console.log(rootStore.projectStore.allProjects);
+
         this.recentlyPlacedTile = this.tileInHand;
         this.tileInHand = undefined;
         if (this.boardState.length > 9) {

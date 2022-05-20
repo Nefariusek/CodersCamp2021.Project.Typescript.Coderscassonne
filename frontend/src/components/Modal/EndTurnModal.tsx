@@ -1,10 +1,10 @@
 import React from 'react';
-import { openModal, Modal } from './Modal';
+import { openModal, Modal, ModalEvents } from './Modal';
 
 export function openEndTurnModal() {
-  openModal('endTurn');
+  openModal(ModalEvents.END_TURN);
 }
 
 export const EndTurnModal = (): React.ReactElement => {
-  return <Modal eventType="endTurn" />;
+  return <Modal eventType={ModalEvents.END_TURN} />;
 };

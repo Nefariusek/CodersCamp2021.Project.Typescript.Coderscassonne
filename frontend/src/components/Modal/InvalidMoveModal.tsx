@@ -1,10 +1,10 @@
 import React from 'react';
-import { openModal, Modal } from './Modal';
+import { openModal, Modal, ModalEvents } from './Modal';
 
 export function openInvalidMoveModal() {
-  openModal('invalidMove');
+  openModal(ModalEvents.INVALID_MOVE);
 }
 
 export const InvalidMoveModal = (): React.ReactElement => {
-  return <Modal eventType="invalidMove" />;
+  return <Modal eventType={ModalEvents.INVALID_MOVE} />;
 };

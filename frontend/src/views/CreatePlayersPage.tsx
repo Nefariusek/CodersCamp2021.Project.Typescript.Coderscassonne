@@ -7,6 +7,7 @@ import CreatePlayer from '../components/CreatePlayer/CreatePlayer';
 import DataStoreContext from '../components/DataStoreContext/DataStoreContext';
 import Technologies from '../constants/technologies';
 import Player from '../model/Player';
+import { SettingsModal } from '../components/Modal/SettingsModal';
 
 const CreatePlayersPage = () => {
   const navigate = useNavigate();
@@ -50,6 +51,7 @@ const CreatePlayersPage = () => {
         />
       )}
       {players.length > 0 && <AddedPlayers players={players} save={savePlayers} change={changeOrderOfPlayers} />}
+      <SettingsModal />
     </div>
   );
 };

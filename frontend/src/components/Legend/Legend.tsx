@@ -63,12 +63,12 @@ const Legend: React.FunctionComponent = (): ReactElement => {
             <Description
               name="Monastery"
               description="When surrounded by tiles, gives 9 points to a player whose abbot stands on it"
-              imgURL="./Elements/Tiles/Monastery/Monastery.png"
+              imgURL="./Elements/Tiles/Monastery/Monastery_1.png"
             />
             <Description
               name="Garden"
               description="Scores like monastery"
-              imgURL="./Elements/Tiles/Monastery/Garden.png"
+              imgURL="./Elements/Tiles/Monastery/Monastery_2.png"
             />
             <Description
               name="Zoom and move gameboard"

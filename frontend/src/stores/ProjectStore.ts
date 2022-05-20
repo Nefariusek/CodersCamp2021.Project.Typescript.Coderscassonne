@@ -14,18 +14,14 @@ class ProjectStore {
   }
 
   addNewProject(location: Locations, tile?: Tile) {
-    const newProject = new Project(location, tile); //TODO: change tile <=> location after change of arguments order
+    const newProject = new Project(location, tile);
     this.allProjects.push(newProject);
 
     return newProject;
   }
 
-  // updateProject(adjacentTile: BoardState, project: Project) {
-  //   const projectToUpdate = this.allProjects.find((project) => project.tiles.includes(adjacentTile.tile!));
-  //   const tileInHand = this.rootStore.gameStore.tileInHand;
-  //   if (tileInHand) {
-  //     projectToUpdate && projectToUpdate.tiles.push(tileInHand);
-  //   }
-  // }
+  getAvailableProjects(tile: Tile): Project[] | undefined {
+    return this.allProjects.filter((project) => project.tiles.includes(tile) && project.meeples.length === 0);
+  }
 }
 export default ProjectStore;

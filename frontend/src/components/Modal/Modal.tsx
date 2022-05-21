@@ -8,12 +8,22 @@ export enum ModalEvents {
   END_GAME = 'endGame',
   END_TURN = 'endTurn',
   INVALID_MOVE = 'invalidMove',
-  SETTING_ON = 'settingsOn',
+  SETTINGS_ON = 'settingsOn',
   WORK_IN_PROGRESS = 'workInProgress',
+  DEFAULT = 'default',
 }
 
+const MODAL_EVENT_MESSAGES = {
+  [ModalEvents.END_GAME]: ['End of the game!', 'Play new game'],
+  [ModalEvents.END_TURN]: ["It's the end of your turn!", 'Play new game'],
+  [ModalEvents.INVALID_MOVE]: ["Sorry, this tile can't be placed here!", 'Cancel'],
+  [ModalEvents.SETTINGS_ON]: ['Settings', 'Close'],
+  [ModalEvents.WORK_IN_PROGRESS]: ['Work in progress', 'Cancel'],
+  [ModalEvents.DEFAULT]: ['', 'Cancel'],
+};
+
 interface ModalProps {
-  eventType: string;
+  eventType: ModalEvents;
   children?: React.ReactNode;
 }
 
@@ -28,35 +38,11 @@ export const Modal = observer((props: ModalProps): React.ReactElement => {
   const [isModalOn, setModalOn] = useState(false);
   const navigate = useNavigate();
 
-  let eventText, closeText;
-  switch (eventType) {
-    case 'endGame':
-      eventText = 'End of the game!';
-      closeText = 'Play new game';
-      break;
-    case 'endTurn':
-      eventText = "It's the end of your turn!";
-      closeText = 'Cancel';
-      break;
-    case 'invalidMove':
-      eventText = "Sorry, this tile can't be placed here!";
-      closeText = 'Cancel';
-      break;
-    case 'workInProgress':
-      eventText = 'Work in progress';
-      closeText = 'Cancel';
-      break;
-    case 'settingsOn':
-      eventText = 'Settings';
-      closeText = 'Close';
-      break;
-    default:
-      eventText = '';
-      closeText = 'Cancel';
-  }
+  const eventText = MODAL_EVENT_MESSAGES[eventType][0];
+  const closeText = MODAL_EVENT_MESSAGES[eventType][1];
 
   const handleClose = () => {
-    if (eventType === 'endGame') {
+    if (eventType === ModalEvents.END_GAME) {
       navigate(PATH_TO_SETTINGS);
     } else {
       setModalOn(false);

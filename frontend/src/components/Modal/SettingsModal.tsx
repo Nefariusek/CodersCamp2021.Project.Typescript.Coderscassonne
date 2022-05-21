@@ -5,13 +5,12 @@ import React from 'react';
 import rootStore from '../../stores/RootStore';
 
 export function openSettingsModal() {
-  openModal(ModalEvents.SETTING_ON);
+  openModal(ModalEvents.SETTINGS_ON);
 }
 
 export const SettingsModal = observer((): React.ReactElement => {
   const handleDevelopmentModeButtonClick = () => {
     rootStore.setIsDevelopmentMode();
-    console.log(rootStore.isDevelopmentMode);
   };
 
   const handleClearLocalStorageClick = () => {
@@ -19,7 +18,7 @@ export const SettingsModal = observer((): React.ReactElement => {
   };
 
   return (
-    <Modal eventType={ModalEvents.SETTING_ON}>
+    <Modal eventType={ModalEvents.SETTINGS_ON}>
       <div className="flex flex-col">
         <Button
           text={rootStore.isDevelopmentMode ? 'DEV' : 'PROD'}

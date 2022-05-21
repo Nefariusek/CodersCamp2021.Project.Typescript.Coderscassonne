@@ -28,7 +28,7 @@ const GameTimer = observer((props: GameTimerProps) => {
   }, [seconds, minutes]);
 
   return (
-    <div className="font-ALMENDRA font-bold text-3xl text-DARKTHEME_LIGHT_GREEN_COLOR p-3">
+    <div className="font-ALMENDRA font-bold text-base md:text-2xl xl:text-3xl text-DARKTHEME_LIGHT_GREEN_COLOR p-3">
       <div className="flex">
         <div className="flex-column ml-5 mt-1">
           <p>Turn number: {rootStore.gameStore.turnNumber}</p>

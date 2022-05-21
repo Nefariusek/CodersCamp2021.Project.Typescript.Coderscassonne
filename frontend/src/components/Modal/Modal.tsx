@@ -9,6 +9,7 @@ export enum ModalEvents {
   END_TURN = 'endTurn',
   INVALID_MOVE = 'invalidMove',
   SETTINGS_ON = 'settingsOn',
+  SHOW_SCORE = 'showScore',
   WORK_IN_PROGRESS = 'workInProgress',
   DEFAULT = 'default',
 }
@@ -18,6 +19,7 @@ const MODAL_EVENT_MESSAGES = {
   [ModalEvents.END_TURN]: ["It's the end of your turn!", 'Play new game'],
   [ModalEvents.INVALID_MOVE]: ["Sorry, this tile can't be placed here!", 'Cancel'],
   [ModalEvents.SETTINGS_ON]: ['Settings', 'Close'],
+  [ModalEvents.SHOW_SCORE]: ['Game score', 'Close'],
   [ModalEvents.WORK_IN_PROGRESS]: ['Work in progress', 'Cancel'],
   [ModalEvents.DEFAULT]: ['', 'Cancel'],
 };

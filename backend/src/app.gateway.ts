@@ -32,7 +32,8 @@ export class GameGateway
   }
 
   @SubscribeMessage('sendNextPhase')
-  handleEndOfTurn(client: Socket, text: string): void {
-    client.broadcast.emit('receiveNextPhase', text);
+  handleEndOfTurn(client: Socket, nextPhase: boolean): void {
+    const message = { nextPhase: nextPhase, clientId: client.id };
+    client.broadcast.emit('receiveNextPhase', message);
   }
 }

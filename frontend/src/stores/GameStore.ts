@@ -82,8 +82,7 @@ class GameStore {
     this.tileInHand = undefined;
   }
 
-  setRotationFromWebSocket(rotationString: string) {
-    const rotation = +rotationString as Rotation;
+  setRotationFromWebSocket(rotation: Rotation) {
     this.tileInHand?.setRotation(rotation);
   }
 

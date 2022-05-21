@@ -41,8 +41,7 @@ const GameBoard = observer((): ReactElement => {
 
   useEffect(() => {
     socket.on('receiveTilePlaced', (data) => {
-      // const { tileData, clientId } = data;
-      const tileData = data;
+      const { tileData, clientId } = data;
       const splitMessageArray = tileData.split('_');
 
       const id: string = `${splitMessageArray[0]}_${splitMessageArray[1]}`;
@@ -50,27 +49,31 @@ const GameBoard = observer((): ReactElement => {
       const column: number = +splitMessageArray[3];
       const rotation = +splitMessageArray[4] as Rotation;
 
-      console.log(
-        `Tile with id ${id} is placed in ${row} row and ${column} column rotated ${rotation} degrees`,
-        // `Tile with id ${id} is placed in ${row} row and ${column} column rotated ${rotation} degrees by client with id ${clientId}`,
-      );
-
       if (row !== 0 || column !== 0) {
         rootStore.gameStore.setTileInHandFromWebSocket(id, rotation);
         onTilePlacement(row, column, true);
       }
+
+      console.log(
+        `Tile with id ${id} rotated ${rotation} degrees is placed in ${row} row and ${column} column by client with id ${clientId}`,
+      );
     });
   }, []);
 
   useEffect(() => {
-    socket.on('receiveTileRotated', (rotation) => {
-      rootStore.gameStore.setRotationFromWebSocket(rotation);
+    socket.on('receiveTileRotated', (data) => {
+      const { rotation, clientId } = data;
+      const rotationDegree = rotation as Rotation;
+      rootStore.gameStore.setRotationFromWebSocket(rotationDegree);
+      console.log(`Client with id ${clientId} rotated tile in hand ${rotationDegree} degrees`);
     });
   }, []);
 
   useEffect(() => {
-    socket.on('receiveNextPhase', (nextPhase) => {
+    socket.on('receiveNextPhase', (data) => {
+      const { nextPhase, clientId } = data;
       nextPhase && rootStore.gameStore.setNextPhase(true);
+      console.log(`Client with id ${clientId} moved to the next phase.`);
     });
   }, []);
 

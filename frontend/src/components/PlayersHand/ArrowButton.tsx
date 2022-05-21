@@ -12,12 +12,12 @@ const ArrowButton = observer((props: ArrowButtonInterface) => {
 
   function handleRotateLeft() {
     tile?.rotateLeft();
-    socket.emit('sendTileRotated', '-90');
+    socket.emit('sendTileRotated', -90);
   }
 
   function handleRotateRight() {
     tile?.rotateRight();
-    socket.emit('sendTileRotated', '90');
+    socket.emit('sendTileRotated', 90);
   }
 
   return (

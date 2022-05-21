@@ -72,8 +72,6 @@ const SettingsPage: FC = (): ReactElement => (
       <GameModeContainer gameMode="Fast" infoText={fastModeText} />
       <GameModeContainer gameMode="Custom" infoText={customModeText} />
     </div>
-    <div className="h-[50px]" />
-    <img src="./Elements/Layout/castle.png" alt="Custom mode" className="w-full relative bottom-[0px]" />
   </div>
 );
 

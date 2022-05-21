@@ -15,6 +15,7 @@ import Tile, { Rotation } from '../model/Tile';
 import rootStore from './RootStore';
 
 import { socket } from '../App';
+import WebSocketEvent from '../constants/webSocketEvents';
 class GameStore {
   turnNumber: number;
   boardState: BoardState[] = [];
@@ -40,7 +41,10 @@ class GameStore {
         tileToChange.state = TileState.TAKEN;
         tileToChange.tile = this.tileInHand;
         !fromWebsocket &&
-          socket.emit('sendTilePlaced', `${this.tileInHand.id}_${row}_${column}_${this.tileInHand.rotation}`);
+          socket.emit(
+            WebSocketEvent.SEND_TILE_PLACED,
+            `${this.tileInHand.id}_${row}_${column}_${this.tileInHand.rotation}`,
+          );
 
         extendBoard(row, column);
         activateAdjacentTiles(row, column);
@@ -95,7 +99,7 @@ class GameStore {
       this.endCurrentTurn();
       this.currentPhase = GamePhases.TILE_PLACEMENT;
     }
-    !fromWebsocket && socket.emit('sendNextPhase', true);
+    !fromWebsocket && socket.emit(WebSocketEvent.SEND_NEXT_PHASE, true);
   }
 
   placeMeeple() {

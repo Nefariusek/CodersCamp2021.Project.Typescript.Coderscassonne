@@ -8,6 +8,7 @@ import {
 } from '@nestjs/websockets';
 
 import { Socket, Server } from 'socket.io';
+import WebSocketEvent from './constants/webSocketEvents';
 
 @WebSocketGateway(5001, { cors: true })
 export class GameGateway
@@ -25,15 +26,15 @@ export class GameGateway
     console.log(`disconnected client ${client.id}`);
   }
 
-  @SubscribeMessage('sendMessage')
+  @SubscribeMessage(WebSocketEvent.SEND_MESSAGE)
   handleMessage(client: Socket, text: string): WsResponse<string> {
     const message = `Client with id: ${client.id} send a message: ${text}`;
-    return { event: 'receiveMessage', data: message };
+    return { event: WebSocketEvent.RECEIVE_MESSAGE, data: message };
   }
 
-  @SubscribeMessage('sendNextPhase')
+  @SubscribeMessage(WebSocketEvent.SEND_NEXT_PHASE)
   handleEndOfTurn(client: Socket, nextPhase: boolean): void {
     const message = { nextPhase: nextPhase, clientId: client.id };
-    client.broadcast.emit('receiveNextPhase', message);
+    client.broadcast.emit(WebSocketEvent.RECEIVE_NEXT_PHASE, message);
   }
 }

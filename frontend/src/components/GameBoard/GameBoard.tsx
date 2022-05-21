@@ -9,6 +9,7 @@ import { GAMEBOARD_LAYOUT_PROPORTION, TILE_SIZE } from '../../constants/gameDefa
 import rootStore from '../../stores/RootStore';
 import { observer } from 'mobx-react';
 import { socket } from '../../App';
+import WebSocketEvent from '../../constants/webSocketEvents';
 
 export interface BoardState {
   column: number;
@@ -40,7 +41,7 @@ const GameBoard = observer((): ReactElement => {
   }, []);
 
   useEffect(() => {
-    socket.on('receiveTilePlaced', (data) => {
+    socket.on(WebSocketEvent.RECEIVE_TILE_PLACED, (data) => {
       const { tileData, clientId } = data;
       const splitMessageArray = tileData.split('_');
 
@@ -61,7 +62,7 @@ const GameBoard = observer((): ReactElement => {
   }, []);
 
   useEffect(() => {
-    socket.on('receiveTileRotated', (data) => {
+    socket.on(WebSocketEvent.RECEIVE_TILE_ROTATED, (data) => {
       const { rotation, clientId } = data;
       const rotationDegree = rotation as Rotation;
       rootStore.gameStore.setRotationFromWebSocket(rotationDegree);
@@ -70,7 +71,7 @@ const GameBoard = observer((): ReactElement => {
   }, []);
 
   useEffect(() => {
-    socket.on('receiveNextPhase', (data) => {
+    socket.on(WebSocketEvent.RECEIVE_NEXT_PHASE, (data) => {
       const { nextPhase, clientId } = data;
       nextPhase && rootStore.gameStore.setNextPhase(true);
       console.log(`Client with id ${clientId} moved to the next phase.`);

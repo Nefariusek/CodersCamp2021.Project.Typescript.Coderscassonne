@@ -1,5 +1,6 @@
 import { observer } from 'mobx-react-lite';
 import { socket } from '../../App';
+import WebSocketEvent from '../../constants/webSocketEvents';
 import Tile from '../../model/Tile';
 
 interface ArrowButtonInterface {
@@ -12,12 +13,12 @@ const ArrowButton = observer((props: ArrowButtonInterface) => {
 
   function handleRotateLeft() {
     tile?.rotateLeft();
-    socket.emit('sendTileRotated', -90);
+    socket.emit(WebSocketEvent.SEND_TILE_ROTATED, -90);
   }
 
   function handleRotateRight() {
     tile?.rotateRight();
-    socket.emit('sendTileRotated', 90);
+    socket.emit(WebSocketEvent.SEND_TILE_ROTATED, 90);
   }
 
   return (

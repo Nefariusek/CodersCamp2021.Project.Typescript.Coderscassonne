@@ -65,7 +65,7 @@ const GameModeContainer = (props: GameModeContainerProps) => {
   );
 };
 
-const SettingsPage: FC = (): ReactElement => (
+const GameModePage: FC = (): ReactElement => (
   <div className="flex-col justify-center bg-DARKTHEME_BACKGROUND_COLOR w-full">
     <div className="flex justify-around pt-[150px] pb-[20px] whitespace-pre-line">
       <GameModeContainer gameMode="Classic" infoText={classicModeText} />
@@ -75,4 +75,4 @@ const SettingsPage: FC = (): ReactElement => (
   </div>
 );
 
-export default SettingsPage;
+export default GameModePage;

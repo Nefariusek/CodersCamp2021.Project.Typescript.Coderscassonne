@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { PATH_TO_SETTINGS } from '../../constants/paths';
+import { PATH_TO_GAME_MODE_PAGE } from '../../constants/paths';
 import { useNavigate } from 'react-router-dom';
 
 export function openEndGameModal() {
@@ -11,7 +11,7 @@ export const EndGameModal: React.FC = () => {
   const [isModalOn, setModalOn] = useState(false);
   const navigate = useNavigate();
   const handleEndGame = () => {
-    navigate(PATH_TO_SETTINGS);
+    navigate(PATH_TO_GAME_MODE_PAGE);
   };
   React.useEffect(() => {
     window.addEventListener('endGame', () => {

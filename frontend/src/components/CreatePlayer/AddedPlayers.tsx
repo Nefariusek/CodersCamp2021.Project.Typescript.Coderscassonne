@@ -1,7 +1,7 @@
 import Player from '../../model/Player';
 import Button from '../Button/Button';
 import { useNavigate } from 'react-router-dom';
-import { PATH_TO_SETTINGS } from '../../constants/paths';
+import { PATH_TO_GAME_MODE_PAGE } from '../../constants/paths';
 import { observer } from 'mobx-react';
 import rootStore from '../../stores/RootStore';
 interface AddedPlayersProps {
@@ -54,7 +54,7 @@ const AddedPlayersItem = observer(({ player, number, last }: AddedPlayersItemPro
 const AddedPlayers = observer(({ players }: AddedPlayersProps) => {
   const navigate = useNavigate();
   const handleContinueButton = () => {
-    navigate(PATH_TO_SETTINGS);
+    navigate(PATH_TO_GAME_MODE_PAGE);
   };
   return (
     <div className="flex flex-col items-center justify-between w-96 h-[580px] bg-DARKTHEME_BACKGROUND_COLOR border-4 border-DARKTHEME_LIGHT_GREEN_COLOR">

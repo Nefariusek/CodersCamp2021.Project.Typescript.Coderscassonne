@@ -1,18 +1,19 @@
 import Locations from '../constants/locations';
 import Tile, { Edges } from '../model/Tile';
 
-type TileType = {
+export interface TileType {
+  id: string;
   edges: Edges;
-  middle: Locations;
+  middle: Locations[];
   isSpecial: boolean;
-};
+}
 
 const GameModeParser = (jsonData: TileType[]): Tile[] => {
   const tileArray: Tile[] = [];
   jsonData.toString();
   jsonData.forEach((element) => {
-    const { edges, middle, isSpecial } = element;
-    const tile = new Tile(edges, middle, isSpecial, 'first');
+    const { edges, middle, isSpecial, id } = element;
+    const tile = new Tile(edges, middle, isSpecial, id);
     tileArray.push(tile);
   });
   return tileArray;

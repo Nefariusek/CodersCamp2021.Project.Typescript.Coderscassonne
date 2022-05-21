@@ -3,7 +3,7 @@ import React, { ReactElement, useState } from 'react';
 interface DescriptionProps {
   name: string;
   description: string;
-  imgURL: string;
+  imgURL?: string;
 }
 
 const Description = (props: DescriptionProps) => {
@@ -14,7 +14,7 @@ const Description = (props: DescriptionProps) => {
         <p className="font-bold">{name}</p>
         <p className="text-l">{description}</p>
       </div>
-      <img height={60} width={60} src={imgURL} alt={name}></img>
+      {!!imgURL && <img height={60} width={60} src={imgURL} alt={name}></img>}
     </div>
   );
 };
@@ -27,12 +27,10 @@ const Legend: React.FunctionComponent = (): ReactElement => {
   };
 
   return (
-    <div className="font-ALMENDRA text-DARKTHEME_LIGHT_GREEN_COLOR text-l">
-      {!isLegendToggled && (
-        <button onClick={toggleLegend}>
-          <img src="./Elements/Layout/glass.png" alt="legend" />
-        </button>
-      )}
+    <div className="font-ALMENDRA text-DARKTHEME_LIGHT_GREEN_COLOR text-sm z-50">
+      <button onClick={toggleLegend}>
+        <img src="./Elements/Layout/glass.png" alt="legend" />
+      </button>
       {isLegendToggled && (
         <div className="bg-DARKTHEME_DARK_GREEN_COLOR rounded w-[400px] absolute top-[20px] right-[20px]">
           <div className="grid grid-cols-6 p-[10px] z-100">
@@ -49,7 +47,7 @@ const Legend: React.FunctionComponent = (): ReactElement => {
             />
             <Description
               name="Meeple"
-              description="Can be placed on just placed tiles- on unoccupied roads and cities with no king"
+              description="Can be placed on just placed tiles - on unoccupied roads and cities with no king"
               imgURL="./Elements/Meeple/HTML_meeple.png"
             />
             <Description
@@ -65,12 +63,16 @@ const Legend: React.FunctionComponent = (): ReactElement => {
             <Description
               name="Monastery"
               description="When surrounded by tiles, gives 9 points to a player whose abbot stands on it"
-              imgURL="./Elements/Tiles/Monastery/Monastery.png"
+              imgURL="./Elements/Tiles/Monastery/Monastery_1.png"
             />
             <Description
-              name="Garden"
+              name="Monastery with a road"
               description="Scores like monastery"
-              imgURL="./Elements/Tiles/Monastery/Garden.png"
+              imgURL="./Elements/Tiles/Monastery/Monastery_2.png"
+            />
+            <Description
+              name="Zoom and move gameboard"
+              description="You can zoom and move your gameboard (pinch/wheel scroll to zoom, drag to pan)"
             />
           </div>
         </div>

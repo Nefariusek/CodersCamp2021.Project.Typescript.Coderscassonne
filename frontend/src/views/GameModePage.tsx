@@ -1,6 +1,7 @@
 import { FC, ReactElement, useState } from 'react';
 import { PATH_TO_GAMEPAGE, PATH_TO_CUSTOM_MODE_FORM } from '../constants/paths';
 import Button from '../components/Button/Button';
+import { SettingsModal } from '../components/Modal/SettingsModal';
 
 import { useNavigate } from 'react-router-dom';
 
@@ -65,16 +66,15 @@ const GameModeContainer = (props: GameModeContainerProps) => {
   );
 };
 
-const SettingsPage: FC = (): ReactElement => (
+const GameModePage: FC = (): ReactElement => (
   <div className="flex-col justify-center bg-DARKTHEME_BACKGROUND_COLOR w-full">
     <div className="flex justify-around pt-[150px] pb-[20px] whitespace-pre-line">
       <GameModeContainer gameMode="Classic" infoText={classicModeText} />
       <GameModeContainer gameMode="Fast" infoText={fastModeText} />
       <GameModeContainer gameMode="Custom" infoText={customModeText} />
     </div>
-    <div className="h-[50px]" />
-    <img src="./Elements/Layout/castle.png" alt="Custom mode" className="w-full relative bottom-[0px]" />
+    <SettingsModal />
   </div>
 );
 
-export default SettingsPage;
+export default GameModePage;

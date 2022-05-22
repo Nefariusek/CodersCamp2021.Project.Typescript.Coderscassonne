@@ -27,8 +27,8 @@ class GameStore {
   constructor() {
     this.boardState = [{ row: 0, column: 0, state: TileState.ACTIVE }];
     this.turnNumber = 0;
-    this.drawPile = GameModeParser(JSONData);
     this.currentPhase = GamePhases.TILE_PLACEMENT;
+    this.drawPile = GameModeParser(JSONData);
     this.tileInHand = this.drawPile.shift();
     makeAutoObservable(this);
   }
@@ -120,10 +120,10 @@ class GameStore {
     console.log('initGameStore');
     this.boardState.length = 0;
     this.boardState.push({ row: 0, column: 0, state: TileState.ACTIVE });
-    this.tileInHand = GameModeParser(JSONData)[0];
     this.turnNumber = 0;
-    this.drawPile = GameModeParser(JSONData);
     this.currentPhase = GamePhases.TILE_PLACEMENT;
+    this.drawPile = GameModeParser(JSONData);
+    this.tileInHand = this.drawPile.shift();
   }
 }
 

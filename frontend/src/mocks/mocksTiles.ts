@@ -109,7 +109,7 @@ export const JSONData: TileType[] = [
       top: Locations.FIELD,
     },
     isSpecial: false,
-    id: '002_3',
+    id: '002_4',
     middle: [Locations.ROAD],
   },
   {
@@ -122,5 +122,16 @@ export const JSONData: TileType[] = [
     isSpecial: false,
     id: '003_2',
     middle: [Locations.TAVERN],
+  },
+  {
+    edges: {
+      bottom: Locations.FIELD,
+      left: Locations.ROAD,
+      right: Locations.ROAD,
+      top: Locations.FIELD,
+    },
+    id: '001_4',
+    isSpecial: false,
+    middle: [Locations.ROAD],
   },
 ];

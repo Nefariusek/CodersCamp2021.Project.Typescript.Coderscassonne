@@ -1,7 +1,7 @@
 import { makeAutoObservable } from 'mobx';
 import Locations from '../constants/locations';
 import Project from '../model/Project';
-import Tile from '../model/Tile';
+import Tile, { Edges } from '../model/Tile';
 import type { RootStore } from './RootStore';
 
 class ProjectStore {
@@ -13,8 +13,8 @@ class ProjectStore {
     makeAutoObservable(this);
   }
 
-  addNewProject(location: Locations, tile?: Tile) {
-    const newProject = new Project(location, tile);
+  addNewProject(location: Locations, tile?: Tile, edge?: keyof Edges) {
+    const newProject = new Project(location, tile, edge);
     this.allProjects.push(newProject);
 
     return newProject;

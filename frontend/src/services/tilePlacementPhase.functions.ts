@@ -1,14 +1,12 @@
-import Locations from '../../constants/locations';
-import Tile from '../../model/Tile';
-import { Edges } from '../../model/Tile';
+import Locations from '../constants/locations';
+import Tile from '../model/Tile';
+import { Edges } from '../model/Tile';
 import _ from 'lodash';
-import rootStore, { boardState } from '../../stores/RootStore';
-import Project from '../../model/Project';
-import TileState from '../../constants/tileState';
-import { GamePhases } from '../NextPhaseButton/NextPhaseButton';
-import { BoardState } from './GameBoard';
+import rootStore, { boardState } from '../stores/RootStore';
+import Project from '../model/Project';
+import TileState from '../constants/tileState';
+import { BoardState } from '../components/GameBoard/GameBoard';
 
-//--------------------------PLACE TILE-----------------------//
 export const manageProjects = (row: number, column: number) => {
   const existingLocations: Locations[] = [Locations.FIELD];
   updateExistingProjects(existingLocations, row, column);
@@ -20,16 +18,21 @@ function updateExistingProjects(existingLocations: Locations[], row: number, col
   const adjacentTiles = getAdjacentTiles(row, column);
   adjacentTiles.forEach((adjacentTile, edge) => {
     if (adjacentTile) {
-      const adjacentTileProject = rootStore.projectStore.allProjects.find(
-        (project) =>
-          project.tiles.includes(adjacentTile) && project.type === rootStore.gameStore.tileInHand?.edges[edge],
-      );
+      const adjacentTileProject = adjacentProjectOfType(adjacentTile, edge);
       if (adjacentTileProject) {
-        adjacentTileProject.tiles.push(adjacentTile);
+        const oppositeEdge = getOppositeEdgeKey(edge);
+        adjacentTileProject.addTileOnUpdate(rootStore.gameStore.tileInHand!, oppositeEdge, adjacentTile);
+
         existingLocations.push(adjacentTileProject.type);
       }
     }
   });
+}
+
+function adjacentProjectOfType(adjacentTile: Tile, edge: keyof Edges) {
+  return rootStore.projectStore.allProjects.find(
+    (project) => project.tiles.includes(adjacentTile) && project.type === rootStore.gameStore.tileInHand?.edges[edge],
+  );
 }
 
 function getAdjacentTiles(row: number, column: number): Map<keyof Edges, Tile | undefined> {
@@ -44,7 +47,8 @@ function getAdjacentTiles(row: number, column: number): Map<keyof Edges, Tile | 
 
 function createNewProjects(existingLocations: Locations[]) {
   const tileInHand = rootStore.gameStore.tileInHand!;
-  const addNewProject = (l: Locations, t: Tile) => rootStore.projectStore.addNewProject(l, t);
+  const addNewProject = (l: Locations, t: Tile, e?: keyof Edges) => rootStore.projectStore.addNewProject(l, t, e);
+
   if (!existingLocations.includes(Locations.ROAD) && tileInHand.middle.includes(Locations.ROAD)) {
     const roadProject = addNewProject(Locations.ROAD, tileInHand);
     existingLocations.push(roadProject.type);
@@ -57,9 +61,11 @@ function createNewProjects(existingLocations: Locations[]) {
     const monasteryProject = addNewProject(Locations.MONASTERY, tileInHand);
     existingLocations.push(monasteryProject.type);
   }
-  const edges = Object.values(tileInHand.edges);
+  const edges = Object.entries(tileInHand.edges);
 
-  edges.filter((edge) => !existingLocations.includes(edge)).forEach((edge) => addNewProject(edge, tileInHand));
+  edges
+    .filter(([_edge, location]) => !existingLocations.includes(location))
+    .forEach(([edge, location]) => addNewProject(location, tileInHand, edge as keyof Edges));
 }
 
 function mergeProjects() {
@@ -195,99 +201,4 @@ export const extendBoard = (row: number, column: number) => {
     }
     leftColumn -= 1;
   }
-};
-
-//================== MEEPLE PLACEMENT =====================//
-
-export const placeMeeple = (tile: Tile, projectId: number) => {
-  const currentPlayer = rootStore.playersStore.getCurrentPlayer()!;
-  const availableProjects = rootStore.projectStore.getAvailableProjects(tile);
-
-  if ((availableProjects && !availableProjects.length) || !availableProjects) {
-    console.log('no available projects');
-  }
-  if (!currentPlayer.getMeepleCount()) {
-    console.log('no meeples available');
-  }
-  if (rootStore.gameStore.currentPhase !== GamePhases.MEEPLE_PLACEMENT) {
-    console.log('wrong game phase');
-  }
-  const meeple = currentPlayer.getMeeple()!;
-  const selectedProject = availableProjects!.find((p: Project) => p.id === projectId);
-  if (selectedProject) {
-    selectedProject.meeples.push(meeple);
-  }
-};
-
-//================= POINTS PHASE =====================//
-
-export const evaluatePoints = (tile: Tile) => {
-  if (rootStore.gameStore.currentPhase !== GamePhases.SCORE_PHASE) {
-    console.log('wrong phase');
-  }
-  evaluateRoadProjects(tile);
-  evaluateCityProjects(tile);
-  evaluateMonasteryProjects();
-  if (rootStore.gameStore.drawPile.length < 1) {
-    evaluateUnfinishedProjects();
-  }
-};
-
-function evaluateRoadProjects(tile: Tile) {
-  const roadProjects = rootStore.projectStore.allProjects.filter(
-    (project) => project.type === Locations.ROAD && project.tiles.includes(tile),
-  );
-
-  if (roadProjects) {
-    roadProjects.forEach((project) => {
-      const roadEnds = project.tiles.filter((t) => t.middle.every((m) => m !== Locations.ROAD));
-
-      if (roadEnds.length > 1) {
-        finishProject(project, 2);
-      }
-    });
-  }
-}
-function evaluateCityProjects(tile: Tile) {
-  const cityProjects = rootStore.projectStore.allProjects.filter(
-    (project) => project.type === Locations.CITY && project.tiles.includes(tile),
-  );
-  if (cityProjects) {
-    cityProjects.forEach((project) => {
-      if (false) {
-        finishProject(project, 2);
-      }
-    });
-  }
-}
-
-function evaluateMonasteryProjects() {
-  const monasteryProjects = rootStore.projectStore.allProjects.filter(
-    (project) => project.type === Locations.MONASTERY,
-  );
-  if (monasteryProjects) {
-    monasteryProjects.forEach((project) => {
-      if (project.meeples.length > 8) {
-        finishProject(project, 1);
-      }
-    });
-  }
-}
-
-function finishProject(project: Project, factor: number) {
-  project.meeples.forEach((meeple) => {
-    meeple.player.updateScore(project.tiles.length * factor);
-    meeple.player.returnMeeple(meeple);
-  });
-}
-export const evaluateUnfinishedProjects = () => {
-  const unfinishedProjects = rootStore.projectStore.allProjects.filter((project) => !project.isFinished);
-  unfinishedProjects.forEach((project) => {
-    if (project.type !== Locations.MONASTERY) {
-      project.meeples.forEach((meeple) => {
-        meeple.player.updateScore(project.tiles.length);
-        meeple.player.returnMeeple(meeple);
-      });
-    }
-  });
 };

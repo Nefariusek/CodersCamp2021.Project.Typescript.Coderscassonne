@@ -2,7 +2,7 @@
 import Locations from '../constants/locations';
 import Meeple from './Meeple';
 import Player from './Player';
-import Tile from './Tile';
+import Tile, { Edges } from './Tile';
 import { makeAutoObservable } from 'mobx';
 import rootStore from '../stores/RootStore';
 class Project {
@@ -14,11 +14,18 @@ class Project {
 
   public id: number;
 
-  constructor(type: Locations, tile?: Tile) {
+  private openEdgesSet: Set<string>;
+
+  constructor(type: Locations, tile?: Tile, edge?: keyof Edges) {
     this.meeples = [];
     this.id = rootStore.projectStore.allProjects.length;
-    this.tiles = tile ? [tile] : [];
+    this.tiles = [];
     this.type = type;
+    this.openEdgesSet = new Set<string>();
+
+    if (tile) {
+      this.addTile(tile, edge);
+    }
     makeAutoObservable(this);
   }
 
@@ -86,6 +93,38 @@ class Project {
 
   private checkIfMonasteryProjectIsFinishable() {
     return this.tiles.length === 9 ? true : false;
+  }
+
+  public addTileOnUpdate(tileToAdd: Tile, oppositeEdge: keyof Edges, adjacentTile: Tile): void {
+    this.tiles.push(tileToAdd);
+    console.log(this.openEdgesSet.size);
+    this.openEdgesSet.delete(`${adjacentTile.id}|${oppositeEdge}`);
+    console.log('opposite Edges Set ', this.openEdgesSet);
+    console.log(`${adjacentTile.id}|${oppositeEdge}`);
+    console.log(this.openEdgesSet.size);
+  }
+  public addTile(tileToAdd: Tile, edge?: keyof Edges) {
+    this.tiles.push(tileToAdd);
+    console.log(edge);
+
+    // console.log(location);
+
+    // debugger;
+
+    if (this.type === Locations.CITY && !tileToAdd.middle.includes(Locations.CITY)) {
+      this.openEdgesSet.add(tileToAdd.id + edge);
+    } else if (this.type === Locations.CITY && tileToAdd.middle.includes(Locations.CITY)) {
+      console.log('ts');
+      Object.entries(tileToAdd.edges).forEach(([edge, location]) => {
+        // console.log(edge);
+        // console.log(location);
+        if (location === Locations.CITY) {
+          this.openEdgesSet.add(`${tileToAdd.id}|${edge}`);
+        }
+      });
+    }
+
+    console.log(this.openEdgesSet);
   }
 }
 

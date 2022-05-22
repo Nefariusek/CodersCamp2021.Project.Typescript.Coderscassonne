@@ -8,8 +8,6 @@ interface DropdownProps {}
 const Dropdown: FunctionComponent<DropdownProps> = observer(() => {
   const availableProjects = rootStore.projectStore.availableProjects;
 
-  console.log(availableProjects);
-
   return (
     <div className="p-10">
       <div className="group inline-block z-50">

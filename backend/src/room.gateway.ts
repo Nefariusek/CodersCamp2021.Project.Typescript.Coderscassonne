@@ -22,23 +22,28 @@ export class RoomGateway {
   }
 
   @SubscribeMessage('createRoom')
-  handleRoomCreate(client: Socket, room: string, password?: string) {
-    if (!rooms.some((r) => r.room === room)) {
-      client.join(room);
-      client.emit('joinedRoom', room);
-      rooms.push({ room, password });
-      console.log(`create room: ${room}`);
+  handleRoomCreate(
+    client: Socket,
+    room: { name: string; password: string | undefined },
+  ) {
+    if (!rooms.some((r) => r.room === room.name)) {
+      rooms.push({ room: room.name, password: room.password });
     } else {
-      client.emit('createRoomError', `Room ${room} already exists!`);
+      client.emit('createRoomError', `Room ${room.name} already exists!`);
     }
   }
 
   @SubscribeMessage('joinRoom')
-  handleRoomJoin(client: Socket, room: string, password?: string) {
-    if (rooms.some((r) => r.room === room && r.password === password)) {
-      client.join(room);
-      client.emit('joinedRoom', room);
-      console.log(`client: ${client.id} joins room: ${room}`);
+  handleRoomJoin(
+    client: Socket,
+    room: { name: string; password: string | undefined },
+  ) {
+    if (
+      rooms.some((r) => r.room === room.name && r.password === room.password)
+    ) {
+      client.join(room.name);
+      client.emit('joinedRoom', room.name);
+      console.log(`client: ${client.id} joins room: ${room.name}`);
     } else {
       client.emit('joinRoomError', `Wrong password!`);
     }
@@ -48,5 +53,18 @@ export class RoomGateway {
   handleRoomLeave(client: Socket, room: string) {
     client.leave(room);
     client.emit('leftRoom', room);
+  }
+
+  @SubscribeMessage('getRooms')
+  handleGetRooms(client: Socket) {
+    client.emit(
+      'availableRooms',
+      rooms.map((r) => r.room),
+    );
+    console.log(rooms);
+    console.log(
+      'wyslalem:',
+      rooms.map((r) => r.room),
+    );
   }
 }

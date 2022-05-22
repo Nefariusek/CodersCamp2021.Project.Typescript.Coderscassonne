@@ -12,6 +12,7 @@ import {
   PATH_TO_LANDINGPAGE,
   PATH_TO_SETTINGS,
   PATH_TO_CUSTOM_MODE_FORM,
+  PATH_TO_ROOMS,
 } from './constants/paths';
 import CreditsPage from './views/CreditsPage';
 import CreatePlayersPage from './views/CreatePlayersPage';
@@ -22,6 +23,7 @@ import LandingPage from './views/LandingPage';
 import SettingsPage from './views/SettingsPage';
 import CustomModePage from './views/CustomModePage';
 import { WorkInProgressModal } from './components/Modal/WorkInProgressModal';
+import JoinRoomPage from './views/JoinRoomPage';
 
 const socket = io('http://localhost:5001');
 
@@ -34,6 +36,7 @@ const paths = [
   { element: <CreditsPage />, url: PATH_TO_CREDITS },
   { element: <SettingsPage />, url: PATH_TO_SETTINGS },
   { element: <CustomModePage />, url: PATH_TO_CUSTOM_MODE_FORM },
+  { element: <JoinRoomPage />, url: PATH_TO_ROOMS },
 ];
 const pathsWithoutHeader = [PATH_TO_GAMEPAGE];
 
@@ -43,18 +46,10 @@ const App: FC = (): ReactElement => {
 
   useEffect(() => {
     socket.emit('message', 'Hello from Client');
-    socket.emit('createRoom', 'pokoj');
-    socket.emit('messageToRoom', { sender: 'imie', room: 'pokoj', message: 'Hello from Client' });
   }, []);
 
   useEffect(() => {
     socket.on('messageToClient', (data) => {
-      console.log(data);
-    });
-    socket.on('joinedRoom', (data) => {
-      console.log(data);
-    });
-    socket.on('messageToRoom', (data) => {
       console.log(data);
     });
   });

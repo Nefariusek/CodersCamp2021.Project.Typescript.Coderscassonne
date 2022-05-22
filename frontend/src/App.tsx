@@ -9,7 +9,6 @@ import {
   PATH_TO_GAMEPAGE,
   PATH_TO_HOMEPAGE,
   PATH_TO_HOWTOPLAYPAGE,
-  PATH_TO_LANDINGPAGE,
   PATH_TO_GAME_MODE_PAGE,
   PATH_TO_CUSTOM_MODE_FORM,
 } from './constants/paths';
@@ -18,7 +17,6 @@ import CreatePlayersPage from './views/CreatePlayersPage';
 import GamePage from './views/Game';
 import HomePage from './views/HomePage';
 import HowToPlayPage from './views/HowToPlayPage';
-import LandingPage from './views/LandingPage';
 import GameModePage from './views/GameModePage';
 import CustomModePage from './views/CustomModePage';
 import { WorkInProgressModal } from './components/Modal/WorkInProgressModal';
@@ -27,7 +25,6 @@ const socket = io('http://localhost:5001');
 
 const paths = [
   { element: <HomePage />, url: PATH_TO_HOMEPAGE },
-  { element: <LandingPage />, url: PATH_TO_LANDINGPAGE },
   { element: <GamePage />, url: PATH_TO_GAMEPAGE },
   { element: <HowToPlayPage />, url: PATH_TO_HOWTOPLAYPAGE },
   { element: <CreatePlayersPage />, url: PATH_TO_CREATE_PLAYERS },

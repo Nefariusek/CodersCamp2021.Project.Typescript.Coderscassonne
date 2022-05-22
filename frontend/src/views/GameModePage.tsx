@@ -1,6 +1,7 @@
 import { FC, ReactElement, useState } from 'react';
 import { PATH_TO_GAMEPAGE, PATH_TO_CUSTOM_MODE_FORM } from '../constants/paths';
 import Button from '../components/Button/Button';
+import { SettingsModal } from '../components/Modal/SettingsModal';
 
 import { useNavigate } from 'react-router-dom';
 
@@ -72,6 +73,7 @@ const GameModePage: FC = (): ReactElement => (
       <GameModeContainer gameMode="Fast" infoText={fastModeText} />
       <GameModeContainer gameMode="Custom" infoText={customModeText} />
     </div>
+    <SettingsModal />
   </div>
 );
 

@@ -1,11 +1,11 @@
 import { FunctionComponent } from 'react';
-import './DropDown.css';
+import './Dropdown.css';
 import rootStore from '../../stores/RootStore';
 import { observer } from 'mobx-react-lite';
 
-interface DropDownProps {}
+interface DropdownProps {}
 
-const DropDown: FunctionComponent<DropDownProps> = observer(() => {
+const Dropdown: FunctionComponent<DropdownProps> = observer(() => {
   const availableProjects = rootStore.projectStore.availableProjects;
 
   console.log(availableProjects);
@@ -66,4 +66,4 @@ const DropDown: FunctionComponent<DropDownProps> = observer(() => {
     </div>
   );
 });
-export default DropDown;
+export default Dropdown;

@@ -17,7 +17,7 @@ enum WebSocketEvent {
   SEND_MESSAGE = 'sendMessage',
   RECEIVE_MESSAGE = 'receiveMessage',
 
-  CREATE_ROOM = 'creteRoom',
+  CREATE_ROOM = 'createRoom',
   JOINED_ROOM = 'joinedRoom',
 }
 

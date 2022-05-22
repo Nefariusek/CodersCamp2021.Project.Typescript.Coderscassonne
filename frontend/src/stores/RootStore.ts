@@ -2,11 +2,13 @@ import { makeAutoObservable } from 'mobx';
 import ProjectStore from './ProjectStore';
 import GameStore from './GameStore';
 import PlayersStore from './PlayersStore';
+import WebSocketConnection from '../model/websocket/WebSocketConnection';
 
 class RootStore {
   gameStore: GameStore;
   playersStore: PlayersStore;
   projectStore: ProjectStore;
+  websocket: WebSocketConnection;
   isDevelopmentMode = false;
 
   constructor() {

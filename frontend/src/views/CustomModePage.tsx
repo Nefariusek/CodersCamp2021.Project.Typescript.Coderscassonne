@@ -4,6 +4,7 @@ import GameMode from '../model/GameMode';
 import { BoardSize, TileAmount, TurnLength } from '../model/Settings';
 import { useNavigate } from 'react-router-dom';
 import { PATH_TO_GAMEPAGE } from '../constants/paths';
+import { SettingsModal } from '../components/Modal/SettingsModal';
 import Button from '../components/Button/Button';
 
 const sizes: BoardSize[] = [4, 8, 16, 32, 64];
@@ -12,13 +13,13 @@ const lengths: TurnLength[] = [5, 10, 15, 30, 60];
 
 interface NumberDropdown {
   options: BoardSize[] | TileAmount[] | TurnLength[];
-  property: 'Board size' | 'Tile amount' | 'Turn Length';
+  property: 'Board Size' | 'Tile Amount' | 'Turn Length';
   value: number;
   setFunction: Dispatch<SetStateAction<number>>;
 }
 
 const CustomModeForm = (props: NumberDropdown) => {
-  const { options, property, value, setFunction } = props;
+  const { options, property, setFunction } = props;
 
   const handleOnClick = (e: any) => {
     const selectedValue = parseFloat(e.currentTarget.innerHTML);
@@ -26,39 +27,17 @@ const CustomModeForm = (props: NumberDropdown) => {
   };
 
   return (
-    <div className="font-ALMENDRA font-bold text-3xl text-DARKTHEME_LIGHT_GREEN_COLOR p-10 text-center">
+    <div className="font-ALMENDRA font-bold text-3xl text-DARKTHEME_LIGHT_GREEN_COLOR mt-40 p-10 text-center">
       <p className="text-4xl">{property}</p>
-      <button
-        id="dropdownDefault"
-        data-dropdown-toggle={property}
-        className="text-DARKTHEME_BACKGROUND_COLOR hover:text-white font-ALMENDRA font-bold text-3xl bg-DARKTHEME_LIGHT_GREEN_COLOR hover:bg-DARKTHEME_DARK_GREEN_COLOR focus:ring-4 focus:outline-none rounded-lg px-4 py-2.5 mt-3 text-center inline-flex items-center"
-        type="button"
+      <select
+        onClick={handleOnClick}
+        className="text-DARKTHEME_BACKGROUND_COLOR hover:text-white font-ALMENDRA font-bold text-3xl w-40 bg-DARKTHEME_LIGHT_GREEN_COLOR hover:bg-DARKTHEME_DARK_GREEN_COLOR focus:ring-4 focus:outline-none rounded-lg px-4 py-2.5 mt-3 text-left inline-flex items-center"
+        id={property}
       >
-        {value}
-        <svg
-          className="w-4 h-4 ml-2"
-          fill="none"
-          stroke="currentColor"
-          viewBox="0 0 24 24"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7"></path>
-        </svg>
-      </button>
-      <div id={property} className="z-10 hidden bg-DARKTHEME_LIGHT_GREEN_COLOR divide-gray-100 rounded shadow w-44">
-        <ul className="py-1 text-sm text-DARKTHEME_BACKGROUND_COLOR" aria-labelledby="dropdownDefault">
-          {options.map((opt) => (
-            <li key={`${property}_${opt}`}>
-              <a
-                onClick={handleOnClick}
-                className="block px-4 py-2 hover:bg-DARKTHEME_DARK_GREEN_COLOR hover:text-white"
-              >
-                {opt}
-              </a>
-            </li>
-          ))}
-        </ul>
-      </div>
+        {options.map((opt) => (
+          <option value={opt}>{opt}</option>
+        ))}
+      </select>
     </div>
   );
 };
@@ -87,14 +66,14 @@ const CustomModePage: FC = (): ReactElement => {
         Custom Mode
       </p>
       <div className="flex flex-row justify-center px-5 w-full mt-[10px]">
-        <CustomModeForm options={sizes} value={boardSize} property="Board size" setFunction={setBoardSize} />
-        <CustomModeForm options={amounts} value={tileAmount} property="Tile amount" setFunction={setTileAmount} />
+        <CustomModeForm options={sizes} value={boardSize} property="Board Size" setFunction={setBoardSize} />
+        <CustomModeForm options={amounts} value={tileAmount} property="Tile Amount" setFunction={setTileAmount} />
         <CustomModeForm options={lengths} value={turnLength} property="Turn Length" setFunction={setTurnLength} />
       </div>
       <div className="flex justify-center relative right-[15px]">
         <Button text="Play Game" onClick={handleGameModeSubmit} colorVariant="light" />
       </div>
-      <img src="./Elements/Layout/castle.png" alt="Custom mode" className="w-full relative bottom-[0px]" />
+      <SettingsModal />
     </div>
   );
 };

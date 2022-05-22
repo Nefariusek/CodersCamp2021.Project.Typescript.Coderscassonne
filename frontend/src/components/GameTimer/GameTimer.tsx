@@ -1,12 +1,10 @@
 import { useEffect, useState } from 'react';
-import Button from '../Button/Button';
-
 import { TurnLength } from '../../model/Settings';
+
 import TurnTimer from './TurnTimer';
 import rootStore from '../../stores/RootStore';
 import { observer } from 'mobx-react';
 
-const END_TURN_LABEL = 'End your turn';
 interface GameTimerProps {
   isTurnTimerVisible: boolean;
   turnLength: TurnLength;
@@ -29,19 +27,17 @@ const GameTimer = observer((props: GameTimerProps) => {
     return () => clearInterval(interval);
   }, [seconds, minutes]);
 
-  const handleTurnEnd = () => {
-    rootStore.gameStore.endCurrentTurn();
-  };
-
   return (
     <div className="font-ALMENDRA font-bold text-3xl text-DARKTHEME_LIGHT_GREEN_COLOR p-3">
-      <p>Turn number: {rootStore.gameStore.turnNumber}</p>
-      <Button text={END_TURN_LABEL} onClick={handleTurnEnd} colorVariant="light" />
-
-      <p>
-        Game time: {minutes}:{seconds > 9 ? seconds : `0${seconds}`}
-      </p>
-      {isTurnTimerVisible && <TurnTimer turnLength={turnLength} />}
+      <div className="flex">
+        <div className="flex-column ml-5 mt-1">
+          <p>Turn number: {rootStore.gameStore.turnNumber}</p>
+          <p>
+            Game time: {minutes}:{seconds > 9 ? seconds : `0${seconds}`}
+          </p>
+        </div>
+        {isTurnTimerVisible && <TurnTimer turnLength={turnLength} />}
+      </div>
     </div>
   );
 });

@@ -1,5 +1,6 @@
-import { FC, ReactElement } from 'react';
+import { FC, ReactElement, useEffect } from 'react';
 import { Route, Routes, useLocation } from 'react-router-dom';
+import io from 'socket.io-client';
 
 import { AppHeaderSection, Castle } from './components/Layout';
 import {
@@ -20,6 +21,8 @@ import SettingsPage from './views/SettingsPage';
 import CustomModePage from './views/CustomModePage';
 import { WorkInProgressModal } from './components/Modal/WorkInProgressModal';
 
+const socket = io('http://localhost:5001');
+
 const paths = [
   { element: <HomePage />, url: PATH_TO_HOMEPAGE },
   { element: <GamePage />, url: PATH_TO_GAMEPAGE },
@@ -34,6 +37,17 @@ const pathsWithoutHeader = [PATH_TO_GAMEPAGE];
 const App: FC = (): ReactElement => {
   const { pathname } = useLocation();
   const pageValidation = pathsWithoutHeader.includes(pathname);
+
+  useEffect(() => {
+    socket.emit('message', 'Hello from Client');
+  }, []);
+
+  useEffect(() => {
+    socket.on('messageToClient', (data) => {
+      console.log(data);
+    });
+  });
+
   return (
     <div className="h-full min-h-screen bg-DARKTHEME_BACKGROUND_COLOR ">
       {pageValidation ? null : <AppHeaderSection />}

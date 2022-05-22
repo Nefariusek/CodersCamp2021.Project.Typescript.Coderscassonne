@@ -2,6 +2,7 @@ import React, { ReactElement } from 'react';
 import ReactPlayer from 'react-player';
 import { Link } from 'react-router-dom';
 import { PATH_TO_HOMEPAGE } from '../constants/paths';
+import { SettingsModal } from '../components/Modal/SettingsModal';
 import Button from '../components/Button/Button';
 
 const HOW_TO_PLAY_TITLE = {
@@ -34,6 +35,7 @@ const HowToPlayPage: React.FunctionComponent = (): ReactElement => (
         </Link>
       </div>
     </footer>
+    <SettingsModal />
   </div>
 );
 

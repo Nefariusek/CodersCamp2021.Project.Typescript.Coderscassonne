@@ -1,6 +1,7 @@
 import { FC, ReactElement, useState } from 'react';
 import { PATH_TO_GAMEPAGE, PATH_TO_CUSTOM_MODE_FORM } from '../constants/paths';
 import Button from '../components/Button/Button';
+import { SettingsModal } from '../components/Modal/SettingsModal';
 
 import { useNavigate } from 'react-router-dom';
 
@@ -74,6 +75,7 @@ const SettingsPage: FC = (): ReactElement => (
     </div>
     <div className="h-[50px]" />
     <img src="./Elements/Layout/castle.png" alt="Custom mode" className="w-full relative bottom-[0px]" />
+    <SettingsModal />
   </div>
 );
 

@@ -1,6 +1,6 @@
 import { INestApplication } from '@nestjs/common';
 import { Test, TestingModule } from '@nestjs/testing';
-import { AppGateway } from './app.gateway';
+import { AppGateway } from './app.game.gateway';
 import * as ioClient from 'socket.io-client';
 
 const socketUrl = 'http://localhost:5001';

@@ -7,6 +7,8 @@ import {
   WsResponse,
 } from '@nestjs/websockets';
 import { Server, Socket } from 'socket.io';
+import { MassageHandler } from './app.messagehandler.service';
+import { defaultMessage, meeplePlacementReceive } from './constants';
 
 @WebSocketGateway(5001, { cors: true })
 export class GameGateway
@@ -24,17 +26,19 @@ export class GameGateway
     console.log(`disconnected client ${client.id}`);
   }
 
-  @SubscribeMessage('message')
+  @SubscribeMessage(defaultMessage)
   handleEvent(client: Socket, text: string): WsResponse<string> {
-    const message = `Client with id: ${client.id} send a message: ${text}`;
-    console.log(message);
-    return { event: 'messageToClient', data: message };
+    const msgHandler = new MassageHandler();
+    msgHandler.messageType = defaultMessage;
+    msgHandler.createMessage(client.id, text);
+    return msgHandler.sendMassage();
   }
 
-  @SubscribeMessage('meeplePlacementMessage')
+  @SubscribeMessage(meeplePlacementReceive)
   handleMessage(client: Socket, text: string): WsResponse<string> {
-    const message = `Client with id: ${client.id} put a meeple: ${text}`;
-    console.log(message);
-    return { event: 'messageToClientAfterMeeplePlacement', data: message };
+    const msgHandler = new MassageHandler();
+    msgHandler.messageType = meeplePlacementReceive;
+    msgHandler.createMessage(client.id, text);
+    return msgHandler.sendMassage();
   }
 }

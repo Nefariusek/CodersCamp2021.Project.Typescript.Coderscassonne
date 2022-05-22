@@ -59,7 +59,9 @@ export class RoomGateway {
   handleGetRooms(client: Socket) {
     client.emit(
       'availableRooms',
-      rooms.map((r) => r.room),
+      rooms.map((r) => {
+        return { name: r.room, password: !!r.password };
+      }),
     );
     console.log(rooms);
     console.log(

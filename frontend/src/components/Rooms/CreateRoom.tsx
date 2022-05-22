@@ -1,13 +1,11 @@
 import { useState, useEffect } from 'react';
+import { socket } from '../../constants/socket';
 import Button from '../Button/Button';
 import Tooltip from '../Tooltip/Tooltip';
-import io from 'socket.io-client';
 
-const socket = io('http://localhost:5001');
-
-const CreateRoom = () => {
+const CreateRoom = ({ refresh, setRefresh }) => {
   const [roomName, setRoomName] = useState<string>('');
-  const [roomPassword, setRoomPassword] = useState<string>();
+  const [roomPassword, setRoomPassword] = useState<string>('');
   const [errorMessage, setErrorMessage] = useState<string>('');
 
   useEffect(() => {
@@ -26,7 +24,6 @@ const CreateRoom = () => {
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (!roomName) return;
-    console.log(roomName);
     socket.emit('createRoom', { name: roomName, password: roomPassword });
     socket.on('createRoomError', (errorMsg) => {
       alert(errorMsg);
@@ -34,6 +31,7 @@ const CreateRoom = () => {
     });
     setRoomName('');
     setRoomPassword('');
+    setRefresh(!refresh);
   };
 
   return (

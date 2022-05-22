@@ -1,6 +1,5 @@
 import { FC, ReactElement, useEffect } from 'react';
 import { Route, Routes, useLocation } from 'react-router-dom';
-import io from 'socket.io-client';
 
 import { AppHeaderSection, Castle } from './components/Layout';
 import {
@@ -24,8 +23,7 @@ import SettingsPage from './views/SettingsPage';
 import CustomModePage from './views/CustomModePage';
 import { WorkInProgressModal } from './components/Modal/WorkInProgressModal';
 import JoinRoomPage from './views/JoinRoomPage';
-
-const socket = io('http://localhost:5001');
+import { socket } from './constants/socket';
 
 const paths = [
   { element: <HomePage />, url: PATH_TO_HOMEPAGE },

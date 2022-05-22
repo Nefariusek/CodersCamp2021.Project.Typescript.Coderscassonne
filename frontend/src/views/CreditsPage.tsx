@@ -1,6 +1,7 @@
 import React, { ReactElement } from 'react';
 import { Link } from 'react-router-dom';
 import { PATH_TO_HOMEPAGE } from '../constants/paths';
+import { SettingsModal } from '../components/Modal/SettingsModal';
 import Button from '../components/Button/Button';
 
 type Authors = {
@@ -54,6 +55,7 @@ const CreditsPage: React.FunctionComponent = (): ReactElement => (
         </Link>
       </div>
     </footer>
+    <SettingsModal />
   </div>
 );
 

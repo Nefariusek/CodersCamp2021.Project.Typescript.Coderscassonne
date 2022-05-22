@@ -4,6 +4,7 @@ import GameMode from '../model/GameMode';
 import { BoardSize, TileAmount, TurnLength } from '../model/Settings';
 import { useNavigate } from 'react-router-dom';
 import { PATH_TO_GAMEPAGE } from '../constants/paths';
+import { SettingsModal } from '../components/Modal/SettingsModal';
 import Button from '../components/Button/Button';
 
 const sizes: BoardSize[] = [4, 8, 16, 32, 64];
@@ -34,7 +35,9 @@ const CustomModeForm = (props: NumberDropdown) => {
         id={property}
       >
         {options.map((opt) => (
-          <option value={opt}>{opt}</option>
+          <option key={opt} value={opt}>
+            {opt}
+          </option>
         ))}
       </select>
     </div>
@@ -72,6 +75,7 @@ const CustomModePage: FC = (): ReactElement => {
       <div className="flex justify-center relative right-[15px]">
         <Button text="Play Game" onClick={handleGameModeSubmit} colorVariant="light" />
       </div>
+      <SettingsModal />
     </div>
   );
 };

@@ -2,8 +2,8 @@ import { useState } from 'react';
 
 import AddedPlayers from '../components/CreatePlayer/AddedPlayers';
 import CreatePlayer from '../components/CreatePlayer/CreatePlayer';
-//import DataStoreContext from '../components/DataStoreContext/DataStoreContext';
 import Technologies from '../constants/technologies';
+import { SettingsModal } from '../components/Modal/SettingsModal';
 import rootStore from '../stores/RootStore';
 import { observer } from 'mobx-react';
 
@@ -28,6 +28,7 @@ const CreatePlayersPage = observer(() => {
         />
       )}
       {players.length > 0 && <AddedPlayers players={players} />}
+      <SettingsModal />
     </div>
   );
 });

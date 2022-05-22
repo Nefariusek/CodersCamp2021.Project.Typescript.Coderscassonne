@@ -21,7 +21,7 @@ import GameModePage from './views/GameModePage';
 import CustomModePage from './views/CustomModePage';
 import { WorkInProgressModal } from './components/Modal/WorkInProgressModal';
 
-const socket = io('http://localhost:5001');
+export const socket = io('http://localhost:5001');
 
 const paths = [
   { element: <HomePage />, url: PATH_TO_HOMEPAGE },
@@ -39,14 +39,14 @@ const App: FC = (): ReactElement => {
   const pageValidation = pathsWithoutHeader.includes(pathname);
 
   useEffect(() => {
-    socket.emit('message', 'Hello from Client');
+    socket.emit('sendMessage', 'Hello from Client');
   }, []);
 
   useEffect(() => {
-    socket.on('messageToClient', (data) => {
+    socket.on('receiveMessage', (data) => {
       console.log(data);
     });
-  });
+  }, []);
 
   return (
     <div className="h-full min-h-screen bg-DARKTHEME_BACKGROUND_COLOR ">

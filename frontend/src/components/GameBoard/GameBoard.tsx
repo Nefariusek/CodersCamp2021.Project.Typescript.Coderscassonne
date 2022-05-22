@@ -6,6 +6,7 @@ import TileState from '../../constants/tileState';
 import Tile from '../../model/Tile';
 import TileContainer from '../TileContainer/TileContainer';
 import { GAMEBOARD_LAYOUT_PROPORTION, TILE_SIZE } from '../../constants/gameDefaults';
+import { useTilePlacementReceiver, useTileRotationReceiver, useNextPhaseReceiver } from './GameBoard.hooks';
 import rootStore from '../../stores/RootStore';
 import { observer } from 'mobx-react';
 
@@ -22,9 +23,9 @@ const GameBoard = observer((): ReactElement => {
   const sortedBoardState = _.orderBy(boardState, ['row', 'column'], ['asc', 'asc']);
   const tilesGroupedByRows = _.groupBy(sortedBoardState, 'row');
 
-  const onTilePlacement = (row: number, column: number) => {
+  const onTilePlacement = (row: number, column: number, fromWebsocket: boolean) => {
     console.log(`tile placement`);
-    rootStore.gameStore.placeTile(row, column);
+    rootStore.gameStore.placeTile(row, column, fromWebsocket);
   };
 
   const [windowHeight, setWindowHeight] = useState(window.innerHeight);
@@ -34,9 +35,13 @@ const GameBoard = observer((): ReactElement => {
   }, []);
 
   useEffect(() => {
-    onTilePlacement(0, 0);
+    onTilePlacement(0, 0, false);
     rootStore.gameStore.endCurrentTurn();
   }, []);
+
+  useTilePlacementReceiver(onTilePlacement);
+  useTileRotationReceiver();
+  useNextPhaseReceiver();
 
   function gameBoardAutoScale(): number {
     const rowsCount = Object.entries(tilesGroupedByRows).length;

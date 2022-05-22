@@ -7,7 +7,7 @@ import Tile from '../../model/Tile';
 export interface TileInterface {
   tile: Tile | undefined;
   initialState: TileState;
-  onChange?: (row: number, column: number, tile: Tile) => void;
+  onChange?: (row: number, column: number, fromWebSocket: boolean, tile: Tile) => void;
   row?: number;
   column?: number;
 }
@@ -18,7 +18,7 @@ const TileContainer = observer((props: TileInterface): ReactElement => {
   function handleActiveTileClick(event: MouseEvent<HTMLImageElement>): void {
     event.preventDefault();
     if (onChange && row !== undefined && column !== undefined) {
-      onChange(row, column, tile!);
+      onChange(row, column, false, tile!);
     }
   }
 

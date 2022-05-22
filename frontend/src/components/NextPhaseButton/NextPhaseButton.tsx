@@ -1,7 +1,7 @@
 import rootStore from '../../stores/RootStore';
 import Button from '../Button/Button';
 import { observer } from 'mobx-react';
-import Dropdown from '../Dropdown/Dropdown.tsx';
+import Dropdown from '../Dropdown/DropDown';
 
 export enum GamePhases {
   TILE_PLACEMENT = 'Tile placement phase',

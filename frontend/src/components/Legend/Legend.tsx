@@ -12,7 +12,7 @@ const Description = (props: DescriptionProps) => {
     <div className="grid grid-cols-4 text-center justify-items-center p-2">
       <div className="col-span-3">
         <p className="font-bold">{name}</p>
-        <p className="text-l">{description}</p>
+        <p className="lg:text-base">{description}</p>
       </div>
       {!!imgURL && <img height={60} width={60} src={imgURL} alt={name}></img>}
     </div>
@@ -27,7 +27,7 @@ const Legend: React.FunctionComponent = (): ReactElement => {
   };
 
   return (
-    <div className="font-ALMENDRA text-DARKTHEME_LIGHT_GREEN_COLOR text-sm z-50">
+    <div className="font-ALMENDRA text-DARKTHEME_LIGHT_GREEN_COLOR text-base z-50">
       <button onClick={toggleLegend}>
         <img src="./Elements/Layout/glass.png" alt="legend" />
       </button>

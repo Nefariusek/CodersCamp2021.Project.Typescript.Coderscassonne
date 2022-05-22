@@ -16,6 +16,9 @@ import rootStore from './RootStore';
 
 import { socket } from '../App';
 import WebSocketEvent from '../constants/webSocketEvents';
+import WebsocketMessageParser from '../model/websocket/WebSocketMessageParser';
+import TilePlacementMessage from '../model/websocket/TilePlacementMessage';
+
 class GameStore {
   turnNumber: number;
   boardState: BoardState[] = [];
@@ -40,11 +43,21 @@ class GameStore {
       if (validateTilePlacement(row, column)) {
         tileToChange.state = TileState.TAKEN;
         tileToChange.tile = this.tileInHand;
-        !fromWebsocket &&
+        if (!fromWebsocket) {
+          const websocketMessageParser = new WebsocketMessageParser();
+          const tilePlacementMessage = new TilePlacementMessage('');
+          tilePlacementMessage.id = this.tileInHand.id;
+          tilePlacementMessage.row = row;
+          tilePlacementMessage.column = column;
+          tilePlacementMessage.rotation = this.tileInHand.rotation;
+
+          websocketMessageParser.parse(tilePlacementMessage, WebSocketEvent.SEND_TILE_PLACED);
+
           socket.emit(
             WebSocketEvent.SEND_TILE_PLACED,
             `${this.tileInHand.id}_${row}_${column}_${this.tileInHand.rotation}`,
           );
+        }
 
         extendBoard(row, column);
         activateAdjacentTiles(row, column);

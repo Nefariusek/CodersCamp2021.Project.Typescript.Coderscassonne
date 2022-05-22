@@ -1,12 +1,6 @@
 import MeeplePlacementMessage from './MeeplePlacementMessage';
 import TilePlacementMessage from './TilePlacementMessage';
-
-export enum WebSocketEvent {
-  SEND_TILE_PLACED = 'sendTilePlaced',
-  SEND_MEEPLE_PLACED = 'sendMeeplePlaced',
-  RECEIVE_TILE_PLACED = 'receiveTilePlaced',
-  RECEIVE_MEEPLE_PLACED = 'receiveMeeplePlaced',
-}
+import WebSocketEvent from '../../constants/webSocketEvents';
 
 type messageType = string | TilePlacementMessage | MeeplePlacementMessage;
 type eventType =

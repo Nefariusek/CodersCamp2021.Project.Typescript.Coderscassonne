@@ -10,6 +10,7 @@ import rootStore from '../../stores/RootStore';
 import { observer } from 'mobx-react';
 import { socket } from '../../App';
 import WebSocketEvent from '../../constants/webSocketEvents';
+import WebsocketMessageParser from '../../model/websocket/WebSocketMessageParser';
 
 export interface BoardState {
   column: number;
@@ -20,6 +21,7 @@ export interface BoardState {
 
 const GameBoard = observer((): ReactElement => {
   const boardState = rootStore.gameStore.boardState;
+  const websocketMessageParser = new WebsocketMessageParser();
 
   const sortedBoardState = _.orderBy(boardState, ['row', 'column'], ['asc', 'asc']);
   const tilesGroupedByRows = _.groupBy(sortedBoardState, 'row');
@@ -43,12 +45,7 @@ const GameBoard = observer((): ReactElement => {
   useEffect(() => {
     socket.on(WebSocketEvent.RECEIVE_TILE_PLACED, (data) => {
       const { tileData, clientId } = data;
-      const splitMessageArray = tileData.split('_');
-
-      const id: string = `${splitMessageArray[0]}_${splitMessageArray[1]}`;
-      const row: number = +splitMessageArray[2];
-      const column: number = +splitMessageArray[3];
-      const rotation = +splitMessageArray[4] as Rotation;
+      const { id, row, column, rotation } = websocketMessageParser.parse(tileData, WebSocketEvent.RECEIVE_TILE_PLACED);
 
       if (row !== 0 || column !== 0) {
         rootStore.gameStore.setTileInHandFromWebSocket(id, rotation);

@@ -84,20 +84,14 @@ class GameStore {
   }
 
   setTileInHandFromWebSocket(id: string, rotation: Rotation) {
-    const tiles = GameModeParser(JSONData);
-    const foundTileData = tiles.find((tile) => tile.id === id);
+    const tileFromWebSocket = this.drawPile.find((tile) => tile.id === id);
 
-    if (foundTileData) {
-      const tileFromWebSocket = new Tile(
-        foundTileData.edges,
-        foundTileData.middle,
-        foundTileData.isSpecial,
-        foundTileData.id,
-      );
+    if (tileFromWebSocket) {
       tileFromWebSocket.setRotation(rotation);
       this.tileInHand = tileFromWebSocket;
       return;
     }
+
     this.tileInHand = undefined;
   }
 

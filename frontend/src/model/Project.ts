@@ -12,8 +12,6 @@ class Project {
 
   public type: Locations;
 
-  public isFinished: boolean;
-
   public id: number;
 
   constructor(type: Locations, tile?: Tile) {
@@ -21,7 +19,6 @@ class Project {
     this.id = rootStore.projectStore.allProjects.length;
     this.tiles = tile ? [tile] : [];
     this.type = type;
-    this.isFinished = false;
     makeAutoObservable(this);
   }
 
@@ -57,13 +54,38 @@ class Project {
   }
 
   public finishProject() {
-    this.isFinished = true;
     this.meeples.map((meeple) => meeple.player.returnMeeple(meeple));
     this.owner.updateScore(this.getCurrentScore());
   }
 
   public scoreUnfinishedProject() {
     this.owner.updateScore(this.getCurrentScore());
+  }
+
+  public get isFinished(): boolean {
+    if (this.type === Locations.ROAD) {
+      return this.checkIfRoadProjectIsFinishable();
+    } else if (this.type === Locations.CITY) {
+      return this.checkIfCityProjectIsFinishable();
+    } else if (this.type === Locations.MONASTERY) {
+      return this.checkIfMonasteryProjectIsFinishable();
+    }
+
+    return false;
+  }
+
+  private checkIfRoadProjectIsFinishable() {
+    const roadEnds = this.tiles.filter((t) => !t.middle.includes(Locations.ROAD));
+
+    return roadEnds.length === 2 ? true : false;
+  }
+
+  private checkIfCityProjectIsFinishable() {
+    return false;
+  }
+
+  private checkIfMonasteryProjectIsFinishable() {
+    return this.tiles.length === 9 ? true : false;
   }
 }
 

@@ -34,10 +34,10 @@ function updateExistingProjects(existingLocations: Locations[], row: number, col
 
 function getAdjacentTiles(row: number, column: number): Map<keyof Edges, Tile | undefined> {
   const adjacentTiles = new Map<keyof Edges, Tile | undefined>();
-  adjacentTiles.set('top', getAdjacentTopBoardState(row, column)?.tile);
-  adjacentTiles.set('right', getAdjacentRightBoardState(row, column)?.tile);
-  adjacentTiles.set('bottom', getAdjacentBottomBoardState(row, column)?.tile);
-  adjacentTiles.set('left', getAdjacentLeftBoardState(row, column)?.tile);
+  adjacentTiles.set('top', getAdjacentBoardStateByEdge(row, column, 'top')?.tile);
+  adjacentTiles.set('right', getAdjacentBoardStateByEdge(row, column, 'right')?.tile);
+  adjacentTiles.set('bottom', getAdjacentBoardStateByEdge(row, column, 'bottom')?.tile);
+  adjacentTiles.set('left', getAdjacentBoardStateByEdge(row, column, 'left')?.tile);
 
   return adjacentTiles;
 }
@@ -103,87 +103,73 @@ function getProjectsOfType(type: Locations, projects: Project[]) {
 }
 
 export function validateTilePlacement(row: number, column: number): boolean {
-  const upperTile = boardState.find((tile) => tile.column === column && tile.row === row - 1);
-  if (
-    upperTile &&
-    upperTile.state === TileState.TAKEN &&
-    upperTile.tile?.edges.bottom !== rootStore.gameStore.tileInHand?.edges.top
-  ) {
-    return false;
-  }
+  const isValidTop = validateEdge(row, column, 'top');
+  const isValidBottom = validateEdge(row, column, 'bottom');
+  const isValidLeft = validateEdge(row, column, 'left');
+  const isValidRight = validateEdge(row, column, 'right');
 
-  const lowerTile = boardState.find((tile) => tile.column === column && tile.row === row + 1);
-  if (
-    lowerTile &&
-    lowerTile.state === TileState.TAKEN &&
-    lowerTile.tile?.edges.top !== rootStore.gameStore.tileInHand?.edges.bottom
-  ) {
-    return false;
-  }
+  return isValidRight && isValidLeft && isValidBottom && isValidTop;
+}
 
-  const rightTile = boardState.find((tile) => tile.column === column + 1 && tile.row === row);
+function validateEdge(row: number, column: number, edge: keyof Edges) {
+  const tileContainer = getAdjacentBoardStateByEdge(row, column, edge);
   if (
-    rightTile &&
-    rightTile.state === TileState.TAKEN &&
-    rightTile.tile?.edges.left !== rootStore.gameStore.tileInHand?.edges.right
-  ) {
-    return false;
-  }
-
-  const leftTile = boardState.find((tile) => tile.column === column - 1 && tile.row === row);
-  if (
-    leftTile &&
-    leftTile.state === TileState.TAKEN &&
-    leftTile.tile?.edges.right !== rootStore.gameStore.tileInHand?.edges.left
+    tileContainer &&
+    tileContainer.state === TileState.TAKEN &&
+    tileContainer.tile?.edges[getOppositeEdgeKey(edge)] !== rootStore.gameStore.tileInHand?.edges[edge]
   ) {
     return false;
   }
   return true;
 }
 
+function getOppositeEdgeKey(edge: keyof Edges): keyof Edges {
+  switch (edge) {
+    case 'left':
+      return 'right';
+    case 'right':
+      return 'left';
+    case 'bottom':
+      return 'top';
+    case 'top':
+      return 'bottom';
+  }
+}
+
 export const activateAdjacentTiles = (row: number, column: number) => {
-  const upperTile = boardState.find((tile) => tile.column === column && tile.row === row - 1);
-  if (upperTile && upperTile.state === TileState.IDLE) {
-    upperTile.state = TileState.ACTIVE;
+  activateAdjacentTileContainer(row, column, 'top');
+  activateAdjacentTileContainer(row, column, 'bottom');
+  activateAdjacentTileContainer(row, column, 'left');
+  activateAdjacentTileContainer(row, column, 'right');
+};
+
+function activateAdjacentTileContainer(row: number, column: number, edge: keyof Edges) {
+  const tileContainer = getAdjacentBoardStateByEdge(row, column, edge);
+  if (tileContainer && tileContainer.state === TileState.IDLE) {
+    tileContainer.state = TileState.ACTIVE;
   }
+}
 
-  const lowerTile = boardState.find((tile) => tile.column === column && tile.row === row + 1);
-  if (lowerTile && lowerTile.state === TileState.IDLE) {
-    lowerTile.state = TileState.ACTIVE;
+const adjacentContainerOffsetMap = new Map<keyof Edges, { row: number; column: number }>([
+  ['top', { row: -1, column: 0 }],
+  ['bottom', { row: 1, column: 0 }],
+  ['right', { row: 0, column: 1 }],
+  ['left', { row: 0, column: -1 }],
+]);
+
+const getAdjacentBoardStateByEdge = (row: number, column: number, edge: keyof Edges): BoardState | undefined => {
+  const offsets = adjacentContainerOffsetMap.get(edge);
+  if (offsets) {
+    return boardState.find((tile) => tile.column === column + offsets.column && tile.row === row + offsets.row);
   }
-
-  const rightTile = boardState.find((tile) => tile.column === column + 1 && tile.row === row);
-  if (rightTile && rightTile.state === TileState.IDLE) {
-    rightTile.state = TileState.ACTIVE;
-  }
-
-  const leftTile = boardState.find((tile) => tile.column === column - 1 && tile.row === row);
-  if (leftTile && leftTile.state === TileState.IDLE) {
-    leftTile.state = TileState.ACTIVE;
-  }
+  return;
 };
-
-export const getAdjacentTopBoardState = (row: number, column: number): BoardState | undefined => {
-  return boardState.find((tile) => tile.column === column && tile.row === row - 1);
-};
-
-export const getAdjacentBottomBoardState = (row: number, column: number): BoardState | undefined => {
-  return boardState.find((tile) => tile.column === column && tile.row === row + 1);
-};
-
-export const getAdjacentRightBoardState = (row: number, column: number): BoardState | undefined => {
-  return boardState.find((tile) => tile.column === column + 1 && tile.row === row);
-};
-
-export const getAdjacentLeftBoardState = (row: number, column: number): BoardState | undefined => {
-  return boardState.find((tile) => tile.column === column - 1 && tile.row === row);
-};
-
 export const extendBoard = (row: number, column: number) => {
   let bottomRow = _.maxBy(boardState, 'row')!.row;
   let topRow = _.minBy(boardState, 'row')!.row;
   let leftColumn = _.minBy(boardState, 'column')!.column;
   let rightColumn = _.maxBy(boardState, 'column')!.column;
+
   if (row === bottomRow) {
     for (let col = leftColumn; col <= rightColumn; col++) {
       boardState.push({ row: row + 1, column: col, state: TileState.IDLE });
@@ -289,7 +275,6 @@ function evaluateMonasteryProjects() {
 }
 
 function finishProject(project: Project, factor: number) {
-  project.isFinished = true;
   project.meeples.forEach((meeple) => {
     meeple.player.updateScore(project.tiles.length * factor);
     meeple.player.returnMeeple(meeple);

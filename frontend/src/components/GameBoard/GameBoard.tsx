@@ -3,14 +3,12 @@ import _ from 'lodash';
 import { ReactElement, useEffect, useState } from 'react';
 
 import TileState from '../../constants/tileState';
-import Tile, { Rotation } from '../../model/Tile';
+import Tile from '../../model/Tile';
 import TileContainer from '../TileContainer/TileContainer';
 import { GAMEBOARD_LAYOUT_PROPORTION, TILE_SIZE } from '../../constants/gameDefaults';
+import { useTilePlacementReceiver, useTileRotationReceiver, useNextPhaseReceiver } from './GameBoard.hooks';
 import rootStore from '../../stores/RootStore';
 import { observer } from 'mobx-react';
-import { socket } from '../../App';
-import WebSocketEvent from '../../constants/webSocketEvents';
-import WebsocketMessageParser from '../../model/websocket/WebSocketMessageParser';
 
 export interface BoardState {
   column: number;
@@ -21,7 +19,6 @@ export interface BoardState {
 
 const GameBoard = observer((): ReactElement => {
   const boardState = rootStore.gameStore.boardState;
-  const websocketMessageParser = new WebsocketMessageParser();
 
   const sortedBoardState = _.orderBy(boardState, ['row', 'column'], ['asc', 'asc']);
   const tilesGroupedByRows = _.groupBy(sortedBoardState, 'row');
@@ -42,38 +39,9 @@ const GameBoard = observer((): ReactElement => {
     rootStore.gameStore.endCurrentTurn();
   }, []);
 
-  useEffect(() => {
-    socket.on(WebSocketEvent.RECEIVE_TILE_PLACED, (data) => {
-      const { tileData, clientId } = data;
-      const { id, row, column, rotation } = websocketMessageParser.parse(tileData, WebSocketEvent.RECEIVE_TILE_PLACED);
-
-      if (row !== 0 || column !== 0) {
-        rootStore.gameStore.setTileInHandFromWebSocket(id, rotation);
-        onTilePlacement(row, column, true);
-      }
-
-      console.log(
-        `Tile with id ${id} rotated ${rotation} degrees is placed in ${row} row and ${column} column by client with id ${clientId}`,
-      );
-    });
-  }, []);
-
-  useEffect(() => {
-    socket.on(WebSocketEvent.RECEIVE_TILE_ROTATED, (data) => {
-      const { rotation, clientId } = data;
-      const rotationDegree = rotation as Rotation;
-      rootStore.gameStore.setRotationFromWebSocket(rotationDegree);
-      console.log(`Client with id ${clientId} rotated tile in hand ${rotationDegree} degrees`);
-    });
-  }, []);
-
-  useEffect(() => {
-    socket.on(WebSocketEvent.RECEIVE_NEXT_PHASE, (data) => {
-      const { nextPhase, clientId } = data;
-      nextPhase && rootStore.gameStore.setNextPhase(true);
-      console.log(`Client with id ${clientId} moved to the next phase.`);
-    });
-  }, []);
+  useTilePlacementReceiver(onTilePlacement);
+  useTileRotationReceiver();
+  useNextPhaseReceiver();
 
   function gameBoardAutoScale(): number {
     const rowsCount = Object.entries(tilesGroupedByRows).length;

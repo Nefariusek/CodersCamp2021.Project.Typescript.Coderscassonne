@@ -4,13 +4,13 @@ import { APPLICATION_TITLE } from '../constants/labels';
 import { CASTLE_SOURCE, SETTINGS_ICON_SOURCE, TILE_TITLE_SOURCE } from '../constants/layoutElements';
 import { Link } from 'react-router-dom';
 import { PATH_TO_HOMEPAGE } from '../constants/paths';
-import { openWorkInProgressModal } from '../components/Modal/WorkInProgressModal';
+import { openSettingsModal } from '../components/Modal/SettingsModal';
 
 export const AppHeaderSection: FC = () => (
   <div className="flex justify-center h-40 bg-DARKTHEME_BACKGROUND_COLOR">
     <div className="mt-2">
       <div className="absolute top-5 right-7 ">
-        <img src={SETTINGS_ICON_SOURCE} onClick={openWorkInProgressModal} alt="titile_tile" className="w-30 h-30" />
+        <img src={SETTINGS_ICON_SOURCE} onClick={openSettingsModal} alt="titile_tile" className="w-30 h-30" />
       </div>
       <Link to={PATH_TO_HOMEPAGE}>
         <div className="absolute">

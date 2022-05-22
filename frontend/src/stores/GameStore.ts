@@ -44,19 +44,7 @@ class GameStore {
         tileToChange.state = TileState.TAKEN;
         tileToChange.tile = this.tileInHand;
         if (!fromWebsocket) {
-          const websocketMessageParser = new WebsocketMessageParser();
-          const tilePlacementMessage = new TilePlacementMessage('');
-          tilePlacementMessage.id = this.tileInHand.id;
-          tilePlacementMessage.row = row;
-          tilePlacementMessage.column = column;
-          tilePlacementMessage.rotation = this.tileInHand.rotation;
-
-          websocketMessageParser.parse(tilePlacementMessage, WebSocketEvent.SEND_TILE_PLACED);
-
-          socket.emit(
-            WebSocketEvent.SEND_TILE_PLACED,
-            `${this.tileInHand.id}_${row}_${column}_${this.tileInHand.rotation}`,
-          );
+          this.emitTilePlacementMessage(this.tileInHand.id, row, column, this.tileInHand.rotation);
         }
 
         extendBoard(row, column);
@@ -79,6 +67,20 @@ class GameStore {
         openInvalidMoveModal();
       }
     }
+  }
+
+  emitTilePlacementMessage(id: string, row: number, column: number, rotation: Rotation) {
+    const websocketMessageParser = new WebsocketMessageParser();
+    const tilePlacementMessage = new TilePlacementMessage('');
+    tilePlacementMessage.id = id;
+    tilePlacementMessage.row = row;
+    tilePlacementMessage.column = column;
+    tilePlacementMessage.rotation = rotation;
+
+    socket.emit(
+      WebSocketEvent.SEND_TILE_PLACED,
+      websocketMessageParser.parse(tilePlacementMessage, WebSocketEvent.SEND_TILE_PLACED),
+    );
   }
 
   setTileInHandFromWebSocket(id: string, rotation: Rotation) {

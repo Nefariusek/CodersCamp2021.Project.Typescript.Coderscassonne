@@ -1,4 +1,5 @@
-import { Rotation } from '../Tile';
+import MeeplePlacementMessage from './MeeplePlacementMessage';
+import TilePlacementMessage from './TilePlacementMessage';
 
 export enum WebSocketEvent {
   SEND_TILE_PLACED = 'sendTilePlaced',
@@ -44,44 +45,4 @@ export interface BaseMessageInterface {
   id: string;
   row: number;
   column: number;
-}
-
-export class TilePlacementMessage implements BaseMessageInterface {
-  public id: string;
-  public row: number;
-  public column: number;
-  public rotation: Rotation;
-
-  constructor(message: string) {
-    const splitMessageArray = message.split('_');
-    if (splitMessageArray.length === 5) {
-      this.id = `${splitMessageArray[0]}_${splitMessageArray[1]}`;
-      this.row = +splitMessageArray[2];
-      this.column = +splitMessageArray[3];
-      this.rotation = +splitMessageArray[4] as Rotation;
-    }
-  }
-
-  get messageString(): string {
-    return `${this.id}_${this.row}_${this.column}_${this.rotation}`;
-  }
-}
-
-export class MeeplePlacementMessage implements BaseMessageInterface {
-  public id: string;
-  public row: number;
-  public column: number;
-
-  constructor(message: string) {
-    const splitMessageArray = message.split('_');
-    if (splitMessageArray.length === 3) {
-      this.id = `${splitMessageArray[0]}`;
-      this.row = +splitMessageArray[1];
-      this.column = +splitMessageArray[2];
-    }
-  }
-
-  get messageString(): string {
-    return `${this.id}_${this.row}_${this.column}`;
-  }
 }

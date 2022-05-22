@@ -33,8 +33,8 @@ export const NextPhaseButton = observer(() => {
             <div key={phase} className={currentPhase === phase ? active : inactive} />
           ))}
         </div>
-        <Dropdown />
       </div>
+      <Dropdown />
     </div>
   );
 });

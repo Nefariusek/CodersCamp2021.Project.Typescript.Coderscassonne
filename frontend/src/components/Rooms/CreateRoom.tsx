@@ -3,7 +3,7 @@ import { socket } from '../../constants/socket';
 import Button from '../Button/Button';
 import Tooltip from '../Tooltip/Tooltip';
 
-const CreateRoom = ({ refresh, setRefresh }) => {
+const CreateRoom = () => {
   const [roomName, setRoomName] = useState<string>('');
   const [roomPassword, setRoomPassword] = useState<string>('');
   const [errorMessage, setErrorMessage] = useState<string>('');
@@ -25,13 +25,9 @@ const CreateRoom = ({ refresh, setRefresh }) => {
     e.preventDefault();
     if (!roomName) return;
     socket.emit('createRoom', { name: roomName, password: roomPassword });
-    socket.on('createRoomError', (errorMsg) => {
-      alert(errorMsg);
-      return;
-    });
     setRoomName('');
     setRoomPassword('');
-    setRefresh(!refresh);
+    socket.emit('getRooms');
   };
 
   return (

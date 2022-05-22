@@ -2,7 +2,6 @@ import {
   SubscribeMessage,
   WebSocketGateway,
   WebSocketServer,
-  WsResponse,
 } from '@nestjs/websockets';
 
 import { Server, Socket } from 'socket.io';
@@ -62,11 +61,6 @@ export class RoomGateway {
       rooms.map((r) => {
         return { name: r.room, password: !!r.password };
       }),
-    );
-    console.log(rooms);
-    console.log(
-      'wyslalem:',
-      rooms.map((r) => r.room),
     );
   }
 }

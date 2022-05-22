@@ -1,8 +1,6 @@
 import Button from '../Button/Button';
 import Tooltip from '../Tooltip/Tooltip';
 import { useEffect, useState } from 'react';
-import { PATH_TO_CREATE_PLAYERS } from '../../constants/paths';
-import { useNavigate } from 'react-router-dom';
 import { openPasswordModal } from '../Modal/PasswordModal';
 import { socket } from '../../constants/socket';
 
@@ -11,8 +9,11 @@ interface Room {
   password: boolean;
 }
 
-const AvailableRooms = ({ rooms }) => {
-  const navigate = useNavigate();
+interface AvailableRoomsProps {
+  rooms: Room[];
+}
+
+const AvailableRooms = ({ rooms }: AvailableRoomsProps) => {
   const [selectedRoom, setSelectedRoom] = useState<Room>();
   const [errorMessage, setErrorMessage] = useState<string>('');
 
@@ -25,15 +26,6 @@ const AvailableRooms = ({ rooms }) => {
     }
   }, [selectedRoom]);
 
-  useEffect(() => {
-    console.log('rerender');
-    socket.on('joinedRoom', () => {
-      console.log('odebralwm');
-
-      navigate(PATH_TO_CREATE_PLAYERS);
-    });
-  });
-
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     console.log(selectedRoom);
@@ -41,7 +33,7 @@ const AvailableRooms = ({ rooms }) => {
     if (selectedRoom.password) {
       openPasswordModal(selectedRoom.name);
     } else {
-      socket.emit('joinRoom', { name: selectedRoom?.name, password: undefined });
+      socket.emit('joinRoom', { name: selectedRoom?.name, password: '' });
     }
     setSelectedRoom(undefined);
     const radio: HTMLInputElement | null = document.querySelector('input[type=radio]:checked');

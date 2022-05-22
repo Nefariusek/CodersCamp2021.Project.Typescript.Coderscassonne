@@ -9,7 +9,7 @@ import {
   PATH_TO_GAMEPAGE,
   PATH_TO_HOMEPAGE,
   PATH_TO_HOWTOPLAYPAGE,
-  PATH_TO_SETTINGS,
+  PATH_TO_GAME_MODE_PAGE,
   PATH_TO_CUSTOM_MODE_FORM,
 } from './constants/paths';
 import CreditsPage from './views/CreditsPage';
@@ -17,7 +17,7 @@ import CreatePlayersPage from './views/CreatePlayersPage';
 import GamePage from './views/Game';
 import HomePage from './views/HomePage';
 import HowToPlayPage from './views/HowToPlayPage';
-import SettingsPage from './views/SettingsPage';
+import GameModePage from './views/GameModePage';
 import CustomModePage from './views/CustomModePage';
 import { WorkInProgressModal } from './components/Modal/WorkInProgressModal';
 
@@ -29,7 +29,7 @@ const paths = [
   { element: <HowToPlayPage />, url: PATH_TO_HOWTOPLAYPAGE },
   { element: <CreatePlayersPage />, url: PATH_TO_CREATE_PLAYERS },
   { element: <CreditsPage />, url: PATH_TO_CREDITS },
-  { element: <SettingsPage />, url: PATH_TO_SETTINGS },
+  { element: <GameModePage />, url: PATH_TO_GAME_MODE_PAGE },
   { element: <CustomModePage />, url: PATH_TO_CUSTOM_MODE_FORM },
 ];
 const pathsWithoutHeader = [PATH_TO_GAMEPAGE];

@@ -35,7 +35,9 @@ const CustomModeForm = (props: NumberDropdown) => {
         id={property}
       >
         {options.map((opt) => (
-          <option value={opt}>{opt}</option>
+          <option key={opt} value={opt}>
+            {opt}
+          </option>
         ))}
       </select>
     </div>

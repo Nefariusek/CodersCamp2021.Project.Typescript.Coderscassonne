@@ -1,16 +1,14 @@
 import {
-  SubscribeMessage,
-  WebSocketGateway,
-  OnGatewayInit,
   OnGatewayConnection,
   OnGatewayDisconnect,
+  OnGatewayInit,
+  SubscribeMessage,
+  WebSocketGateway,
   WsResponse,
 } from '@nestjs/websockets';
-
-import { Socket, Server } from 'socket.io';
+import { Server, Socket } from 'socket.io';
 import { MassageHandler } from './app.messagehandler.service';
 import WebSocketEvent from './constants/webSocketEvents';
-import { meeplePlacementReceive } from './constants';
 
 @WebSocketGateway(5001, { cors: true })
 export class GameGateway
@@ -30,7 +28,7 @@ export class GameGateway
 
   @SubscribeMessage(WebSocketEvent.SEND_MESSAGE)
   handleMessage(client: Socket, text: string): WsResponse<string> {
-    const message = `Client with id: ${client.id} send a message: ${text}`;
+    const message = `Client with id: ${client.id} sent a message: ${text}`;
     return { event: WebSocketEvent.RECEIVE_MESSAGE, data: message };
   }
 
@@ -40,10 +38,10 @@ export class GameGateway
     client.broadcast.emit(WebSocketEvent.RECEIVE_NEXT_PHASE, message);
   }
 
-  @SubscribeMessage(meeplePlacementReceive)
+  @SubscribeMessage(WebSocketEvent.SEND_MEEPLE_PLACED)
   handleMeeplePlacement(client: Socket, text: string): WsResponse<string> {
     const msgHandler = new MassageHandler();
-    msgHandler.messageType = meeplePlacementReceive;
+    msgHandler.messageType = WebSocketEvent.SEND_MEEPLE_PLACED;
     msgHandler.createMessage(client.id, text);
     return msgHandler.sendMassage();
   }

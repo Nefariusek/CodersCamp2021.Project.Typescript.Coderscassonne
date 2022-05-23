@@ -1,12 +1,12 @@
 import { INestApplication } from '@nestjs/common';
 import { Test, TestingModule } from '@nestjs/testing';
-import { AppGateway } from './app.game.gateway';
+import { GameGateway } from './game.gateway';
 import * as ioClient from 'socket.io-client';
 
 const socketUrl = 'http://localhost:5001';
 
-describe('AppGateway', () => {
-  let gateway: AppGateway;
+describe('GameGateway', () => {
+  let gateway: GameGateway;
   let app: INestApplication;
   const connectToSocketIO = (): ioClient.Socket =>
     ioClient.io(socketUrl, {
@@ -16,13 +16,13 @@ describe('AppGateway', () => {
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
-      providers: [AppGateway],
+      providers: [GameGateway],
     }).compile();
 
     app = module.createNestApplication();
     await app.init();
 
-    gateway = module.get<AppGateway>(AppGateway);
+    gateway = module.get<GameGateway>(GameGateway);
   });
 
   afterEach(async () => {

@@ -1,4 +1,4 @@
-import React, { ReactElement, useContext, useState } from 'react';
+import React, { ReactElement, useState } from 'react';
 // @ts-ignore
 import { MapInteractionCSS } from 'react-map-interaction';
 import PlayersInfo from '../components/PlayersInfo/PlayersInfo';
@@ -12,14 +12,14 @@ import { MENU_TITLE_SOURCE } from '../constants/layoutElements';
 import { Link } from 'react-router-dom';
 import { PATH_TO_HOMEPAGE } from '../constants/paths';
 import { openEndGameModal, EndGameModal } from '../components/Modal/EndGameModal';
-import DataStoreContext from '../components/DataStoreContext/DataStoreContext';
 import { InvalidMoveModal } from '../components/Modal/InvalidMoveModal';
 import { EndTurnModal } from '../components/Modal/EndTurnModal';
 import rootStore from '../stores/RootStore';
 import { observer } from 'mobx-react';
+import NextPhaseButton from '../components/NextPhaseButton/NextPhaseButton';
 
 const GamePage: React.FunctionComponent = observer((): ReactElement => {
-  const context = useContext(DataStoreContext);
+  const players = rootStore.playersStore.players;
   const drawPileLength = rootStore.gameStore.drawPile.length;
   const [currentPlayer] = useState<number>(0);
 
@@ -42,7 +42,8 @@ const GamePage: React.FunctionComponent = observer((): ReactElement => {
             <img src={MENU_TITLE_SOURCE} alt="title_tile" className="w-30 h-30" />
           </Link>
         </div>
-        <PlayersInfo players={context?.allPlayersData} currentPlayer={currentPlayer} />
+        <PlayersInfo players={players} currentPlayer={currentPlayer} />
+        <NextPhaseButton />
         <GameTimer isTurnTimerVisible={false} turnLength={60} />
         <div className="flex justify-end">
           <Legend />

@@ -1,7 +1,7 @@
 import { makeAutoObservable } from 'mobx';
 
 import Locations from '../constants/locations';
-import { PREDEFINED_TILES } from '../constants/tiles';
+import { PREDEFINED_TILE_IMAGES } from '../constants/tileImages';
 import type Player from './Player';
 
 export type Rotation = 0 | 90 | 180 | 270;
@@ -18,7 +18,7 @@ class Tile {
 
   public id: string;
 
-  public middle: Locations;
+  public middle: Locations[];
 
   public placedBy: Player;
 
@@ -30,10 +30,10 @@ class Tile {
 
   private readonly originalEdges: Edges;
 
-  constructor(edges: Edges, middle: Locations, isSpecial = false, id: string) {
+  constructor(edges: Edges, middle: Locations[], isSpecial = false, id: string) {
     this.id = id;
     this.edges = edges;
-    this.middle = middle;
+    this.middle = [...middle];
     this.originalEdges = edges;
     this.isSpecial = isSpecial;
     this.rotation = 0;
@@ -72,10 +72,26 @@ class Tile {
     };
   }
 
-  public getTileImageSource(): string | undefined {
-    const foundTile = PREDEFINED_TILES.find(
+  public setRotation(rotation: Rotation): void {
+    const rotateBy90Count = Math.abs(rotation / 90);
+    for (let i = 0; i < rotateBy90Count; i++) {
+      rotation > 0 ? this.rotateRight() : this.rotateLeft();
+    }
+  }
+
+  public getTileImageSourceById(): string | undefined {
+    const splitIdArray = this.id.split('_');
+    const tileImageId = splitIdArray[0];
+    const foundTile = PREDEFINED_TILE_IMAGES.find((tileImage) => tileImage.id === tileImageId);
+    if (foundTile) {
+      return foundTile.imageSource;
+    }
+    return undefined;
+  }
+
+  public getTileImageSourceByLocations(): string | undefined {
+    const foundTile = PREDEFINED_TILE_IMAGES.find(
       (tile) =>
-        tile.middle === this.middle &&
         tile.bottom === this.originalEdges.bottom &&
         tile.right === this.originalEdges.right &&
         tile.left === this.originalEdges.left &&

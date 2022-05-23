@@ -63,7 +63,7 @@ export const Modal = observer((props: ModalProps): React.ReactElement => {
         <div className="bg-DARKTHEME_DARK_GREEN_COLOR opacity-95 fixed inset-0 z-50">
           <div className="flex h-screen opacity-1 justify-center items-center z-50">
             <div className="flex-col justify-center bg-DARKTHEME_BACKGROUND_COLOR py-12 px-24 border-4 border-DARKTHEME_LIGHT_GREEN_COLOR rounded-xl z-50">
-              <div className="flex justify-center font-ALMENDRA text-2xl text-DARKTHEME_LIGHT_GREEN_COLOR mb-10 z-50">
+              <div className="flex justify-center font-ALMENDRA text-3xl text-DARKTHEME_LIGHT_GREEN_COLOR mb-10 z-50">
                 <p>{eventText}</p>
               </div>
               {children}

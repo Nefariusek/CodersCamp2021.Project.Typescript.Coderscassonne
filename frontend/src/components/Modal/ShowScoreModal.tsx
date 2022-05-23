@@ -13,11 +13,11 @@ export const ShowScoreModal = observer((): React.ReactElement => {
 
   return (
     <Modal eventType={ModalEvents.SHOW_SCORE}>
-      <div className="flex flex-col text-white mb-5 text-center">
+      <div className="flex flex-col text-white mb-5 text-center text-xl">
         <div className="flex flex-col">
           {!players.length && <div>There isn't any players yet!</div>}
           {players.map((player: Player) => (
-            <div key={player.technology} className="flex flex-row py-2 text-2xl bold justify-start">
+            <div key={player.technology} className="flex flex-row py-2 text-xl bold justify-start">
               <div className="px-1">Name: {player.name}</div>
               <div className="px-1">has score: {player.score}</div>
             </div>

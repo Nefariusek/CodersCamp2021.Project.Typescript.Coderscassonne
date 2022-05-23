@@ -10,6 +10,7 @@ import { PATH_TO_CREATE_PLAYERS } from '../constants/paths';
 interface Room {
   name: string;
   password: boolean;
+  players: number;
 }
 
 const JoinRoomPage = () => {

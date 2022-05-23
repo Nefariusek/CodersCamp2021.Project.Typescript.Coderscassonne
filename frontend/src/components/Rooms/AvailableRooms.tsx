@@ -7,6 +7,7 @@ import { socket } from '../../constants/socket';
 interface Room {
   name: string;
   password: boolean;
+  players: number;
 }
 
 interface AvailableRoomsProps {
@@ -62,6 +63,7 @@ const AvailableRooms = ({ rooms }: AvailableRoomsProps) => {
             />
             <div className="flex gap-8 peer-checked:border-2 peer-checked:border-DARKTHEME_LIGHT_GREEN_COLOR">
               <p className="font-ALMENDRA font-bold text-2xl text-DARKTHEME_LIGHT_GREEN_COLOR p-1">{room.name}</p>
+              <p className="font-ALMENDRA font-bold text-2xl text-DARKTHEME_LIGHT_GREEN_COLOR p-1">{room.players}/5 </p>
               {room.password && <img className="h-8 p-1" src={`./Elements/Layout/lock.png`} alt={`locked`} />}
             </div>
           </label>

@@ -26,7 +26,7 @@ export class RoomGateway {
     room: { name: string; password: string | undefined },
   ) {
     if (!rooms.some((r) => r.room === room.name)) {
-      rooms.push({ room: room.name, password: room.password });
+      rooms.push({ room: room.name, password: room.password, players: 0 });
     } else {
       client.emit('createRoomError', `Room ${room.name} already exists!`);
     }
@@ -40,9 +40,14 @@ export class RoomGateway {
     if (
       rooms.some((r) => r.room === room.name && r.password === room.password)
     ) {
-      client.join(room.name);
-      client.emit('joinedRoom', room.name);
-      console.log(`client: ${client.id} joins room: ${room.name}`);
+      if (rooms.find((r) => r.room === room.name).players < 5) {
+        client.join(room.name);
+        rooms.find((r) => r.room === room.name).players++;
+        client.emit('joinedRoom', room.name);
+        console.log(`client: ${client.id} joins room: ${room.name}`);
+      } else {
+        client.emit('joinRoomError', `Room ${room.name} is full!`);
+      }
     } else {
       client.emit('joinRoomError', `Wrong password!`);
     }
@@ -51,6 +56,7 @@ export class RoomGateway {
   @SubscribeMessage('leaveRoom')
   handleRoomLeave(client: Socket, room: string) {
     client.leave(room);
+    rooms.find((r) => r.room === room).players--;
     client.emit('leftRoom', room);
   }
 
@@ -58,9 +64,11 @@ export class RoomGateway {
   handleGetRooms(client: Socket) {
     client.emit(
       'availableRooms',
-      rooms.map((r) => {
-        return { name: r.room, password: !!r.password };
-      }),
+      rooms
+        .filter((r) => r.players < 5)
+        .map((r) => {
+          return { name: r.room, password: !!r.password, players: r.players };
+        }),
     );
   }
 }

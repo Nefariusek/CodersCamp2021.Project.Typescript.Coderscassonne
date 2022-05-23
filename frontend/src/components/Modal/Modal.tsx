@@ -19,7 +19,7 @@ const MODAL_EVENT_MESSAGES = {
   [ModalEvents.END_TURN]: ["It's the end of your turn!", 'Play new game'],
   [ModalEvents.INVALID_MOVE]: ["Sorry, this tile can't be placed here!", 'Cancel'],
   [ModalEvents.SETTINGS_ON]: ['Settings', 'Close'],
-  [ModalEvents.SHOW_SCORE]: ['Game score', 'Close'],
+  [ModalEvents.SHOW_SCORE]: ['Game scores', 'Close'],
   [ModalEvents.WORK_IN_PROGRESS]: ['Work in progress', 'Cancel'],
   [ModalEvents.DEFAULT]: ['', 'Cancel'],
 };

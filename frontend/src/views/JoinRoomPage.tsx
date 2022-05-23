@@ -6,6 +6,7 @@ import { PasswordModal } from '../components/Modal/PasswordModal';
 import { socket } from '../constants/socket';
 import { useNavigate } from 'react-router-dom';
 import { PATH_TO_CREATE_PLAYERS } from '../constants/paths';
+import WebSocketEvent from '../constants/webSocketEvents';
 
 interface Room {
   name: string;
@@ -18,22 +19,22 @@ const JoinRoomPage = () => {
   const [rooms, setRooms] = useState<Room[]>([]);
   const [errorMessage, setErrorMessage] = useState<string>('');
   useEffect(() => {
-    socket.emit('getRooms');
+    socket.emit(WebSocketEvent.GET_ROOMS);
   }, []);
   useEffect(() => {
-    socket.on('availableRooms', (data) => {
+    socket.on(WebSocketEvent.SEND_ROOMS, (data) => {
       if (data) {
         setRooms(data);
       }
     });
-    socket.on('joinedRoom', () => {
+    socket.on(WebSocketEvent.JOINED_ROOM, () => {
       navigate(PATH_TO_CREATE_PLAYERS);
     });
-    socket.on('createRoomError', (errorMsg) => {
+    socket.on(WebSocketEvent.CREATE_ROOM_ERROR, (errorMsg) => {
       setErrorMessage(errorMsg);
       return;
     });
-    socket.on('joinRoomError', (errorMsg) => {
+    socket.on(WebSocketEvent.JOIN_ROOM_ERROR, (errorMsg) => {
       setErrorMessage(errorMsg);
       return;
     });

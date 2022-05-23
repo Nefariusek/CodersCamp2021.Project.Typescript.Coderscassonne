@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { socket } from '../../constants/socket';
+import WebSocketEvent from '../../constants/webSocketEvents';
 import Button from '../Button/Button';
 import Tooltip from '../Tooltip/Tooltip';
 
@@ -24,10 +25,10 @@ const CreateRoom = () => {
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (!roomName) return;
-    socket.emit('createRoom', { name: roomName, password: roomPassword });
+    socket.emit(WebSocketEvent.CREATE_ROOM, { name: roomName, password: roomPassword });
     setRoomName('');
     setRoomPassword('');
-    socket.emit('getRooms');
+    socket.emit(WebSocketEvent.GET_ROOMS);
   };
 
   return (

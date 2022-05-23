@@ -4,6 +4,8 @@ import {
   WebSocketServer,
 } from '@nestjs/websockets';
 
+import WebSocketEvent from './constants/webSocketEvents';
+
 import { Server, Socket } from 'socket.io';
 
 const rooms = [];
@@ -12,15 +14,17 @@ const rooms = [];
 export class RoomGateway {
   @WebSocketServer() wss: Server;
 
-  @SubscribeMessage('messageToRoom')
+  @SubscribeMessage(WebSocketEvent.RECEIVE_MESSAGE_FROM_ROOM)
   handleRoomMessage(
     client: Socket,
     message: { sender: string; room: string; message: string },
   ) {
-    this.wss.to(message.room).emit('messageToRoom', message);
+    this.wss
+      .to(message.room)
+      .emit(WebSocketEvent.SEND_MESSAGE_TO_ROOM, message);
   }
 
-  @SubscribeMessage('createRoom')
+  @SubscribeMessage(WebSocketEvent.CREATE_ROOM)
   handleRoomCreate(
     client: Socket,
     room: { name: string; password: string | undefined },
@@ -28,11 +32,14 @@ export class RoomGateway {
     if (!rooms.some((r) => r.room === room.name)) {
       rooms.push({ room: room.name, password: room.password, players: 0 });
     } else {
-      client.emit('createRoomError', `Room ${room.name} already exists!`);
+      client.emit(
+        WebSocketEvent.CREATE_ROOM_ERROR,
+        `Room ${room.name} already exists!`,
+      );
     }
   }
 
-  @SubscribeMessage('joinRoom')
+  @SubscribeMessage(WebSocketEvent.JOIN_ROOM)
   handleRoomJoin(
     client: Socket,
     room: { name: string; password: string | undefined },
@@ -43,27 +50,30 @@ export class RoomGateway {
       if (rooms.find((r) => r.room === room.name).players < 5) {
         client.join(room.name);
         rooms.find((r) => r.room === room.name).players++;
-        client.emit('joinedRoom', room.name);
+        client.emit(WebSocketEvent.JOINED_ROOM, room.name);
         console.log(`client: ${client.id} joins room: ${room.name}`);
       } else {
-        client.emit('joinRoomError', `Room ${room.name} is full!`);
+        client.emit(
+          WebSocketEvent.JOIN_ROOM_ERROR,
+          `Room ${room.name} is full!`,
+        );
       }
     } else {
-      client.emit('joinRoomError', `Wrong password!`);
+      client.emit(WebSocketEvent.JOIN_ROOM_ERROR, `Wrong password!`);
     }
   }
 
-  @SubscribeMessage('leaveRoom')
+  @SubscribeMessage(WebSocketEvent.LEAVE_ROOM)
   handleRoomLeave(client: Socket, room: string) {
     client.leave(room);
     rooms.find((r) => r.room === room).players--;
-    client.emit('leftRoom', room);
+    client.emit(WebSocketEvent.LEFT_ROOM, room);
   }
 
-  @SubscribeMessage('getRooms')
+  @SubscribeMessage(WebSocketEvent.GET_ROOMS)
   handleGetRooms(client: Socket) {
     client.emit(
-      'availableRooms',
+      WebSocketEvent.SEND_ROOMS,
       rooms
         .filter((r) => r.players < 5)
         .map((r) => {

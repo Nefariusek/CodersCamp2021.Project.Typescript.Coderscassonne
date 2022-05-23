@@ -40,7 +40,6 @@ const App: FC = (): ReactElement => {
 
   useEffect(() => {
     socket.emit('sendMessage', 'Hello from Client');
-    socket.emit('meeplePlacementMessage', 'Meeple placed');
   }, []);
 
   useEffect(() => {

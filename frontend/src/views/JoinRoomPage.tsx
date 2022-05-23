@@ -7,6 +7,7 @@ import { socket } from '../constants/socket';
 import { useNavigate } from 'react-router-dom';
 import { PATH_TO_CREATE_PLAYERS } from '../constants/paths';
 import WebSocketEvent from '../constants/webSocketEvents';
+import rootStore from '../stores/RootStore';
 
 interface Room {
   name: string;
@@ -27,7 +28,8 @@ const JoinRoomPage = () => {
         setRooms(data);
       }
     });
-    socket.on(WebSocketEvent.JOINED_ROOM, () => {
+    socket.on(WebSocketEvent.JOINED_ROOM, (data) => {
+      rootStore.setRoom(data);
       navigate(PATH_TO_CREATE_PLAYERS);
     });
     socket.on(WebSocketEvent.CREATE_ROOM_ERROR, (errorMsg) => {

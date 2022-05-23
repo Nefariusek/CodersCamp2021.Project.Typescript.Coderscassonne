@@ -77,10 +77,10 @@ class GameStore {
     tilePlacementMessage.column = column;
     tilePlacementMessage.rotation = rotation;
 
-    socket.emit(
-      WebSocketEvent.SEND_TILE_PLACED,
-      websocketMessageParser.parse(tilePlacementMessage, WebSocketEvent.SEND_TILE_PLACED),
-    );
+    socket.emit(WebSocketEvent.SEND_TILE_PLACED, {
+      room: rootStore.room,
+      tileData: websocketMessageParser.parse(tilePlacementMessage, WebSocketEvent.SEND_TILE_PLACED),
+    });
   }
 
   setTileInHandFromWebSocket(id: string, rotation: Rotation) {

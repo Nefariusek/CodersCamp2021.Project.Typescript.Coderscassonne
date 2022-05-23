@@ -33,6 +33,7 @@ class GameStore {
     this.currentPhase = GamePhases.TILE_PLACEMENT;
     this.drawPile = GameModeParser(JSONData);
     this.tileInHand = this.drawPile.shift();
+    this.recentlyPlacedTile = undefined;
     makeAutoObservable(this);
   }
 

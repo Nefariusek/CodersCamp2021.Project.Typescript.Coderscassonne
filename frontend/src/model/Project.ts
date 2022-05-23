@@ -63,6 +63,13 @@ class Project {
     return score;
   }
 
+  public addMeeple() {
+    const meepleToAdd = rootStore.playersStore.getCurrentPlayer()?.getMeeple();
+    if (meepleToAdd) {
+      this.meeples.push(meepleToAdd);
+    }
+  }
+
   public finishProject() {
     this.meeples.map((meeple) => meeple.player.returnMeeple(meeple));
     this.owner.updateScore(this.getCurrentScore());

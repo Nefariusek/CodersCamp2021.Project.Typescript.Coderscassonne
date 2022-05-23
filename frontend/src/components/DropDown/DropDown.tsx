@@ -2,13 +2,14 @@ import { FunctionComponent } from 'react';
 import './Dropdown.css';
 import rootStore from '../../stores/RootStore';
 import { observer } from 'mobx-react-lite';
+import Project from '../../model/Project';
 
 interface DropdownProps {}
 
 const Dropdown: FunctionComponent<DropdownProps> = observer(() => {
   const availableProjects = rootStore.projectStore.availableProjects;
-  const getTileName = (e: any) => {
-    console.log(e.target.value);
+  const handleOptionClick = (project: Project) => {
+    project.addMeeple();
   };
 
   return (
@@ -33,7 +34,7 @@ const Dropdown: FunctionComponent<DropdownProps> = observer(() => {
         >
           {availableProjects?.map((project) => (
             <li
-              onClick={getTileName}
+              onClick={() => handleOptionClick(project)}
               className="rounded-sm relative px-3 py-1 hover:bg-DARKTHEME_DARK_GREEN_COLOR hover:text-white"
             >
               {project.type}

@@ -14,6 +14,7 @@ const ProjectList = observer(() => {
           <th>Tiles</th>
           <th>setlength</th>
           <th>isfinished</th>
+          <th>Meeples</th>
         </tr>
       </thead>
       <tbody>
@@ -25,6 +26,7 @@ const ProjectList = observer(() => {
               <td>{project.tiles.length}</td>
               <td>{project.openEdgesSet.size}</td>
               <td>{project.isFinished ? 'yes' : 'nope'}</td>
+              <td>{project.meeples.length}</td>
             </tr>
           );
         })}

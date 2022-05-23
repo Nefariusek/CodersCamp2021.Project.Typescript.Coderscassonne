@@ -9,12 +9,14 @@ import { GAMEBOARD_LAYOUT_PROPORTION, TILE_SIZE } from '../../constants/gameDefa
 import { useTilePlacementReceiver, useTileRotationReceiver, useNextPhaseReceiver } from './GameBoard.hooks';
 import rootStore from '../../stores/RootStore';
 import { observer } from 'mobx-react';
+import Meeple from '../../model/Meeple';
 
 export interface BoardState {
   column: number;
   row: number;
   state: TileState;
   tile?: Tile;
+  meeple?: Meeple;
 }
 
 const GameBoard = observer((): ReactElement => {
@@ -70,6 +72,7 @@ const GameBoard = observer((): ReactElement => {
                         onChange={onTilePlacement}
                         row={element.row}
                         column={element.column}
+                        meeple={element.meeple}
                       />
                     </td>
                   ))}

@@ -12,7 +12,7 @@ import { GamePhases } from '../components/NextPhaseButton/NextPhaseButton';
 import TileState from '../constants/tileState';
 import { JSONData } from '../mocks/mocksTiles';
 import Tile, { Rotation } from '../model/Tile';
-import rootStore from './RootStore';
+import rootStore, { RootStore } from './RootStore';
 
 import { socket } from '../App';
 import WebSocketEvent from '../constants/webSocketEvents';
@@ -26,9 +26,11 @@ class GameStore {
   recentlyPlacedTile: Tile | undefined;
   tileInHand: Tile | undefined;
   currentPhase: GamePhases;
+  rootStore: RootStore;
 
-  constructor() {
+  constructor(rootStore: RootStore) {
     this.boardState = [{ row: 0, column: 0, state: TileState.ACTIVE }];
+    this.rootStore = rootStore;
     this.turnNumber = 0;
     this.currentPhase = GamePhases.TILE_PLACEMENT;
     this.drawPile = GameModeParser(JSONData);

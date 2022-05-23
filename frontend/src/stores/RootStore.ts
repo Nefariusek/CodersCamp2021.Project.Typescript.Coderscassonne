@@ -10,7 +10,7 @@ class RootStore {
   isDevelopmentMode = false;
 
   constructor() {
-    this.gameStore = new GameStore();
+    this.gameStore = new GameStore(this);
     this.playersStore = new PlayersStore(this);
     this.projectStore = new ProjectStore(this);
 

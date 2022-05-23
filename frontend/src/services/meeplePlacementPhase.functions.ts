@@ -1,6 +1,6 @@
 // import { GamePhases } from '../components/NextPhaseButton/NextPhaseButton';
 import Project from '../model/Project';
-// import rootStore from '../stores/RootStore';
+import rootStore from '../stores/RootStore';
 
 export const placeMeeple = (project: Project) => {
   // const currentPlayer = rootStore.playersStore.getCurrentPlayer()!;
@@ -16,6 +16,12 @@ export const placeMeeple = (project: Project) => {
   //   console.log('wrong game phase');
   // }
   if (project) {
-    project.addMeeple();
+    const meeple = project.addMeeple();
+    const currentContainer = rootStore.gameStore.boardState.find(
+      (container) => container.tile === rootStore.gameStore.recentlyPlacedTile,
+    );
+    if (currentContainer) {
+      currentContainer.meeple = meeple;
+    }
   }
 };

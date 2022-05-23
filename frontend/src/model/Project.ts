@@ -70,7 +70,9 @@ class Project {
     const meepleToAdd = rootStore.playersStore.getCurrentPlayer()?.getMeeple();
     if (meepleToAdd) {
       this.meeples.push(meepleToAdd);
+      meepleToAdd.placedAt = this.type;
     }
+    return meepleToAdd;
   }
 
   public finishProject() {

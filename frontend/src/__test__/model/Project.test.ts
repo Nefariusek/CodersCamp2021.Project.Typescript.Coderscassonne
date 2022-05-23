@@ -38,34 +38,4 @@ describe('Project model', () => {
     }
     expect(city.owner).toBe(mocksPlayers[1]);
   });
-
-  test('Score is calculated correctly', () => {
-    const tile1 = new Tile(
-      {
-        bottom: Locations.CITY,
-        left: Locations.FIELD,
-        right: Locations.FIELD,
-        top: Locations.ROAD,
-      },
-      [Locations.FIELD],
-      false,
-      'first',
-    );
-    city.tiles.push(tile1);
-    const tile2 = new Tile(
-      {
-        bottom: Locations.CITY,
-        left: Locations.FIELD,
-        right: Locations.FIELD,
-        top: Locations.ROAD,
-      },
-      [Locations.FIELD],
-      true,
-      'second',
-    );
-    city.tiles.push(tile2);
-    expect(city.getCurrentScore()).toBe(4);
-    city.finishProject();
-    expect(city.owner.score).toBe(4);
-  });
 });

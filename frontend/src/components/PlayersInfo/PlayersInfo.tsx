@@ -13,7 +13,7 @@ interface PlayersInfoItemProps {
 
 const PlayersInfoItem = ({ player, isCurrent }: PlayersInfoItemProps) => {
   const playerImage = `./Elements/Meeple/${player.technology}_meeple.png`;
-  const cardImage = `./Elements/Meeple/Card_${player.technology}.png`;
+
   return (
     <>
       {!isCurrent ? (
@@ -34,11 +34,8 @@ const PlayersInfoItem = ({ player, isCurrent }: PlayersInfoItemProps) => {
             <img src={playerImage} alt={player.technology} width="60px" />
           </div>
           <p className="font-ALMENDRA font-bold text-2xl lg:text-4xl text-DARKTHEME_LIGHT_GREEN_COLOR py-3 sm:px-1 lg:px-2">
-            {1}x{' '}
+            {`score: ${player.score}`}
           </p>
-          <div className="flex justify-center w-[60px]">
-            <img src={cardImage} alt={player.technology} width="60px" />
-          </div>
         </div>
       )}
     </>

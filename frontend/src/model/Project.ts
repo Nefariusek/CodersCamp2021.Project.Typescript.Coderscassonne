@@ -15,6 +15,8 @@ class Project {
 
   public id: number;
 
+  public isFinished: boolean;
+
   public openEdgesSet: Set<string>;
   public closedEdgesSet: Set<string>;
 
@@ -23,6 +25,7 @@ class Project {
     this.id = rootStore.projectStore.allProjects.length;
     this.tiles = [];
     this.type = type;
+    this.isFinished = false;
     this.openEdgesSet = new Set<string>();
     this.closedEdgesSet = new Set<string>();
 
@@ -41,10 +44,10 @@ class Project {
           : currentMeeple,
       this.meeples[0],
     );
-    return mode.player;
+    return mode?.player;
   }
 
-  public getCurrentScore(): number {
+  public get currentScore(): number {
     let score: number;
     switch (this.type) {
       case Locations.ROAD || Locations.MONASTERY || Locations.GARDEN:
@@ -71,15 +74,17 @@ class Project {
   }
 
   public finishProject() {
-    this.meeples.map((meeple) => meeple.player.returnMeeple(meeple));
-    this.owner.updateScore(this.getCurrentScore());
+    this.owner.updateScore(this.currentScore);
+    this.meeples.forEach((meeple) => meeple.player.returnMeeple(meeple));
+    this.meeples.length = 0;
+    this.isFinished = true;
   }
 
   public scoreUnfinishedProject() {
-    this.owner.updateScore(this.getCurrentScore());
+    this.owner.updateScore(this.currentScore);
   }
 
-  public get isFinished(): boolean {
+  public get isFinishable(): boolean {
     if (this.type === Locations.ROAD) {
       return this.checkIfRoadProjectIsFinishable();
     } else if (this.type === Locations.CITY) {

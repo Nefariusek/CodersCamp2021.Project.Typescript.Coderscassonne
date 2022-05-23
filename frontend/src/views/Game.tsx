@@ -17,6 +17,7 @@ import { EndTurnModal } from '../components/Modal/EndTurnModal';
 import rootStore from '../stores/RootStore';
 import { observer } from 'mobx-react';
 import NextPhaseButton from '../components/NextPhaseButton/NextPhaseButton';
+import ProjectList from '../components/ProjectList/ProjectList';
 
 const GamePage: React.FunctionComponent = observer((): ReactElement => {
   const players = rootStore.playersStore.players;
@@ -53,6 +54,7 @@ const GamePage: React.FunctionComponent = observer((): ReactElement => {
         className="flex justify-center items-center"
         style={{ height: gamebordLayoutProportion, maxHeight: gamebordLayoutProportion, overflow: 'auto' }}
       >
+        <ProjectList />
         <MapInteractionCSS minScale={0.5} maxScale={3}>
           <div className={`flex justify-center items-center w-screen`} style={{ height: gamebordLayoutProportion }}>
             <GameBoard />

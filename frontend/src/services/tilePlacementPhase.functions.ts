@@ -20,8 +20,8 @@ function updateExistingProjects(existingLocations: Locations[], row: number, col
     if (adjacentTile) {
       const adjacentTileProject = adjacentProjectOfType(adjacentTile, edge);
       if (adjacentTileProject) {
-        const oppositeEdge = getOppositeEdgeKey(edge);
-        adjacentTileProject.addTileOnUpdate(rootStore.gameStore.tileInHand!, oppositeEdge, adjacentTile);
+        console.log(edge);
+        adjacentTileProject.addTileOnUpdate(rootStore.gameStore.tileInHand!, edge, adjacentTile);
 
         existingLocations.push(adjacentTileProject.type);
       }
@@ -90,18 +90,33 @@ function mergeProjects() {
 
 function createMergedProject(type: Locations, projects: Project[]) {
   const joinedProjectOfType = rootStore.projectStore.addNewProject(type);
-  const tilesOfType = getTilesToMerge(type, projects);
-  joinedProjectOfType.tiles.push(...tilesOfType);
+  const { tilesToMerge, openEdgesToMerge, closedEdgesToMerge } = getFieldsToMerge(type, projects);
+
+  joinedProjectOfType.tiles.push(...tilesToMerge);
+
+  if (type === Locations.CITY) {
+    joinedProjectOfType.openEdgesSet = openEdgesToMerge;
+    joinedProjectOfType.closedEdgesSet = closedEdgesToMerge;
+  }
 }
 
-function getTilesToMerge(type: Locations, projects: Project[]) {
+function getFieldsToMerge(type: Locations, projects: Project[]) {
   const projectsOfType = getProjectsOfType(type, projects);
   const arrayOfTiles: Tile[] = [];
+  const openEdges: string[] = [];
+  const closedEdges: string[] = [];
+
   projectsOfType.forEach((project: Project) => {
     arrayOfTiles.push(...project.tiles);
+    openEdges.push(...project.openEdgesSet);
+    closedEdges.push(...project.closedEdgesSet);
   });
-  const tilesOfType = new Set<Tile>(arrayOfTiles);
-  return tilesOfType.values();
+
+  const tilesToMerge = new Set<Tile>(arrayOfTiles).values();
+  const openEdgesToMerge = new Set<string>(openEdges);
+  const closedEdgesToMerge = new Set<string>(closedEdges);
+
+  return { tilesToMerge, openEdgesToMerge, closedEdgesToMerge };
 }
 
 function getProjectsOfType(type: Locations, projects: Project[]) {
@@ -129,7 +144,7 @@ function validateEdge(row: number, column: number, edge: keyof Edges) {
   return true;
 }
 
-function getOppositeEdgeKey(edge: keyof Edges): keyof Edges {
+export function getOppositeEdgeKey(edge: keyof Edges): keyof Edges {
   switch (edge) {
     case 'left':
       return 'right';

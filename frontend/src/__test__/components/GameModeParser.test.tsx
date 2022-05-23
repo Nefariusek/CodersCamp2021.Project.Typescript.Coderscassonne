@@ -2,7 +2,7 @@ import GameModeParser from '../../components/GameModeParser';
 import { JSONData } from '../../mocks/mocksTiles';
 
 const jsonData = JSONData;
-const length = 14;
+const length = 18;
 const tileArray = GameModeParser(jsonData);
 
 test('Array has all the tiles', () => {

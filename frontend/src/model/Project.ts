@@ -5,6 +5,7 @@ import Player from './Player';
 import Tile, { Edges } from './Tile';
 import { makeAutoObservable } from 'mobx';
 import rootStore from '../stores/RootStore';
+import { getOppositeEdgeKey } from '../services/tilePlacementPhase.functions';
 class Project {
   public meeples: Meeple[];
 
@@ -14,7 +15,8 @@ class Project {
 
   public id: number;
 
-  private openEdgesSet: Set<string>;
+  public openEdgesSet: Set<string>;
+  public closedEdgesSet: Set<string>;
 
   constructor(type: Locations, tile?: Tile, edge?: keyof Edges) {
     this.meeples = [];
@@ -22,6 +24,7 @@ class Project {
     this.tiles = [];
     this.type = type;
     this.openEdgesSet = new Set<string>();
+    this.closedEdgesSet = new Set<string>();
 
     if (tile) {
       this.addTile(tile, edge);
@@ -88,43 +91,49 @@ class Project {
   }
 
   private checkIfCityProjectIsFinishable() {
-    return false;
+    return new Set<string>(...this.closedEdgesSet, ...this.openEdgesSet).size === this.closedEdgesSet.size;
   }
 
   private checkIfMonasteryProjectIsFinishable() {
     return this.tiles.length === 9 ? true : false;
   }
 
-  public addTileOnUpdate(tileToAdd: Tile, oppositeEdge: keyof Edges, adjacentTile: Tile): void {
+  public addTileOnUpdate(tileToAdd: Tile, edge: keyof Edges, adjacentTile: Tile): void {
     this.tiles.push(tileToAdd);
-    console.log(this.openEdgesSet.size);
-    this.openEdgesSet.delete(`${adjacentTile.id}|${oppositeEdge}`);
-    console.log('opposite Edges Set ', this.openEdgesSet);
-    console.log(`${adjacentTile.id}|${oppositeEdge}`);
-    console.log(this.openEdgesSet.size);
+    const oppositeEdge = getOppositeEdgeKey(edge);
+
+    const edgeToClose = `${adjacentTile.id}|${oppositeEdge}`;
+    console.log('edgeToClose', edgeToClose);
+
+    this.openEdgesSet.delete(edgeToClose);
+    this.closedEdgesSet.add(edgeToClose);
+    this.closedEdgesSet.add(`${tileToAdd.id}|${edge}`);
+
+    Object.entries(tileToAdd.edges).forEach(([edgeName, location]) => {
+      if (location === Locations.CITY && edgeName !== edge && !this.closedEdgesSet.has(`${tileToAdd.id}|${edgeName}`)) {
+        this.openEdgesSet.add(`${tileToAdd.id}|${edgeName}`);
+      }
+      if (location === Locations.CITY && edgeName === edge) {
+        this.closedEdgesSet.add(`${tileToAdd.id}|${edgeName}`);
+      }
+    });
+
+    console.log(this.openEdgesSet);
+    console.log(this.closedEdgesSet);
   }
+
   public addTile(tileToAdd: Tile, edge?: keyof Edges) {
     this.tiles.push(tileToAdd);
-    console.log(edge);
-
-    // console.log(location);
-
-    // debugger;
 
     if (this.type === Locations.CITY && !tileToAdd.middle.includes(Locations.CITY)) {
       this.openEdgesSet.add(tileToAdd.id + edge);
     } else if (this.type === Locations.CITY && tileToAdd.middle.includes(Locations.CITY)) {
-      console.log('ts');
       Object.entries(tileToAdd.edges).forEach(([edge, location]) => {
-        // console.log(edge);
-        // console.log(location);
         if (location === Locations.CITY) {
           this.openEdgesSet.add(`${tileToAdd.id}|${edge}`);
         }
       });
     }
-
-    console.log(this.openEdgesSet);
   }
 }
 

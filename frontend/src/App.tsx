@@ -1,6 +1,5 @@
 import { FC, ReactElement, useEffect } from 'react';
 import { Route, Routes, useLocation } from 'react-router-dom';
-import io from 'socket.io-client';
 import { AppHeaderSection, Castle } from './components/Layout';
 import {
   PATH_TO_CREDITS,
@@ -10,6 +9,7 @@ import {
   PATH_TO_HOWTOPLAYPAGE,
   PATH_TO_GAME_MODE_PAGE,
   PATH_TO_CUSTOM_MODE_FORM,
+  PATH_TO_ROOMS,
 } from './constants/paths';
 import CreatePlayersPage from './views/CreatePlayersPage';
 import CreditsPage from './views/CreditsPage';
@@ -19,8 +19,8 @@ import GameModePage from './views/GameModePage';
 import HomePage from './views/HomePage';
 import HowToPlayPage from './views/HowToPlayPage';
 import { WorkInProgressModal } from './components/Modal/WorkInProgressModal';
-
-export const socket = io('http://localhost:5001');
+import JoinRoomPage from './views/JoinRoomPage';
+import { socket } from './constants/socket';
 
 const paths = [
   { element: <HomePage />, url: PATH_TO_HOMEPAGE },
@@ -30,6 +30,7 @@ const paths = [
   { element: <CreditsPage />, url: PATH_TO_CREDITS },
   { element: <GameModePage />, url: PATH_TO_GAME_MODE_PAGE },
   { element: <CustomModePage />, url: PATH_TO_CUSTOM_MODE_FORM },
+  { element: <JoinRoomPage />, url: PATH_TO_ROOMS },
 ];
 const pathsWithoutHeader = [PATH_TO_GAMEPAGE];
 
@@ -39,7 +40,6 @@ const App: FC = (): ReactElement => {
 
   useEffect(() => {
     socket.emit('sendMessage', 'Hello from Client');
-    socket.emit('meeplePlacementMessage', 'Meeple placed');
   }, []);
 
   useEffect(() => {

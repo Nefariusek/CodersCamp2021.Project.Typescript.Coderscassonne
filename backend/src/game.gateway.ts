@@ -35,16 +35,20 @@ export class GameGateway
   }
 
   @SubscribeMessage(WebSocketEvent.SEND_NEXT_PHASE)
-  handleEndOfTurn(client: Socket, nextPhase: boolean): void {
-    const message = { nextPhase: nextPhase, clientId: client.id };
-    client.broadcast.emit(WebSocketEvent.RECEIVE_NEXT_PHASE, message);
+  handleEndOfTurn(
+    client: Socket,
+    rec: { room: string; nextPhase: boolean },
+  ): void {
+    const message = { nextPhase: rec.nextPhase, clientId: client.id };
+    client.to(rec.room).emit(WebSocketEvent.RECEIVE_NEXT_PHASE, message);
   }
 
   @SubscribeMessage(meeplePlacementReceive)
-  handleMeeplePlacement(client: Socket, text: string): WsResponse<string> {
+  handleMeeplePlacement(client: Socket, rec: { room: string; text: string }) {
     const msgHandler = new MassageHandler();
     msgHandler.messageType = meeplePlacementReceive;
-    msgHandler.createMessage(client.id, text);
-    return msgHandler.sendMassage();
+    msgHandler.createMessage(client.id, rec.text);
+    const { event, data } = msgHandler.sendMassage();
+    client.to(rec.room).emit(event, data);
   }
 }

@@ -14,7 +14,7 @@ import { JSONData } from '../mocks/mocksTiles';
 import Tile, { Rotation } from '../model/Tile';
 import rootStore, { RootStore } from './RootStore';
 
-import { socket } from '../App';
+import { socket } from '../constants/socket';
 import WebSocketEvent from '../constants/webSocketEvents';
 import WebsocketMessageParser from '../model/websocket/WebSocketMessageParser';
 import TilePlacementMessage from '../model/websocket/TilePlacementMessage';
@@ -80,10 +80,10 @@ class GameStore {
     tilePlacementMessage.column = column;
     tilePlacementMessage.rotation = rotation;
 
-    socket.emit(
-      WebSocketEvent.SEND_TILE_PLACED,
-      websocketMessageParser.parse(tilePlacementMessage, WebSocketEvent.SEND_TILE_PLACED),
-    );
+    socket.emit(WebSocketEvent.SEND_TILE_PLACED, {
+      room: rootStore.room,
+      tileData: websocketMessageParser.parse(tilePlacementMessage, WebSocketEvent.SEND_TILE_PLACED),
+    });
   }
 
   setTileInHandFromWebSocket(id: string, rotation: Rotation) {

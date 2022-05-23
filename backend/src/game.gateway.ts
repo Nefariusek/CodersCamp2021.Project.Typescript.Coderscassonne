@@ -8,7 +8,9 @@ import {
 } from '@nestjs/websockets';
 
 import { Socket, Server } from 'socket.io';
+import { MassageHandler } from './app.messagehandler.service';
 import WebSocketEvent from './constants/webSocketEvents';
+import { meeplePlacementReceive } from './constants';
 
 @WebSocketGateway(5001, { cors: true })
 export class GameGateway
@@ -36,5 +38,13 @@ export class GameGateway
   handleEndOfTurn(client: Socket, nextPhase: boolean): void {
     const message = { nextPhase: nextPhase, clientId: client.id };
     client.broadcast.emit(WebSocketEvent.RECEIVE_NEXT_PHASE, message);
+  }
+
+  @SubscribeMessage(meeplePlacementReceive)
+  handleMeeplePlacement(client: Socket, text: string): WsResponse<string> {
+    const msgHandler = new MassageHandler();
+    msgHandler.messageType = meeplePlacementReceive;
+    msgHandler.createMessage(client.id, text);
+    return msgHandler.sendMassage();
   }
 }

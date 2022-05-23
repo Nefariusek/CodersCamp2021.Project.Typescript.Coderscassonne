@@ -66,6 +66,6 @@ describe('Project model', () => {
     city.tiles.push(tile2);
     expect(city.getCurrentScore()).toBe(4);
     city.finishProject();
-    expect(city.owner.score).toBe(8);
+    expect(city.owner.score).toBe(4);
   });
 });

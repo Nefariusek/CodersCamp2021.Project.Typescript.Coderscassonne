@@ -7,6 +7,9 @@ interface DropdownProps {}
 
 const Dropdown: FunctionComponent<DropdownProps> = observer(() => {
   const availableProjects = rootStore.projectStore.availableProjects;
+  const getTileName = (e: any) => {
+    console.log(e.target.value);
+  };
 
   return (
     <div className="p-10">
@@ -29,7 +32,10 @@ const Dropdown: FunctionComponent<DropdownProps> = observer(() => {
           transition duration-400 ease-in-out origin-top min-w-32"
         >
           {availableProjects?.map((project) => (
-            <li className="rounded-sm relative px-3 py-1 hover:bg-DARKTHEME_DARK_GREEN_COLOR hover:text-white">
+            <li
+              onClick={getTileName}
+              className="rounded-sm relative px-3 py-1 hover:bg-DARKTHEME_DARK_GREEN_COLOR hover:text-white"
+            >
               {project.type}
             </li>
           ))}

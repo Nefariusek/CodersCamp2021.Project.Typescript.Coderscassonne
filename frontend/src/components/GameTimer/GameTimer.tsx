@@ -1,9 +1,9 @@
+import { observer } from 'mobx-react';
 import { useEffect, useState } from 'react';
 import { TurnLength } from '../../model/Settings';
 
-import TurnTimer from './TurnTimer';
 import rootStore from '../../stores/RootStore';
-import { observer } from 'mobx-react';
+import TurnTimer from './TurnTimer';
 
 interface GameTimerProps {
   isTurnTimerVisible: boolean;

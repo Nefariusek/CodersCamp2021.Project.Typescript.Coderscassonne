@@ -72,6 +72,13 @@ class Tile {
     };
   }
 
+  public setRotation(rotation: Rotation): void {
+    const rotateBy90Count = Math.abs(rotation / 90);
+    for (let i = 0; i < rotateBy90Count; i++) {
+      rotation > 0 ? this.rotateRight() : this.rotateLeft();
+    }
+  }
+
   public getTileImageSourceById(): string | undefined {
     const splitIdArray = this.id.split('_');
     const tileImageId = splitIdArray[0];

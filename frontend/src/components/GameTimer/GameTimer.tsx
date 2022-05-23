@@ -1,9 +1,9 @@
+import { observer } from 'mobx-react';
 import { useEffect, useState } from 'react';
 import { TurnLength } from '../../model/Settings';
 
-import TurnTimer from './TurnTimer';
 import rootStore from '../../stores/RootStore';
-import { observer } from 'mobx-react';
+import TurnTimer from './TurnTimer';
 
 interface GameTimerProps {
   isTurnTimerVisible: boolean;
@@ -28,7 +28,7 @@ const GameTimer = observer((props: GameTimerProps) => {
   }, [seconds, minutes]);
 
   return (
-    <div className="font-ALMENDRA font-bold text-3xl text-DARKTHEME_LIGHT_GREEN_COLOR p-3">
+    <div className="font-ALMENDRA font-bold text-base md:text-2xl xl:text-3xl text-DARKTHEME_LIGHT_GREEN_COLOR p-3">
       <div className="flex">
         <div className="flex-column ml-5 mt-1">
           <p>Turn number: {rootStore.gameStore.turnNumber}</p>

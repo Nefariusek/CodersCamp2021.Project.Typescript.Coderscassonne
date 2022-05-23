@@ -5,8 +5,10 @@ import _ from 'lodash';
 import rootStore, { boardState } from '../../stores/RootStore';
 import Project from '../../model/Project';
 import TileState from '../../constants/tileState';
+import { GamePhases } from '../NextPhaseButton/NextPhaseButton';
 import { BoardState } from './GameBoard';
 
+//--------------------------PLACE TILE-----------------------//
 export const manageProjects = (row: number, column: number) => {
   const existingLocations: Locations[] = [Locations.FIELD];
   updateExistingProjects(existingLocations, row, column);
@@ -206,5 +208,27 @@ export const extendBoard = (row: number, column: number) => {
       boardState.push({ row: row, column: column - 1, state: TileState.IDLE });
     }
     leftColumn -= 1;
+  }
+};
+
+//================== MEEPLE PLACEMENT =====================//
+
+export const placeMeeple = (tile: Tile, projectId: number) => {
+  const currentPlayer = rootStore.playersStore.getCurrentPlayer()!;
+  const availableProjects = rootStore.projectStore.getAvailableProjects(tile);
+
+  if ((availableProjects && !availableProjects.length) || !availableProjects) {
+    console.log('no available projects');
+  }
+  if (!currentPlayer.getMeepleCount()) {
+    console.log('no meeples available');
+  }
+  if (rootStore.gameStore.currentPhase !== GamePhases.MEEPLE_PLACEMENT) {
+    console.log('wrong game phase');
+  }
+  const meeple = currentPlayer.getMeeple()!;
+  const selectedProject = availableProjects!.find((p: Project) => p.id === projectId);
+  if (selectedProject) {
+    selectedProject.meeples.push(meeple);
   }
 };

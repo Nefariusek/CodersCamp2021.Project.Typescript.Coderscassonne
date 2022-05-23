@@ -1,5 +1,5 @@
-//import Locations from '../constants/locations';
-/*
+import Locations from './locations';
+
 export const tilesData = [
   {
     id: '001_1',
@@ -794,4 +794,3 @@ export const tilesData = [
     isSpecial: false,
   },
 ];
-*/

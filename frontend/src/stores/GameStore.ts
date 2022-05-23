@@ -5,7 +5,7 @@ import {
   extendBoard,
   manageProjects,
   validateTilePlacement,
-} from '../components/GameBoard/GameBoard.functions';
+} from '../services/tilePlacementPhase.functions';
 import GameModeParser from '../components/GameModeParser';
 import { openInvalidMoveModal } from '../components/Modal/InvalidMoveModal';
 import { GamePhases } from '../components/NextPhaseButton/NextPhaseButton';

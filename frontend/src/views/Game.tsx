@@ -35,10 +35,10 @@ const GamePage: React.FunctionComponent = observer((): ReactElement => {
   return (
     <div style={{ height: '97vh' }}>
       <div
-        className="flex justify-between items-center z-0"
+        className="flex justify-between items-center z-0 border-b-2 border-DARKTHEME_LIGHT_GREEN_COLOR"
         style={{ height: playersInfoLayoutProportion, maxHeight: playersInfoLayoutProportion, minHeight: '128px' }}
       >
-        <div className="flex justify-center">
+        <div className="flex justify-center mt-4">
           <Link to={PATH_TO_HOMEPAGE}>
             <img src={MENU_TITLE_SOURCE} alt="title_tile" className="w-30 h-30" />
           </Link>
@@ -62,7 +62,7 @@ const GamePage: React.FunctionComponent = observer((): ReactElement => {
         </MapInteractionCSS>
       </div>
       <div
-        className="flex justify-around"
+        className="flex justify-around border-t-2 border-DARKTHEME_LIGHT_GREEN_COLOR pt-2"
         style={{ bottom: 0, height: drawPileLayoutProportion, maxHeight: drawPileLayoutProportion }}
       >
         {<PlayersHand />}

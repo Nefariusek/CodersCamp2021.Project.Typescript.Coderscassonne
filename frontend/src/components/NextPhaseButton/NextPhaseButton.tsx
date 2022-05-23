@@ -1,7 +1,6 @@
 import rootStore from '../../stores/RootStore';
 import Button from '../Button/Button';
 import { observer } from 'mobx-react';
-import Dropdown from '../DropDown/DropDown';
 
 export enum GamePhases {
   TILE_PLACEMENT = 'Tile placement phase',
@@ -34,7 +33,6 @@ export const NextPhaseButton = observer(() => {
           ))}
         </div>
       </div>
-      <Dropdown />
     </div>
   );
 });

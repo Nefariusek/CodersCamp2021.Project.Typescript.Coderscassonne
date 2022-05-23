@@ -1,3 +1,4 @@
+import _ from 'lodash';
 import Locations from '../constants/locations';
 import Tile, { Edges } from '../model/Tile';
 
@@ -17,6 +18,7 @@ const GameModeParser = (jsonData: TileType[]): Tile[] => {
     tileArray.push(tile);
   });
   return tileArray;
+  // return _.shuffle(tileArray);
 };
 
 export default GameModeParser;

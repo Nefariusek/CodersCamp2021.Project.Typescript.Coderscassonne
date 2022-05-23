@@ -7,8 +7,8 @@ export default class WebSocketConnection {
 
   constructor() {
     this.socket = io('http://localhost:5001');
-    this.socket.emit('clientJoin');
-    this.socket.on('youAreHost', () => {
+    this.socket.emit(WebSocketEvent.CLIENT_JOINED);
+    this.socket.on(WebSocketEvent.YOU_ARE_HOST, () => {
       this.isHost = true;
     });
   }
@@ -25,11 +25,15 @@ export default class WebSocketConnection {
     this.socket.emit(WebSocketEvent.SEND_TILE_ROTATED, message);
   }
 
-  public emitMessage(message: string) {
-    this.socket.emit(WebSocketEvent.SEND_MESSAGE, message);
+  public emitNextPhase(message: boolean) {
+    this.socket.emit(WebSocketEvent.SEND_NEXT_PHASE, message);
   }
 
   public emitCreateRoom(message: string) {
     this.socket.emit(WebSocketEvent.CREATE_ROOM, message);
+  }
+
+  public emitMessage(message: string) {
+    this.socket.emit(WebSocketEvent.SEND_MESSAGE, message);
   }
 }

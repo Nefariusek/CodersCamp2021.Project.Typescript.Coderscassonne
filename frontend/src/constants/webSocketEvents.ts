@@ -14,11 +14,14 @@ enum WebSocketEvent {
   SEND_MESSAGE_TO_ROOM = 'sendMessageToRoom', // 'messageToRoom',
   RECEIVE_MESSAGE_TO_ROOM = 'receiveMessageToRoom', // 'messageToRoom',
 
-  SEND_MESSAGE = 'sendMessage',
-  RECEIVE_MESSAGE = 'receiveMessage',
+  CLIENT_JOINED = 'clientJoined',
+  YOU_ARE_HOST = 'youAreHost',
 
   CREATE_ROOM = 'createRoom',
   JOINED_ROOM = 'joinedRoom',
+
+  SEND_MESSAGE = 'sendMessage',
+  RECEIVE_MESSAGE = 'receiveMessage',
 }
 
 export default WebSocketEvent;

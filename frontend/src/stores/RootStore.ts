@@ -8,7 +8,7 @@ class RootStore {
   gameStore: GameStore;
   playersStore: PlayersStore;
   projectStore: ProjectStore;
-  websocket: WebSocketConnection;
+  websocket: WebSocketConnection | undefined;
   isDevelopmentMode = false;
 
   constructor() {

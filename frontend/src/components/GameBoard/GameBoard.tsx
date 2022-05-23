@@ -39,9 +39,11 @@ const GameBoard = observer((): ReactElement => {
     rootStore.gameStore.endCurrentTurn();
   }, []);
 
-  useTilePlacementReceiver(onTilePlacement);
-  useTileRotationReceiver();
-  useNextPhaseReceiver();
+  if (!!rootStore.websocket) {
+    useTilePlacementReceiver(onTilePlacement);
+    useTileRotationReceiver();
+    useNextPhaseReceiver();
+  }
 
   function gameBoardAutoScale(): number {
     const rowsCount = Object.entries(tilesGroupedByRows).length;

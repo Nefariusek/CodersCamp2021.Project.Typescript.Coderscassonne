@@ -3,13 +3,14 @@ import './Dropdown.css';
 import rootStore from '../../stores/RootStore';
 import { observer } from 'mobx-react-lite';
 import Project from '../../model/Project';
+import { placeMeeple } from '../../services/meeplePlacementPhase.functions';
 
 interface DropdownProps {}
 
 const Dropdown: FunctionComponent<DropdownProps> = observer(() => {
   const availableProjects = rootStore.projectStore.availableProjects;
   const handleOptionClick = (project: Project) => {
-    project.addMeeple();
+    placeMeeple(project);
   };
 
   return (

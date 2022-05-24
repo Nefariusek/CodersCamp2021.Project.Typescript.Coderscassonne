@@ -1,4 +1,19 @@
-import { Controller } from '@nestjs/common';
+import { Controller, Get, Param } from '@nestjs/common';
 
-@Controller('tiles')
-export class TilesController {}
+import { TilesService } from './tiles.service';
+
+@Controller('api/tiles')
+export class TilesController {
+  constructor(private readonly tilesService: TilesService) {}
+
+  @Get()
+  async getAllTiles() {
+    const tiles = this.tilesService.getTiles();
+    return tiles;
+  }
+
+  @Get(':id')
+  getTile(@Param('id') tileId: string) {
+    return this.tilesService.getSingleTile(tileId);
+  }
+}

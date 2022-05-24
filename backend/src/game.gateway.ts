@@ -61,5 +61,4 @@ export class GameGateway
     const message = `Client with id: ${client.id} send a message: ${text}`;
     return { event: WebSocketEvent.RECEIVE_MESSAGE, data: message };
   }
-
 }

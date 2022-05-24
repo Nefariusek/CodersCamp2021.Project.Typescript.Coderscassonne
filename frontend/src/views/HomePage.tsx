@@ -5,12 +5,19 @@ import { SettingsModal } from '../components/Modal/SettingsModal';
 import Button from '../components/Button/Button';
 import WebSocketConnection from '../model/websocket/WebSocketConnection';
 
-import { PATH_TO_CREDITS, PATH_TO_HOWTOPLAYPAGE, PATH_TO_GAMEPAGE, PATH_TO_CREATE_PLAYERS, PATH_TO_ROOMS } from '../constants/paths';
+import {
+  PATH_TO_CREDITS,
+  PATH_TO_HOWTOPLAYPAGE,
+  PATH_TO_GAMEPAGE,
+  PATH_TO_CREATE_PLAYERS,
+  PATH_TO_ROOMS,
+} from '../constants/paths';
 import rootStore from '../stores/RootStore';
 import { observer } from 'mobx-react-lite';
 import Technologies from '../constants/technologies';
 import Player from '../model/Player';
 import GameMode from '../model/GameMode';
+import startGameWithTilesRetrieval from '../service/startGameWithTilesRetrieval';
 
 const HomePage: React.FunctionComponent = observer((): ReactElement => {
   const navigate = useNavigate();
@@ -40,20 +47,20 @@ const HomePage: React.FunctionComponent = observer((): ReactElement => {
                   if (rootStore.isDevelopmentMode) {
                     if (view.url === PATH_TO_CREATE_PLAYERS) {
                       initDevelopmentPreset();
-                      await rootStore.gameStore.initGameStore();
+                      await startGameWithTilesRetrieval();
                       navigate(PATH_TO_GAMEPAGE);
                     } else if (view.url === PATH_TO_ROOMS && view.name === 'Play Multiplayer') {
                       initDevelopmentPreset();
                       rootStore.websocket = new WebSocketConnection();
-                      await rootStore.gameStore.initGameStore();
+                      await startGameWithTilesRetrieval();
                       navigate(view.url);
                     }
                   } else if (view.url === PATH_TO_ROOMS && view.name === 'Play Multiplayer') {
                     rootStore.websocket = new WebSocketConnection();
-                    await rootStore.gameStore.initGameStore();
+                    await startGameWithTilesRetrieval();
                     navigate(view.url);
                   } else if (view.url === PATH_TO_CREATE_PLAYERS) {
-                    await rootStore.gameStore.initGameStore();
+                    await startGameWithTilesRetrieval();
                     navigate(view.url);
                   } else {
                     navigate(view.url);

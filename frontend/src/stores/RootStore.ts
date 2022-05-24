@@ -2,8 +2,10 @@ import { makeAutoObservable } from 'mobx';
 import ProjectStore from './ProjectStore';
 import GameStore from './GameStore';
 import PlayersStore from './PlayersStore';
+import { JSONData } from '../mocks/mocksTiles';
+import GameModeParser from '../components/GameModeParser';
+import { BoardState } from '../components/GameBoard/GameBoard';
 import WebSocketConnection from '../model/websocket/WebSocketConnection';
-
 class RootStore {
   gameStore: GameStore;
   playersStore: PlayersStore;
@@ -13,7 +15,7 @@ class RootStore {
   room: string;
 
   constructor() {
-    this.gameStore = new GameStore(this);
+    this.gameStore = new GameStore(this, GameModeParser(JSONData));
     this.playersStore = new PlayersStore(this);
     this.projectStore = new ProjectStore(this);
 
@@ -30,7 +32,12 @@ class RootStore {
 }
 
 const rootStore = new RootStore();
+export let boardState: BoardState[];
 
+export function setBoardStateVariableReference() {
+  boardState = rootStore.gameStore.boardState;
+}
+
+setBoardStateVariableReference();
 export type { RootStore };
-export const boardState = rootStore.gameStore.boardState;
 export default rootStore;

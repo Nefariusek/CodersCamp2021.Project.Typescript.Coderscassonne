@@ -32,7 +32,6 @@ export function useTilePlacementReceiver(
   }, []);
 }
 
-
 export function useMeeplePlacementReceiver() {
   useEffect(() => {
     rootStore.websocket?.socket.on(WebSocketEvent.RECEIVE_MEEPLE_PLACED, (data) => {
@@ -60,7 +59,6 @@ export function useMeeplePlacementReceiver() {
     //     );
     //   },
     // );
-
   }, []);
 }
 

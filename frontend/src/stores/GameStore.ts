@@ -6,13 +6,12 @@ import {
   manageProjects,
   validateTilePlacement,
 } from '../services/tilePlacementPhase.functions';
-import GameModeParser from '../components/GameModeParser';
 import { openInvalidMoveModal } from '../components/Modal/InvalidMoveModal';
 import { GamePhases } from '../components/NextPhaseButton/NextPhaseButton';
 import TileState from '../constants/tileState';
-import { JSONData } from '../mocks/mocksTiles';
 import Tile, { Rotation } from '../model/Tile';
 import rootStore, { RootStore } from './RootStore';
+import { FIRST_TILE_ID } from '../constants/gameDefaults';
 
 import WebSocketEvent from '../constants/webSocketEvents';
 import WebsocketMessageParser from '../model/websocket/WebSocketMessageParser';
@@ -28,15 +27,22 @@ class GameStore {
   currentPhase: GamePhases;
   rootStore: RootStore;
 
-  constructor(rootStore: RootStore) {
+  constructor(rootStore: RootStore, allTiles: Tile[]) {
     this.boardState = [{ row: 0, column: 0, state: TileState.ACTIVE }];
     this.rootStore = rootStore;
     this.turnNumber = 0;
     this.currentPhase = GamePhases.TILE_PLACEMENT;
-    this.drawPile = GameModeParser(JSONData);
-    this.tileInHand = this.drawPile.shift();
+    this.drawPile = allTiles;
+    this.getAndRemoveFirstTile();
     this.recentlyPlacedTile = undefined;
     makeAutoObservable(this);
+  }
+
+  getAndRemoveFirstTile() {
+    const index = this.drawPile.findIndex((tile) => tile.id === FIRST_TILE_ID);
+    this.tileInHand = this.drawPile[index];
+    if (index !== -1) this.drawPile.splice(index, 1);
+    // this.tileInHand = this.drawPile.shift();
   }
 
   placeTile(row: number, column: number, fromWebsocket: boolean) {
@@ -135,16 +141,6 @@ class GameStore {
   endCurrentTurn() {
     this.increaseTurnNumber();
     this.recentlyPlacedTile = undefined;
-    this.tileInHand = this.drawPile.shift();
-  }
-
-  initGameStore() {
-    console.log('initGameStore');
-    this.boardState.length = 0;
-    this.boardState.push({ row: 0, column: 0, state: TileState.ACTIVE });
-    this.turnNumber = 0;
-    this.currentPhase = GamePhases.TILE_PLACEMENT;
-    this.drawPile = GameModeParser(JSONData);
     this.tileInHand = this.drawPile.shift();
   }
 }

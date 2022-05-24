@@ -19,7 +19,7 @@ export default class WebSocketConnection {
   }
 
   public emitMeeplPlaced(message: string) {
-    this.socket.emit(WebSocketEvent.SEND_MEEPLE_PLACED, { room: rootStore.room, text: message});
+    this.socket.emit(WebSocketEvent.SEND_MEEPLE_PLACED, { room: rootStore.room, text: message });
   }
 
   public emitRotation(message: number) {

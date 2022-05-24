@@ -12,7 +12,6 @@ import {
   PATH_TO_CUSTOM_MODE_FORM,
   PATH_TO_ROOMS,
 } from './constants/paths';
-import WebSocketEvent from './constants/webSocketEvents';
 import CreatePlayersPage from './views/CreatePlayersPage';
 import CreditsPage from './views/CreditsPage';
 import CustomModePage from './views/CustomModePage';

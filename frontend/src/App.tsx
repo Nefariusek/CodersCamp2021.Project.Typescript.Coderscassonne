@@ -20,11 +20,8 @@ import GamePage from './views/Game';
 import GameModePage from './views/GameModePage';
 import HomePage from './views/HomePage';
 import HowToPlayPage from './views/HowToPlayPage';
-import { WorkInProgressModal } from './components/Modal/WorkInProgressModal';
 import JoinRoomPage from './views/JoinRoomPage';
 import { socket } from './constants/socket';
-
-export const socket = io('http://localhost:5001');
 
 const paths = [
   { element: <HomePage />, url: PATH_TO_HOMEPAGE },

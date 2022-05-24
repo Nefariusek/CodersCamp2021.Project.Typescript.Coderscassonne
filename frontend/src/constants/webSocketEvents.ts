@@ -12,16 +12,26 @@ enum WebSocketEvent {
   RECEIVE_NEXT_PHASE = 'receiveNextPhase',
 
   SEND_MESSAGE_TO_ROOM = 'sendMessageToRoom',
-  RECEIVE_MESSAGE_TO_ROOM = 'receiveMessageToRoom',
+  RECEIVE_MESSAGE_FROM_ROOM = 'receiveMessageToRoom',
+
+  SEND_MESSAGE = 'sendMessage',
+  RECEIVE_MESSAGE = 'receiveMessage',
 
   CLIENT_JOINED = 'clientJoined',
   YOU_ARE_HOST = 'youAreHost',
 
   CREATE_ROOM = 'createRoom',
-  JOINED_ROOM = 'joinedRoom',
+  CREATE_ROOM_ERROR = 'createRoomError',
 
-  SEND_MESSAGE = 'sendMessage',
-  RECEIVE_MESSAGE = 'receiveMessage',
+  JOIN_ROOM = 'joinRoom',
+  JOINED_ROOM = 'joinedRoom',
+  JOIN_ROOM_ERROR = 'joinRoomError',
+
+  LEAVE_ROOM = 'leaveRoom',
+  LEFT_ROOM = 'leftRoom',
+
+  GET_ROOMS = 'getRooms',
+  SEND_ROOMS = 'availableRooms',
 }
 
 export default WebSocketEvent;

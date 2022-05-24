@@ -32,6 +32,15 @@ export function useTilePlacementReceiver(
   }, []);
 }
 
+
+export function useMeeplePlacementReceiver() {
+  useEffect(() => {
+    rootStore.websocket?.socket.on(WebSocketEvent.RECEIVE_MEEPLE_PLACED, (data) => {
+      console.log(data);
+    });
+  }, []);
+}
+
 export function useTileRotationReceiver() {
   useEffect(() => {
     rootStore.websocket?.socket.on(

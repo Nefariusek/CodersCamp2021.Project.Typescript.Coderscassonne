@@ -1,13 +1,21 @@
 import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
-import { AppService } from './app.service';
 import { GameGateway } from './game.gateway';
-import { TilesModule } from './tiles/tiles.module';
+import { MassageHandler } from './app.messagehandler.service';
+import { AppService } from './app.service';
+import { RoomGateway } from './room.gateway';
 import { TilesGateway } from './tiles/tiles.gateway';
+import { TilesModule } from './tiles/tiles.module';
 
 @Module({
   imports: [TilesModule],
   controllers: [AppController],
-  providers: [AppService, GameGateway, TilesGateway],
+  providers: [
+    AppService,
+    GameGateway,
+    MassageHandler,
+    TilesGateway,
+    RoomGateway,
+  ],
 })
 export class AppModule {}

@@ -47,12 +47,12 @@ class Player {
     this._placedTiles.push(tile);
   }
 
-  public getMeeple(): Meeple | null {
+  public getMeeple(): Meeple | undefined {
     const meeple = this._meeples.pop();
     if (typeof meeple !== 'undefined') {
       return meeple;
     }
-    return null;
+    return undefined;
   }
 
   public getMeepleCount(): number {

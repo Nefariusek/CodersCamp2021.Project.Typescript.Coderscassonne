@@ -17,6 +17,7 @@ import { EndTurnModal } from '../components/Modal/EndTurnModal';
 import rootStore from '../stores/RootStore';
 import { observer } from 'mobx-react';
 import NextPhaseButton from '../components/NextPhaseButton/NextPhaseButton';
+import ProjectList from '../components/ProjectList/ProjectList';
 
 const GamePage: React.FunctionComponent = observer((): ReactElement => {
   const players = rootStore.playersStore.players;
@@ -34,10 +35,10 @@ const GamePage: React.FunctionComponent = observer((): ReactElement => {
   return (
     <div style={{ height: '97vh' }}>
       <div
-        className="flex justify-between items-center z-0"
+        className="flex justify-between items-center z-0 border-b-2 border-DARKTHEME_LIGHT_GREEN_COLOR"
         style={{ height: playersInfoLayoutProportion, maxHeight: playersInfoLayoutProportion, minHeight: '128px' }}
       >
-        <div className="flex justify-center">
+        <div className="flex justify-center mt-4">
           <Link to={PATH_TO_HOMEPAGE}>
             <img src={MENU_TITLE_SOURCE} alt="title_tile" className="w-30 h-30" />
           </Link>
@@ -53,6 +54,7 @@ const GamePage: React.FunctionComponent = observer((): ReactElement => {
         className="flex justify-center items-center"
         style={{ height: gamebordLayoutProportion, maxHeight: gamebordLayoutProportion, overflow: 'auto' }}
       >
+        <ProjectList />
         <MapInteractionCSS minScale={0.5} maxScale={3}>
           <div className={`flex justify-center items-center w-screen`} style={{ height: gamebordLayoutProportion }}>
             <GameBoard />
@@ -60,7 +62,7 @@ const GamePage: React.FunctionComponent = observer((): ReactElement => {
         </MapInteractionCSS>
       </div>
       <div
-        className="flex justify-around"
+        className="flex justify-around border-t-2 border-DARKTHEME_LIGHT_GREEN_COLOR pt-2"
         style={{ bottom: 0, height: drawPileLayoutProportion, maxHeight: drawPileLayoutProportion }}
       >
         {<PlayersHand />}

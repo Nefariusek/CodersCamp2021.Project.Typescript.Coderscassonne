@@ -1,6 +1,5 @@
 import { FC, ReactElement } from 'react';
 import { Route, Routes, useLocation } from 'react-router-dom';
-
 import { AppHeaderSection, Castle } from './components/Layout';
 import {
   PATH_TO_CREDITS,
@@ -10,15 +9,17 @@ import {
   PATH_TO_HOWTOPLAYPAGE,
   PATH_TO_GAME_MODE_PAGE,
   PATH_TO_CUSTOM_MODE_FORM,
+  PATH_TO_ROOMS,
 } from './constants/paths';
-import CreditsPage from './views/CreditsPage';
 import CreatePlayersPage from './views/CreatePlayersPage';
+import CreditsPage from './views/CreditsPage';
+import CustomModePage from './views/CustomModePage';
 import GamePage from './views/Game';
+import GameModePage from './views/GameModePage';
 import HomePage from './views/HomePage';
 import HowToPlayPage from './views/HowToPlayPage';
-import GameModePage from './views/GameModePage';
-import CustomModePage from './views/CustomModePage';
 import { WorkInProgressModal } from './components/Modal/WorkInProgressModal';
+import JoinRoomPage from './views/JoinRoomPage';
 
 const paths = [
   { element: <HomePage />, url: PATH_TO_HOMEPAGE },
@@ -28,6 +29,7 @@ const paths = [
   { element: <CreditsPage />, url: PATH_TO_CREDITS },
   { element: <GameModePage />, url: PATH_TO_GAME_MODE_PAGE },
   { element: <CustomModePage />, url: PATH_TO_CUSTOM_MODE_FORM },
+  { element: <JoinRoomPage />, url: PATH_TO_ROOMS },
 ];
 const pathsWithoutHeader = [PATH_TO_GAMEPAGE];
 

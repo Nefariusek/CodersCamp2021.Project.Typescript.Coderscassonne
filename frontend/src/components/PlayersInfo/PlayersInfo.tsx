@@ -21,6 +21,9 @@ const PlayersInfoItem = ({ player, isCurrent }: PlayersInfoItemProps) => {
           <div className="flex justify-center w-[60px]">
             <img src={playerImage} alt={player.technology} width="60px" />
           </div>
+          <p className="font-ALMENDRA font-bold text-2xl lg:text-4xl text-DARKTHEME_LIGHT_GREEN_COLOR py-3 sm:px-1 lg:px-2">
+            {player.score}
+          </p>
         </div>
       ) : (
         <div className="flex items-center gap-1 md:gap-2 lg:gap-3 xl:gap-5 h-20 xl:h-28 border-4 border-DARKTHEME_LIGHT_GREEN_COLOR bg-DARKTHEME_DARK_GREEN_COLOR px-1 lg:px-2">

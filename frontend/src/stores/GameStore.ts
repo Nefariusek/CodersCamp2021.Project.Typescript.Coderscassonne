@@ -11,6 +11,7 @@ import { GamePhases } from '../components/NextPhaseButton/NextPhaseButton';
 import TileState from '../constants/tileState';
 import Tile, { Rotation } from '../model/Tile';
 import rootStore, { RootStore } from './RootStore';
+import { FIRST_TILE_ID } from '../constants/gameDefaults';
 
 import { socket } from '../constants/socket';
 import WebSocketEvent from '../constants/webSocketEvents';
@@ -32,14 +33,16 @@ class GameStore {
     this.turnNumber = 0;
     this.currentPhase = GamePhases.TILE_PLACEMENT;
     this.drawPile = allTiles;
+    this.getAndRemoveFirstTile();
+    this.recentlyPlacedTile = undefined;
+    makeAutoObservable(this);
+  }
 
-    const index = this.drawPile.findIndex((tile) => tile.id === '001_1');
+  getAndRemoveFirstTile(){
+    const index = this.drawPile.findIndex((tile) => tile.id === FIRST_TILE_ID);
     this.tileInHand = this.drawPile[index];
     if (index !== -1) this.drawPile.splice(index, 1);
     // this.tileInHand = this.drawPile.shift();
-
-    this.recentlyPlacedTile = undefined;
-    makeAutoObservable(this);
   }
 
   placeTile(row: number, column: number, fromWebsocket: boolean) {

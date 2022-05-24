@@ -18,6 +18,7 @@ import { socket } from '../App';
 import WebSocketEvent from '../constants/webSocketEvents';
 import WebsocketMessageParser from '../model/websocket/WebSocketMessageParser';
 import TilePlacementMessage from '../model/websocket/TilePlacementMessage';
+import { openShowScoreModal } from '../components/Modal/ShowScoreModal';
 
 class GameStore {
   turnNumber: number;
@@ -123,10 +124,15 @@ class GameStore {
   }
 
   endCurrentTurn() {
+    if (this.drawPile.length === 0 && this.tileInHand === undefined && this.currentPhase === GamePhases.SCORE_PHASE) {
+      openShowScoreModal();
+    }
     this.increaseTurnNumber();
     this.recentlyPlacedTile = undefined;
     this.tileInHand = this.drawPile.shift();
   }
+
+  finishGame() {}
 
   initGameStore() {
     console.log('initGameStore');

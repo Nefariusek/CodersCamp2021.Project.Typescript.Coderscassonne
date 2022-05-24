@@ -1,5 +1,7 @@
+import { makeAutoObservable } from 'mobx';
 import { DEFAULT_PLAYERS_MEEPLE_COUNT, DEFAULT_TECHNOLOGY } from '../constants/gameDefaults';
 import Technologies from '../constants/technologies';
+import rootStore from '../stores/RootStore';
 import Meeple from './Meeple';
 import type Tile from './Tile';
 
@@ -22,6 +24,10 @@ class Player {
     this._meeples = [];
 
     this.initializeMeeples();
+    makeAutoObservable(this);
+  }
+  makeAutoObservable() {
+    throw new Error('Method not implemented.');
   }
 
   private initializeMeeples(): void {
@@ -61,6 +67,7 @@ class Player {
 
   public returnMeeple(meeple: Meeple): void {
     this._meeples.push(meeple);
+    rootStore.gameStore.removeMeepleFromBoard(meeple);
   }
 
   public getPlayerInfo(): string {

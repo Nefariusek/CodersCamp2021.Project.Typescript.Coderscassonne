@@ -30,7 +30,7 @@ class Project {
     this.closedEdgesSet = new Set<string>();
 
     if (tile) {
-      this.addTile(tile, edge);
+      this.addTileOnCreation(tile, edge);
     }
     makeAutoObservable(this);
   }
@@ -87,6 +87,10 @@ class Project {
   }
 
   public get isFinishable(): boolean {
+    console.log(this.closedEdgesSet.size);
+    console.log(this.openEdgesSet);
+    console.log(new Set<string>([...this.closedEdgesSet, ...this.openEdgesSet]));
+    console.log(this.type);
     if (this.type === Locations.ROAD) {
       return this.checkIfRoadProjectIsFinishable();
     } else if (this.type === Locations.CITY) {
@@ -105,7 +109,7 @@ class Project {
   }
 
   private checkIfCityProjectIsFinishable() {
-    return new Set<string>(...this.closedEdgesSet, ...this.openEdgesSet).size === this.closedEdgesSet.size;
+    return new Set<string>([...this.closedEdgesSet, ...this.openEdgesSet]).size === this.closedEdgesSet.size;
   }
 
   private checkIfMonasteryProjectIsFinishable() {
@@ -122,29 +126,34 @@ class Project {
     this.openEdgesSet.delete(edgeToClose);
     this.closedEdgesSet.add(edgeToClose);
     this.closedEdgesSet.add(`${tileToAdd.id}|${edge}`);
-
-    Object.entries(tileToAdd.edges).forEach(([edgeName, location]) => {
-      if (location === Locations.CITY && edgeName !== edge && !this.closedEdgesSet.has(`${tileToAdd.id}|${edgeName}`)) {
-        this.openEdgesSet.add(`${tileToAdd.id}|${edgeName}`);
-      }
-      if (location === Locations.CITY && edgeName === edge) {
-        this.closedEdgesSet.add(`${tileToAdd.id}|${edgeName}`);
-      }
-    });
+    if (this.type === Locations.CITY) {
+      Object.entries(tileToAdd.edges).forEach(([edgeName, location]) => {
+        if (
+          location === Locations.CITY &&
+          edgeName !== edge &&
+          !this.closedEdgesSet.has(`${tileToAdd.id}|${edgeName}`)
+        ) {
+          this.openEdgesSet.add(`${tileToAdd.id}|${edgeName}`);
+        }
+        if (location === Locations.CITY && edgeName === edge) {
+          this.closedEdgesSet.add(`${tileToAdd.id}|${edgeName}`);
+        }
+      });
+    }
 
     console.log(this.openEdgesSet);
     console.log(this.closedEdgesSet);
   }
 
-  public addTile(tileToAdd: Tile, edge?: keyof Edges) {
+  public addTileOnCreation(tileToAdd: Tile, edge?: keyof Edges) {
     this.tiles.push(tileToAdd);
 
     if (this.type === Locations.CITY && !tileToAdd.middle.includes(Locations.CITY)) {
-      this.openEdgesSet.add(tileToAdd.id + edge);
+      this.openEdgesSet.add(`${tileToAdd.id}|${edge}`);
     } else if (this.type === Locations.CITY && tileToAdd.middle.includes(Locations.CITY)) {
-      Object.entries(tileToAdd.edges).forEach(([edge, location]) => {
+      Object.entries(tileToAdd.edges).forEach(([edgeName, location]) => {
         if (location === Locations.CITY) {
-          this.openEdgesSet.add(`${tileToAdd.id}|${edge}`);
+          this.openEdgesSet.add(`${tileToAdd.id}|${edgeName}`);
         }
       });
     }

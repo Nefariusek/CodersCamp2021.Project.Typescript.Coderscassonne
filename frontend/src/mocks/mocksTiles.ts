@@ -14,50 +14,6 @@ export const JSONData: TileType[] = [
     middle: [Locations.ROAD],
   },
   {
-    id: '015_1',
-    edges: {
-      top: Locations.CITY,
-      left: Locations.CITY,
-      bottom: Locations.FIELD,
-      right: Locations.FIELD,
-    },
-    middle: [Locations.CITY],
-    isSpecial: false,
-  },
-  {
-    id: '015_2',
-    edges: {
-      top: Locations.CITY,
-      left: Locations.CITY,
-      bottom: Locations.FIELD,
-      right: Locations.FIELD,
-    },
-    middle: [Locations.CITY],
-    isSpecial: false,
-  },
-  {
-    id: '015_3',
-    edges: {
-      top: Locations.CITY,
-      left: Locations.CITY,
-      bottom: Locations.FIELD,
-      right: Locations.FIELD,
-    },
-    middle: [Locations.CITY],
-    isSpecial: false,
-  },
-  {
-    id: '015_4',
-    edges: {
-      top: Locations.CITY,
-      left: Locations.CITY,
-      bottom: Locations.FIELD,
-      right: Locations.FIELD,
-    },
-    middle: [Locations.CITY],
-    isSpecial: false,
-  },
-  {
     id: '006_2',
     edges: {
       top: Locations.CITY,
@@ -100,6 +56,50 @@ export const JSONData: TileType[] = [
     id: '002_1',
     isSpecial: false,
     middle: [Locations.ROAD],
+  },
+  {
+    id: '015_1',
+    edges: {
+      top: Locations.CITY,
+      left: Locations.CITY,
+      bottom: Locations.FIELD,
+      right: Locations.FIELD,
+    },
+    middle: [Locations.CITY],
+    isSpecial: false,
+  },
+  {
+    id: '015_2',
+    edges: {
+      top: Locations.CITY,
+      left: Locations.CITY,
+      bottom: Locations.FIELD,
+      right: Locations.FIELD,
+    },
+    middle: [Locations.CITY],
+    isSpecial: false,
+  },
+  {
+    id: '015_3',
+    edges: {
+      top: Locations.CITY,
+      left: Locations.CITY,
+      bottom: Locations.FIELD,
+      right: Locations.FIELD,
+    },
+    middle: [Locations.CITY],
+    isSpecial: false,
+  },
+  {
+    id: '015_4',
+    edges: {
+      top: Locations.CITY,
+      left: Locations.CITY,
+      bottom: Locations.FIELD,
+      right: Locations.FIELD,
+    },
+    middle: [Locations.CITY],
+    isSpecial: false,
   },
   {
     edges: {

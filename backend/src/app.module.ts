@@ -9,8 +9,15 @@ import { TilesModule } from './tiles/tiles.module';
 import { PlayerGateway } from './players.gateway';
 import { TilesDbModule } from './tiles-db/tiles-db.module';
 
+import { MongooseModule } from '@nestjs/mongoose';
 @Module({
-  imports: [TilesModule, TilesDbModule],
+  imports: [
+    TilesModule,
+    TilesDbModule,
+    MongooseModule.forRoot(
+      `mongodb+srv://<user>:<password>@cluster0.rvske.mongodb.net/coderscassonne1?retryWrites=true&w=majority`,
+    ),
+  ],
   controllers: [AppController],
   providers: [
     AppService,

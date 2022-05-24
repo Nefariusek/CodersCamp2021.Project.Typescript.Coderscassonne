@@ -18,7 +18,6 @@ const GameModeParser = (jsonData: TileType[]): Tile[] => {
     tileArray.push(tile);
   });
   return tileArray;
-  // return _.shuffle(tileArray);
 };
 
 export default GameModeParser;

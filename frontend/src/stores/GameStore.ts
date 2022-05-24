@@ -75,7 +75,6 @@ class GameStore {
     tilePlacementMessage.column = column;
     tilePlacementMessage.rotation = rotation;
 
-    console.log('websocket przed emitTilePlacementMessage: ', rootStore.websocket);
     if (!!rootStore.websocket)
       rootStore.websocket.emitTilePlaced(
         websocketMessageParser.parse(tilePlacementMessage, WebSocketEvent.SEND_TILE_PLACED),

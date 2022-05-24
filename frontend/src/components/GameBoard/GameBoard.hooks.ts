@@ -2,6 +2,7 @@ import { useEffect } from 'react';
 import WebSocketEvent from '../../constants/webSocketEvents';
 import { Rotation } from '../../model/Tile';
 import WebsocketMessageParser from '../../model/websocket/WebSocketMessageParser';
+import { placeMeeple } from '../../services/meeplePlacementPhase.functions';
 import rootStore from '../../stores/RootStore';
 
 export function useTilePlacementReceiver(
@@ -34,10 +35,20 @@ export function useTilePlacementReceiver(
 export function useMeeplePlacementReceiver() {
   useEffect(() => {
     rootStore.websocket?.socket.on(WebSocketEvent.RECEIVE_MEEPLE_PLACED, (data) => {
-      console.log(data);
       const websocketMessageParser = new WebsocketMessageParser();
-      const { id, column, row } = websocketMessageParser.parse(data, WebSocketEvent.RECEIVE_MEEPLE_PLACED);
-      console.log(id, column, row);
+      const { id, column, row } = websocketMessageParser.parse(data.text, WebSocketEvent.RECEIVE_MEEPLE_PLACED);
+      const container = rootStore.gameStore.boardState.find(
+        (container) => container.row === +row && container.column === +column,
+      );
+      console.log(container);
+      if (container && container.tile) {
+        const project = rootStore.projectStore.allProjects.find(
+          (project) => project.tiles.includes(container!.tile!) && project.type === id,
+        );
+        if (project) {
+          placeMeeple(project, true);
+        }
+      }
     });
 
     //// POWYŻSZE MOŻNA ZAMIENIĆ NA TO (uwzględnia przesyłanie informacji o id, row i kolumnie położonego meepla)

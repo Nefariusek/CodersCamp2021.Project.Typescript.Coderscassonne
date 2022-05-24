@@ -41,7 +41,6 @@ export class GameGateway
 
   @SubscribeMessage(WebSocketEvent.SEND_MEEPLE_PLACED)
   handleMeeplePlacement(client: Socket, rec: { room: string; text: string }) {
-    console.log('gotten');
     const msgHandler = new MassageHandler();
     msgHandler.messageType = WebSocketEvent.SEND_MEEPLE_PLACED;
     msgHandler.createMessage(client.id, rec.text);

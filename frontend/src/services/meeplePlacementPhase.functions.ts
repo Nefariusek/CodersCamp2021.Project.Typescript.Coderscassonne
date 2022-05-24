@@ -2,7 +2,7 @@
 import Project from '../model/Project';
 import rootStore from '../stores/RootStore';
 
-export const placeMeeple = (project: Project) => {
+export const placeMeeple = (project: Project, onWebSocket: boolean = false) => {
   if (project) {
     console.log(project);
     const meeple = project.addMeeple();
@@ -12,7 +12,9 @@ export const placeMeeple = (project: Project) => {
     if (currentContainer) {
       currentContainer.meeple = meeple;
       rootStore.gameStore.setNextPhase();
-      rootStore.gameStore.emitMeeplePlacementMessage(project.type, currentContainer.column, currentContainer.column);
+      if (!onWebSocket) {
+        rootStore.gameStore.emitMeeplePlacementMessage(project.type, currentContainer.column, currentContainer.column);
+      }
     }
   }
 };

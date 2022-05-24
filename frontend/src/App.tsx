@@ -1,9 +1,10 @@
 import { FC, ReactElement, useEffect } from 'react';
 import { Route, Routes, useLocation } from 'react-router-dom';
 import { AppHeaderSection, Castle } from './components/Layout';
+import { WorkInProgressModal } from './components/Modal/WorkInProgressModal';
 import {
-  PATH_TO_CREDITS,
   PATH_TO_CREATE_PLAYERS,
+  PATH_TO_CREDITS,
   PATH_TO_GAMEPAGE,
   PATH_TO_HOMEPAGE,
   PATH_TO_HOWTOPLAYPAGE,
@@ -11,6 +12,7 @@ import {
   PATH_TO_CUSTOM_MODE_FORM,
   PATH_TO_ROOMS,
 } from './constants/paths';
+import WebSocketEvent from './constants/webSocketEvents';
 import CreatePlayersPage from './views/CreatePlayersPage';
 import CreditsPage from './views/CreditsPage';
 import CustomModePage from './views/CustomModePage';
@@ -18,7 +20,6 @@ import GamePage from './views/Game';
 import GameModePage from './views/GameModePage';
 import HomePage from './views/HomePage';
 import HowToPlayPage from './views/HowToPlayPage';
-import { WorkInProgressModal } from './components/Modal/WorkInProgressModal';
 import JoinRoomPage from './views/JoinRoomPage';
 import { socket } from './constants/socket';
 
@@ -39,14 +40,16 @@ const App: FC = (): ReactElement => {
   const pageValidation = pathsWithoutHeader.includes(pathname);
 
   useEffect(() => {
-    socket.emit('sendMessage', 'Hello from Client');
+    console.log('emit');
+    socket.emit(WebSocketEvent.SEND_MEEPLE_PLACED, 'Meeple placed');
+    socket.emit(WebSocketEvent.SEND_MESSAGE, 'Hello from Client');
   }, []);
 
   useEffect(() => {
-    socket.on('receiveMessage', (data) => {
+    socket.on(WebSocketEvent.RECEIVE_MESSAGE, (data) => {
       console.log(data);
     });
-    socket.on('messageToClientAfterMeeplePlacement', (data) => {
+    socket.on(WebSocketEvent.RECEIVE_MEEPLE_PLACED, (data) => {
       console.log(data);
     });
   }, []);

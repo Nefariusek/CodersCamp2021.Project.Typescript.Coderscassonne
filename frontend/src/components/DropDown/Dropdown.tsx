@@ -3,16 +3,30 @@ import './Dropdown.css';
 import rootStore from '../../stores/RootStore';
 import { observer } from 'mobx-react-lite';
 import Project from '../../model/Project';
+import { GamePhases } from '../NextPhaseButton/NextPhaseButton';
+
+export const DisabledInfo = () => {
+  return (
+    <div className="p-10">
+      <div className="group inline-block z-50">
+        <div className="outline-none focus:outline-none font-ALMENDRA  px-3 py-1 bg-DARKTHEME_LIGHT_GREEN_COLOR rounded-sm flex items-center min-w-32">
+          <span className="pr-1 font-semibold flex-1">Meeple can't be place now</span>
+        </div>
+      </div>
+    </div>
+  );
+};
 
 interface DropdownProps {}
 
-const Dropdown: FunctionComponent<DropdownProps> = observer(() => {
+export const Dropdown: FunctionComponent<DropdownProps> = observer(() => {
   const availableProjects = rootStore.projectStore.availableProjects;
+  const currentPhase = rootStore.gameStore.currentPhase;
   const handleOptionClick = (project: Project) => {
     rootStore.gameStore.placeMeeple(project);
   };
 
-  return (
+  return availableProjects?.length && currentPhase === GamePhases.MEEPLE_PLACEMENT ? (
     <div className="p-10">
       <div className="group inline-block z-50">
         <button className="outline-none focus:outline-none font-ALMENDRA  px-3 py-1 bg-DARKTHEME_LIGHT_GREEN_COLOR rounded-sm flex items-center min-w-32">
@@ -43,6 +57,13 @@ const Dropdown: FunctionComponent<DropdownProps> = observer(() => {
         </ul>
       </div>
     </div>
+  ) : (
+    <div className="p-10">
+      <div className="group inline-block z-50">
+        <div className="outline-none focus:outline-none font-ALMENDRA  px-3 py-1 bg-DARKTHEME_LIGHT_GREEN_COLOR rounded-sm flex items-center min-w-32">
+          <span className="pr-1 font-semibold flex-1">Meeple placed</span>
+        </div>
+      </div>
+    </div>
   );
 });
-export default Dropdown;

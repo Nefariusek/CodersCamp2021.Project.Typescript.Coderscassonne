@@ -21,6 +21,7 @@ import TilePlacementMessage from '../model/websocket/TilePlacementMessage';
 import { openShowScoreModal } from '../components/Modal/ShowScoreModal';
 import { evaluateProjects } from '../services/pointsPhase.functions';
 import Meeple from '../model/Meeple';
+import Project from '../model/Project';
 
 class GameStore {
   turnNumber: number;
@@ -75,6 +76,19 @@ class GameStore {
     }
   }
 
+  placeMeeple(project: Project) {
+    if (project) {
+      const meeple = project.addMeeple();
+      const currentContainer = rootStore.gameStore.boardState.find(
+        (container) => container.tile === rootStore.gameStore.recentlyPlacedTile,
+      );
+      if (currentContainer) {
+        currentContainer.meeple = meeple;
+      }
+    }
+    this.setNextPhase();
+  }
+
   emitTilePlacementMessage(id: string, row: number, column: number, rotation: Rotation) {
     const websocketMessageParser = new WebsocketMessageParser();
     const tilePlacementMessage = new TilePlacementMessage('');
@@ -118,16 +132,13 @@ class GameStore {
     !fromWebsocket && socket.emit(WebSocketEvent.SEND_NEXT_PHASE, true);
   }
 
-  placeMeeple() {
-    console.log('placeMeeple');
-  }
-
   increaseTurnNumber() {
     this.turnNumber++;
   }
 
   endCurrentTurn() {
     if (this.drawPile.length === 0 && this.tileInHand === undefined && this.currentPhase === GamePhases.SCORE_PHASE) {
+      this.finishGame();
       openShowScoreModal();
     }
     this.increaseTurnNumber();
@@ -135,7 +146,12 @@ class GameStore {
     this.tileInHand = this.drawPile.shift();
   }
 
-  finishGame() {}
+  finishGame() {
+    if (rootStore.gameStore.drawPile.length < 1) {
+      const unfinishedProjects = rootStore.projectStore.allProjects.filter((project) => !project.isFinished);
+      unfinishedProjects.forEach((project) => project.scoreUnfinishedProject());
+    }
+  }
 
   initGameStore() {
     console.log('initGameStore');

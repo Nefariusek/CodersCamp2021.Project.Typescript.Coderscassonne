@@ -87,10 +87,6 @@ class Project {
   }
 
   public get isFinishable(): boolean {
-    console.log(this.closedEdgesSet.size);
-    console.log(this.openEdgesSet);
-    console.log(new Set<string>([...this.closedEdgesSet, ...this.openEdgesSet]));
-    console.log(this.type);
     if (this.type === Locations.ROAD) {
       return this.checkIfRoadProjectIsFinishable();
     } else if (this.type === Locations.CITY) {
@@ -121,7 +117,6 @@ class Project {
     const oppositeEdge = getOppositeEdgeKey(edge);
 
     const edgeToClose = `${adjacentTile.id}|${oppositeEdge}`;
-    console.log('edgeToClose', edgeToClose);
 
     this.openEdgesSet.delete(edgeToClose);
     this.closedEdgesSet.add(edgeToClose);
@@ -140,9 +135,6 @@ class Project {
         }
       });
     }
-
-    console.log(this.openEdgesSet);
-    console.log(this.closedEdgesSet);
   }
 
   public addTileOnCreation(tileToAdd: Tile, edge?: keyof Edges) {

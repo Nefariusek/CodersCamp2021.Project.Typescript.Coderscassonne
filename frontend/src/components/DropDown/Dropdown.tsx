@@ -4,6 +4,7 @@ import rootStore from '../../stores/RootStore';
 import { observer } from 'mobx-react-lite';
 import Project from '../../model/Project';
 import { placeMeeple } from '../../services/meeplePlacementPhase.functions';
+import { GamePhases } from '../NextPhaseButton/NextPhaseButton';
 
 export const DisabledInfo = () => {
   return (
@@ -21,11 +22,12 @@ interface DropdownProps {}
 
 export const Dropdown: FunctionComponent<DropdownProps> = observer(() => {
   const availableProjects = rootStore.projectStore.availableProjects;
+  const currentPhase = rootStore.gameStore.currentPhase;
   const handleOptionClick = (project: Project) => {
     placeMeeple(project);
   };
 
-  return availableProjects?.length ? (
+  return availableProjects?.length && currentPhase === GamePhases.MEEPLE_PLACEMENT ? (
     <div className="p-10">
       <div className="group inline-block z-50">
         <button className="outline-none focus:outline-none font-ALMENDRA  px-3 py-1 bg-DARKTHEME_LIGHT_GREEN_COLOR rounded-sm flex items-center min-w-32">

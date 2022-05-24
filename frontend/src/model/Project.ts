@@ -56,7 +56,7 @@ class Project {
 
       case Locations.CITY:
         score = this.tiles.reduce((sum, curr) => (curr.isSpecial ? sum + 2 : sum + 1), 0);
-        score = this.isFinished ? score * 2 : score;
+        score = this.isFinishable ? score * 2 : score;
         break;
 
       default:

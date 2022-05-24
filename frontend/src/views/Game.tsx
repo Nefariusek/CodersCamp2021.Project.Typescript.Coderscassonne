@@ -16,7 +16,7 @@ import { InvalidMoveModal } from '../components/Modal/InvalidMoveModal';
 import { EndTurnModal } from '../components/Modal/EndTurnModal';
 import rootStore from '../stores/RootStore';
 import { observer } from 'mobx-react';
-import NextPhaseButton from '../components/NextPhaseButton/NextPhaseButton';
+import NextPhaseButton, { GamePhases } from '../components/NextPhaseButton/NextPhaseButton';
 
 const GamePage: React.FunctionComponent = observer((): ReactElement => {
   const players = rootStore.playersStore.players;
@@ -66,7 +66,10 @@ const GamePage: React.FunctionComponent = observer((): ReactElement => {
         className="flex justify-around border-t-2 border-DARKTHEME_LIGHT_GREEN_COLOR pt-2"
         style={{ bottom: 0, height: drawPileLayoutProportion, maxHeight: drawPileLayoutProportion }}
       >
-        {<PlayersHand />}
+        {!(
+          (rootStore.room && !rootStore.playersStore.isMyTurn()) ||
+          rootStore.gameStore.currentPhase != GamePhases.TILE_PLACEMENT
+        ) && <PlayersHand />}
         <DrawPile numberOfAvailableTiles={drawPileLength} />
       </div>
       <InvalidMoveModal />

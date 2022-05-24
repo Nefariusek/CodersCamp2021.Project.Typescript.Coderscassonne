@@ -5,8 +5,8 @@ enum WebSocketEvent {
   SEND_TILE_ROTATED = 'sendTileRotated',
   RECEIVE_TILE_ROTATED = 'receiveTileRotated',
 
-  SEND_MEEPLE_PLACED = 'sendMeeplePlaced', // 'meeplePlacementMessage',
-  RECEIVE_MEEPLE_PLACED = 'receiveMeeplePlaced', // 'messageToClientAfterMeeplePlacement',
+  SEND_MEEPLE_PLACED = 'sendMeeplePlaced',
+  RECEIVE_MEEPLE_PLACED = 'receiveMeeplePlaced',
 
   SEND_NEXT_PHASE = 'sendNextPhase',
   RECEIVE_NEXT_PHASE = 'receiveNextPhase',
@@ -18,7 +18,17 @@ enum WebSocketEvent {
   RECEIVE_MESSAGE = 'receiveMessage',
 
   CREATE_ROOM = 'createRoom',
+  CREATE_ROOM_ERROR = 'createRoomError',
+
+  JOIN_ROOM = 'joinRoom',
   JOINED_ROOM = 'joinedRoom',
+  JOIN_ROOM_ERROR = 'joinRoomError',
+
+  LEAVE_ROOM = 'leaveRoom',
+  LEFT_ROOM = 'leftRoom',
+
+  GET_ROOMS = 'getRooms',
+  SEND_ROOMS = 'availableRooms',
 }
 
 export default WebSocketEvent;

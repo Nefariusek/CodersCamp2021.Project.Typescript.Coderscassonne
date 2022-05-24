@@ -1,6 +1,7 @@
 import rootStore from '../../stores/RootStore';
 import Button from '../Button/Button';
 import { observer } from 'mobx-react';
+import Dropdown from '../DropDown/Dropdown';
 
 export enum GamePhases {
   TILE_PLACEMENT = 'Tile placement phase',
@@ -14,22 +15,26 @@ export const NextPhaseButton = observer(() => {
   const handleNextPhase = () => {
     rootStore.gameStore.setNextPhase();
   };
+
   const active =
     'rounded-full mt-1 mr-3 border-2 border-solid border-DARKTHEME_LIGHT_GREEN_COLOR bg-DARKTHEME_LIGHT_GREEN_COLOR h-8 w-8';
   const inactive = 'rounded-full mt-1 mr-3 border-2 border-solid border-DARKTHEME_LIGHT_GREEN_COLOR h-8 w-8';
 
   return (
-    <div className="flex flex-col mt-2">
-      <Button
-        text={currentPhase === GamePhases.SCORE_PHASE ? 'End turn' : 'Next phase'}
-        colorVariant="light"
-        onClick={handleNextPhase}
-      />
-      <div className="flex">
-        {phases.map((phase) => (
-          <div key={phase} className={currentPhase === phase ? active : inactive} />
-        ))}
+    <div className="inline-flex">
+      <div className="flex flex-col mt-2">
+        <Button
+          text={currentPhase === GamePhases.SCORE_PHASE ? 'End turn' : 'Next phase'}
+          colorVariant="light"
+          onClick={handleNextPhase}
+        />
+        <div className="flex">
+          {phases.map((phase) => (
+            <div key={phase} className={currentPhase === phase ? active : inactive} />
+          ))}
+        </div>
       </div>
+      <Dropdown />
     </div>
   );
 });

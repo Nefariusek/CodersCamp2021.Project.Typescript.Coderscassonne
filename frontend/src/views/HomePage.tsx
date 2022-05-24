@@ -4,7 +4,7 @@ import { openWorkInProgressModal } from '../components/Modal/WorkInProgressModal
 import { SettingsModal } from '../components/Modal/SettingsModal';
 import Button from '../components/Button/Button';
 
-import { PATH_TO_CREDITS, PATH_TO_HOWTOPLAYPAGE, PATH_TO_CREATE_PLAYERS, PATH_TO_GAMEPAGE } from '../constants/paths';
+import { PATH_TO_CREDITS, PATH_TO_HOWTOPLAYPAGE, PATH_TO_GAMEPAGE, PATH_TO_CREATE_PLAYERS } from '../constants/paths';
 import rootStore from '../stores/RootStore';
 import { observer } from 'mobx-react-lite';
 import Technologies from '../constants/technologies';

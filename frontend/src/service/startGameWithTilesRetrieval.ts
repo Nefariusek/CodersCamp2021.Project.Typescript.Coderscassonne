@@ -14,6 +14,6 @@ export default async function startGameWithTilesRetrieval() {
   } else {
     parsedTilesInGame = GameModeParser(JSONData);
   }
-  rootStore.gameStore = new GameStore(parsedTilesInGame);
+  rootStore.gameStore = new GameStore(rootStore, parsedTilesInGame);
   setBoardStateVariableReference();
 }

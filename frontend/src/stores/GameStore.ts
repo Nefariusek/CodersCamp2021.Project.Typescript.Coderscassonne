@@ -5,14 +5,14 @@ import {
   extendBoard,
   manageProjects,
   validateTilePlacement,
-} from '../components/GameBoard/GameBoard.functions';
+} from '../services/tilePlacementPhase.functions';
 import { openInvalidMoveModal } from '../components/Modal/InvalidMoveModal';
 import { GamePhases } from '../components/NextPhaseButton/NextPhaseButton';
 import TileState from '../constants/tileState';
 import Tile, { Rotation } from '../model/Tile';
-import rootStore from './RootStore';
+import rootStore, { RootStore } from './RootStore';
 
-import { socket } from '../App';
+import { socket } from '../constants/socket';
 import WebSocketEvent from '../constants/webSocketEvents';
 import WebsocketMessageParser from '../model/websocket/WebSocketMessageParser';
 import TilePlacementMessage from '../model/websocket/TilePlacementMessage';
@@ -24,13 +24,16 @@ class GameStore {
   recentlyPlacedTile: Tile | undefined;
   tileInHand: Tile | undefined;
   currentPhase: GamePhases;
+  rootStore: RootStore;
 
-  constructor(allTiles: Tile[]) {
+  constructor(rootStore: RootStore, allTiles: Tile[]) {
     this.boardState = [{ row: 0, column: 0, state: TileState.ACTIVE }];
+    this.rootStore = rootStore;
     this.turnNumber = 0;
     this.currentPhase = GamePhases.TILE_PLACEMENT;
     this.drawPile = allTiles;
     this.tileInHand = this.drawPile.shift();
+    this.recentlyPlacedTile = undefined;
     makeAutoObservable(this);
   }
 
@@ -75,10 +78,10 @@ class GameStore {
     tilePlacementMessage.column = column;
     tilePlacementMessage.rotation = rotation;
 
-    socket.emit(
-      WebSocketEvent.SEND_TILE_PLACED,
-      websocketMessageParser.parse(tilePlacementMessage, WebSocketEvent.SEND_TILE_PLACED),
-    );
+    socket.emit(WebSocketEvent.SEND_TILE_PLACED, {
+      room: rootStore.room,
+      tileData: websocketMessageParser.parse(tilePlacementMessage, WebSocketEvent.SEND_TILE_PLACED),
+    });
   }
 
   setTileInHandFromWebSocket(id: string, rotation: Rotation) {

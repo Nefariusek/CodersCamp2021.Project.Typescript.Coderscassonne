@@ -11,7 +11,7 @@ import { GAMEBOARD_LAYOUT_PROPORTION } from '../constants/gameDefaults';
 import { MENU_TITLE_SOURCE } from '../constants/layoutElements';
 import { Link } from 'react-router-dom';
 import { PATH_TO_HOMEPAGE } from '../constants/paths';
-import { openEndGameModal, EndGameModal } from '../components/Modal/EndGameModal';
+import { openShowScoreModal, ShowScoreModal } from '../components/Modal/ShowScoreModal';
 import { InvalidMoveModal } from '../components/Modal/InvalidMoveModal';
 import { EndTurnModal } from '../components/Modal/EndTurnModal';
 import rootStore from '../stores/RootStore';
@@ -66,7 +66,7 @@ const GamePage: React.FunctionComponent = observer((): ReactElement => {
       </div>
       <InvalidMoveModal />
       <EndTurnModal />
-      <EndGameModal />
+      <ShowScoreModal />
     </div>
   );
 });

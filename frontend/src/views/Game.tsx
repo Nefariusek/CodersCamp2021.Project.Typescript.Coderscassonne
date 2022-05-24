@@ -16,7 +16,7 @@ import { InvalidMoveModal } from '../components/Modal/InvalidMoveModal';
 import { EndTurnModal } from '../components/Modal/EndTurnModal';
 import rootStore from '../stores/RootStore';
 import { observer } from 'mobx-react';
-import NextPhaseButton from '../components/NextPhaseButton/NextPhaseButton';
+import NextPhaseButton, { GamePhases } from '../components/NextPhaseButton/NextPhaseButton';
 import ProjectList from '../components/ProjectList/ProjectList';
 
 const GamePage: React.FunctionComponent = observer((): ReactElement => {
@@ -27,10 +27,6 @@ const GamePage: React.FunctionComponent = observer((): ReactElement => {
   const gamebordLayoutProportion = `${GAMEBOARD_LAYOUT_PROPORTION * 100}%`;
   const playersInfoLayoutProportion = `${((1 - GAMEBOARD_LAYOUT_PROPORTION) / 2) * 100 - 1}%`;
   const drawPileLayoutProportion = `${((1 - GAMEBOARD_LAYOUT_PROPORTION * 100) / 2) * 100 - 1}%`;
-
-  if (drawPileLength === 1) {
-    openEndGameModal(); //TODO: game summary view
-  }
 
   return (
     <div style={{ height: '97vh' }}>

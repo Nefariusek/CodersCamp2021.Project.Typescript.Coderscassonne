@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { observer } from 'mobx-react';
-import { PATH_TO_GAMEPAGE } from '../../constants/paths';
+import { PATH_TO_HOMEPAGE } from '../../constants/paths';
 import { useNavigate } from 'react-router-dom';
 import Button from '../Button/Button';
 
@@ -45,7 +45,8 @@ export const Modal = observer((props: ModalProps): React.ReactElement => {
 
   const handleClose = () => {
     if (eventType === ModalEvents.END_GAME) {
-      navigate(PATH_TO_GAMEPAGE);
+      navigate(PATH_TO_HOMEPAGE);
+      localStorage.clear();
     } else {
       setModalOn(false);
     }

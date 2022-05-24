@@ -123,10 +123,15 @@ class GameStore {
   }
 
   endCurrentTurn() {
+    if (this.drawPile.length === 0 && this.tileInHand === undefined && this.currentPhase === GamePhases.SCORE_PHASE) {
+      openEndGameModal();
+    }
     this.increaseTurnNumber();
     this.recentlyPlacedTile = undefined;
     this.tileInHand = this.drawPile.shift();
   }
+
+  finishGame() {}
 
   initGameStore() {
     console.log('initGameStore');

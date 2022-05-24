@@ -7,9 +7,10 @@ import { RoomGateway } from './room.gateway';
 import { TilesGateway } from './tiles/tiles.gateway';
 import { TilesModule } from './tiles/tiles.module';
 import { PlayerGateway } from './players.gateway';
+import { TilesDbModule } from './tiles-db/tiles-db.module';
 
 @Module({
-  imports: [TilesModule],
+  imports: [TilesModule, TilesDbModule],
   controllers: [AppController],
   providers: [
     AppService,

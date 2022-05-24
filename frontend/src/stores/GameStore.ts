@@ -89,8 +89,6 @@ class GameStore {
       this.tileInHand = tileFromWebSocket;
       return;
     }
-
-    this.tileInHand = undefined;
   }
 
   setRotationFromWebSocket(rotation: Rotation) {

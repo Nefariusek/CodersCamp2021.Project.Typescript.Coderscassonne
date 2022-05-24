@@ -13,7 +13,6 @@ export default async function startGameWithTilesRetrieval() {
     parsedTilesInGame = GameModeParser(data);
   } else {
     parsedTilesInGame = GameModeParser(JSONData);
-    // parsedTilesInGame = _.shuffle(parsedTilesInGame);
   }
   rootStore.gameStore = new GameStore(parsedTilesInGame);
   setBoardStateVariableReference();

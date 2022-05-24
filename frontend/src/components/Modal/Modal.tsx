@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { observer } from 'mobx-react';
-import { PATH_TO_GAMEPAGE } from '../../constants/paths';
+import { PATH_TO_HOMEPAGE } from '../../constants/paths';
 import { useNavigate } from 'react-router-dom';
 import Button from '../Button/Button';
 
@@ -16,11 +16,11 @@ export enum ModalEvents {
 }
 
 const MODAL_EVENT_MESSAGES = {
-  [ModalEvents.END_GAME]: ['End of the game!', 'Play new game'],
-  [ModalEvents.END_TURN]: ["It's the end of your turn!", 'Play new game'],
+  [ModalEvents.END_GAME]: ['End of the game!', 'Main menu'],
+  [ModalEvents.END_TURN]: ["It's the end of your turn!", 'OK'],
   [ModalEvents.INVALID_MOVE]: ["Sorry, this tile can't be placed here!", 'Cancel'],
   [ModalEvents.SETTINGS_ON]: ['Settings', 'Close'],
-  [ModalEvents.SHOW_SCORE]: ['Game score', 'Close'],
+  [ModalEvents.SHOW_SCORE]: ['Game scores', 'Main menu'],
   [ModalEvents.WORK_IN_PROGRESS]: ['Work in progress', 'Cancel'],
   [ModalEvents.WAITING_FOR_PLAYERS]: ['Waiting for other players..', 'Close'],
   [ModalEvents.DEFAULT]: ['', 'Cancel'],
@@ -46,8 +46,9 @@ export const Modal = observer((props: ModalProps): React.ReactElement => {
   const closeText = MODAL_EVENT_MESSAGES[eventType][1];
 
   const handleClose = () => {
-    if (eventType === ModalEvents.END_GAME) {
-      navigate(PATH_TO_GAMEPAGE);
+    if (eventType === ModalEvents.END_GAME || eventType === ModalEvents.SHOW_SCORE) {
+      navigate(PATH_TO_HOMEPAGE);
+      setModalOn(false);
     } else {
       setModalOn(false);
     }
@@ -65,7 +66,7 @@ export const Modal = observer((props: ModalProps): React.ReactElement => {
         <div className="bg-DARKTHEME_DARK_GREEN_COLOR opacity-95 fixed inset-0 z-50">
           <div className="flex h-screen opacity-1 justify-center items-center z-50">
             <div className="flex-col justify-center bg-DARKTHEME_BACKGROUND_COLOR py-12 px-24 border-4 border-DARKTHEME_LIGHT_GREEN_COLOR rounded-xl z-50">
-              <div className="flex justify-center font-ALMENDRA text-2xl text-DARKTHEME_LIGHT_GREEN_COLOR mb-10 z-50">
+              <div className="flex justify-center font-ALMENDRA text-3xl text-DARKTHEME_LIGHT_GREEN_COLOR mb-10 z-50">
                 <p>{eventText}</p>
               </div>
               {children}

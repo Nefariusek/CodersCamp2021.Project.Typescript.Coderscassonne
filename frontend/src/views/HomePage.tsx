@@ -2,6 +2,7 @@ import React, { ReactElement, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { openWorkInProgressModal } from '../components/Modal/WorkInProgressModal';
 import { SettingsModal } from '../components/Modal/SettingsModal';
+import { ShowScoreModal, openShowScoreModal } from '../components/Modal/ShowScoreModal';
 import Button from '../components/Button/Button';
 import WebSocketConnection from '../model/websocket/WebSocketConnection';
 
@@ -22,9 +23,8 @@ import startGameWithTilesRetrieval from '../service/startGameWithTilesRetrieval'
 const HomePage: React.FunctionComponent = observer((): ReactElement => {
   const navigate = useNavigate();
   const views: { name: string; url: string }[] = [
-    { name: 'Play Local Game', url: PATH_TO_CREATE_PLAYERS },
-    { name: 'Play Multiplayer', url: PATH_TO_ROOMS },
-    { name: 'Scoreboard', url: 'TODO' },
+    { name: 'Play game', url: PATH_TO_CREATE_PLAYERS },
+    { name: 'Scoreboard', url: 'Scoreboard modal' },
     { name: 'How to play', url: PATH_TO_HOWTOPLAYPAGE },
     { name: 'Credits', url: PATH_TO_CREDITS },
   ];
@@ -62,6 +62,8 @@ const HomePage: React.FunctionComponent = observer((): ReactElement => {
                   } else if (view.url === PATH_TO_CREATE_PLAYERS) {
                     await startGameWithTilesRetrieval();
                     navigate(view.url);
+                  } else if (view.url === 'Scoreboard modal') {
+                    openShowScoreModal();
                   } else {
                     navigate(view.url);
                   }
@@ -72,11 +74,12 @@ const HomePage: React.FunctionComponent = observer((): ReactElement => {
         ))}
       </div>
       <SettingsModal />
+      <ShowScoreModal />
     </div>
   );
 });
 
-function initDevelopmentPreset() {
+export function initDevelopmentPreset() {
   const playerOne: Player = new Player('Tic', Technologies.HTML);
   const playerTwo: Player = new Player('Tac', Technologies.JS);
   const playerThree: Player = new Player('Toe', Technologies.TS);

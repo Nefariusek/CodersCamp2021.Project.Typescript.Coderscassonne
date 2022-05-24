@@ -6,11 +6,11 @@ import {
   manageProjects,
   validateTilePlacement,
 } from '../components/GameBoard/GameBoard.functions';
-import GameModeParser from '../components/GameModeParser';
+// import GameModeParser from '../components/GameModeParser';
 import { openInvalidMoveModal } from '../components/Modal/InvalidMoveModal';
 import { GamePhases } from '../components/NextPhaseButton/NextPhaseButton';
 import TileState from '../constants/tileState';
-import { JSONData } from '../mocks/mocksTiles';
+// import { JSONData } from '../mocks/mocksTiles';
 import Tile, { Rotation } from '../model/Tile';
 import rootStore from './RootStore';
 
@@ -27,12 +27,14 @@ class GameStore {
   tileInHand: Tile | undefined;
   currentPhase: GamePhases;
 
-  constructor() {
+  constructor(allTiles: Tile[]) {
     this.boardState = [{ row: 0, column: 0, state: TileState.ACTIVE }];
     this.turnNumber = 0;
     this.currentPhase = GamePhases.TILE_PLACEMENT;
-    this.drawPile = GameModeParser(JSONData);
+    // this.drawPile = GameModeParser(JSONData);
+    this.drawPile = allTiles;
     this.tileInHand = this.drawPile.shift();
+    // this.tileInHand = this.drawPile.find((tile) => tile.id === '001_1');
     makeAutoObservable(this);
   }
 
@@ -91,8 +93,6 @@ class GameStore {
       this.tileInHand = tileFromWebSocket;
       return;
     }
-
-    this.tileInHand = undefined;
   }
 
   setRotationFromWebSocket(rotation: Rotation) {
@@ -125,15 +125,15 @@ class GameStore {
     this.tileInHand = this.drawPile.shift();
   }
 
-  initGameStore() {
-    console.log('initGameStore');
-    this.boardState.length = 0;
-    this.boardState.push({ row: 0, column: 0, state: TileState.ACTIVE });
-    this.turnNumber = 0;
-    this.currentPhase = GamePhases.TILE_PLACEMENT;
-    this.drawPile = GameModeParser(JSONData);
-    this.tileInHand = this.drawPile.shift();
-  }
+  // initGameStore() {
+  //   console.log('initGameStore');
+  //   this.boardState.length = 0;
+  //   this.boardState.push({ row: 0, column: 0, state: TileState.ACTIVE });
+  //   this.turnNumber = 0;
+  //   this.currentPhase = GamePhases.TILE_PLACEMENT;
+  //   this.drawPile = GameModeParser(JSONData);
+  //   this.tileInHand = this.drawPile.shift();
+  // }
 }
 
 export default GameStore;

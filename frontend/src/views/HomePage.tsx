@@ -10,6 +10,7 @@ import { observer } from 'mobx-react-lite';
 import Technologies from '../constants/technologies';
 import Player from '../model/Player';
 import GameMode from '../model/GameMode';
+import startGameWithTilesRetrieval from '../service/startGameWithTilesRetrieval';
 
 const HomePage: React.FunctionComponent = observer((): ReactElement => {
   const navigate = useNavigate();
@@ -33,10 +34,10 @@ const HomePage: React.FunctionComponent = observer((): ReactElement => {
                 } else {
                   if (rootStore.isDevelopmentMode && view.url === PATH_TO_CREATE_PLAYERS) {
                     initDevelopmentPreset();
-                    await rootStore.gameStore.initGameStore();
+                    await startGameWithTilesRetrieval();
                     navigate(PATH_TO_GAMEPAGE);
                   } else if (view.url === PATH_TO_CREATE_PLAYERS) {
-                    await rootStore.gameStore.initGameStore();
+                    await startGameWithTilesRetrieval();
                     navigate(view.url);
                   } else {
                     navigate(view.url);

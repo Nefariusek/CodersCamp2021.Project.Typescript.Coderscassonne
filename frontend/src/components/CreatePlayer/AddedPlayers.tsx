@@ -4,6 +4,8 @@ import { useNavigate } from 'react-router-dom';
 import { PATH_TO_GAME_MODE_PAGE } from '../../constants/paths';
 import { observer } from 'mobx-react';
 import rootStore from '../../stores/RootStore';
+import { openModal } from '../Modal/Modal';
+
 interface AddedPlayersProps {
   players: Player[];
 }
@@ -54,7 +56,12 @@ const AddedPlayersItem = observer(({ player, number, last }: AddedPlayersItemPro
 const AddedPlayers = observer(({ players }: AddedPlayersProps) => {
   const navigate = useNavigate();
   const handleContinueButton = () => {
-    navigate(PATH_TO_GAME_MODE_PAGE);
+    if (rootStore.room) {
+      openModal('waitingForPayers');
+      rootStore.websocket?.emitContinue();
+    } else {
+      navigate(PATH_TO_GAME_MODE_PAGE);
+    }
   };
   return (
     <div className="flex flex-col items-center justify-between w-96 h-[580px] bg-DARKTHEME_BACKGROUND_COLOR border-4 border-DARKTHEME_LIGHT_GREEN_COLOR">

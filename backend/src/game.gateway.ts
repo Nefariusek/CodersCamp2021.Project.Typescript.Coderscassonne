@@ -16,7 +16,7 @@ export class GameGateway
   implements OnGatewayInit, OnGatewayConnection, OnGatewayDisconnect
 {
   @WebSocketServer()
-  server: Server;
+  wss: Server;
 
   afterInit(server: Server) {
     console.log('initialized...');
@@ -36,7 +36,7 @@ export class GameGateway
     rec: { room: string; nextPhase: boolean },
   ): void {
     const message = { nextPhase: rec.nextPhase, clientId: client.id };
-    client.to(rec.room).emit(WebSocketEvent.RECEIVE_NEXT_PHASE, message);
+    this.wss.to(rec.room).emit(WebSocketEvent.RECEIVE_NEXT_PHASE, message);
   }
 
   @SubscribeMessage(WebSocketEvent.SEND_MEEPLE_PLACED)
@@ -45,12 +45,12 @@ export class GameGateway
     msgHandler.messageType = WebSocketEvent.SEND_MEEPLE_PLACED;
     msgHandler.createMessage(client.id, rec.text);
     const { event, data } = msgHandler.sendMassage();
-    client.to(rec.room).emit(event, data);
+    this.wss.to(rec.room).emit(event, data);
   }
 
   @SubscribeMessage(WebSocketEvent.CLIENT_JOINED)
   async handleClientJoined(): Promise<WsResponse<string>> {
-    const allSockets = await this.server.allSockets();
+    const allSockets = await this.wss.allSockets();
     if (allSockets.size === 1) {
       return { event: WebSocketEvent.YOU_ARE_HOST, data: 'You are the host' };
     }
@@ -61,5 +61,4 @@ export class GameGateway
     const message = `Client with id: ${client.id} send a message: ${text}`;
     return { event: WebSocketEvent.RECEIVE_MESSAGE, data: message };
   }
-
 }

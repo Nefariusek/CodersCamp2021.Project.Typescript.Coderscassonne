@@ -6,6 +6,7 @@ import { AppService } from './app.service';
 import { RoomGateway } from './room.gateway';
 import { TilesGateway } from './tiles/tiles.gateway';
 import { TilesModule } from './tiles/tiles.module';
+import { PlayerGateway } from './players.gateway';
 
 @Module({
   imports: [TilesModule],
@@ -16,6 +17,7 @@ import { TilesModule } from './tiles/tiles.module';
     MassageHandler,
     TilesGateway,
     RoomGateway,
+    PlayerGateway,
   ],
 })
 export class AppModule {}

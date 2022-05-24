@@ -1,4 +1,5 @@
 import { io, Socket } from 'socket.io-client';
+import Technologies from '../../constants/technologies';
 import WebSocketEvent from '../../constants/webSocketEvents';
 import rootStore from '../../stores/RootStore';
 
@@ -19,7 +20,7 @@ export default class WebSocketConnection {
   }
 
   public emitMeeplPlaced(message: string) {
-    this.socket.emit(WebSocketEvent.SEND_MEEPLE_PLACED, { room: rootStore.room, text: message});
+    this.socket.emit(WebSocketEvent.SEND_MEEPLE_PLACED, { room: rootStore.room, text: message });
   }
 
   public emitRotation(message: number) {
@@ -36,5 +37,18 @@ export default class WebSocketConnection {
 
   public emitMessage(message: string) {
     this.socket.emit(WebSocketEvent.SEND_MESSAGE, message);
+  }
+
+  public emitCreatePlayer(playerName: string, playerMeeple: Technologies) {
+    this.socket.emit(WebSocketEvent.CREATE_PLAYER, { room: rootStore.room, player: { playerName, playerMeeple } });
+  }
+  public emitGetPlayers() {
+    this.socket.emit(WebSocketEvent.GET_PLAYERS, rootStore.room);
+  }
+  public emitGetTechnologies() {
+    this.socket.emit(WebSocketEvent.GET_TECH, rootStore.room);
+  }
+  public emitContinue() {
+    this.socket.emit(WebSocketEvent.CONTINUE, rootStore.room);
   }
 }

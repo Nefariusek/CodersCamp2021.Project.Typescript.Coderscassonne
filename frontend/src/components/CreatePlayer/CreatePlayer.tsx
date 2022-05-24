@@ -44,8 +44,17 @@ const CreatePlayer = observer(
       e.preventDefault();
       if (!playerName || !playerMeeple) return;
 
-      rootStore.playersStore.addPlayer(playerName, playerMeeple);
-      setAvailableTechnologies(availableTechnologies.filter((tech) => tech !== playerMeeple));
+      if (rootStore.room) {
+        //rootStore.playersStore.addPlayer(playerName, playerMeeple);
+
+        setAvailableTechnologies([]);
+        rootStore.websocket?.emitCreatePlayer(playerName, playerMeeple);
+        console.log('jeden');
+      } else {
+        rootStore.playersStore.addPlayer(playerName, playerMeeple);
+        setAvailableTechnologies(availableTechnologies.filter((tech) => tech !== playerMeeple));
+      }
+      console.log('dwa');
       setPlayerName('');
       const radio: HTMLInputElement | null = document.querySelector('input[type=radio]:checked');
       if (radio) {

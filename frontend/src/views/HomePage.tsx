@@ -1,10 +1,11 @@
-import React, { ReactElement } from 'react';
+import React, { ReactElement, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { openWorkInProgressModal } from '../components/Modal/WorkInProgressModal';
 import { SettingsModal } from '../components/Modal/SettingsModal';
 import Button from '../components/Button/Button';
+import WebSocketConnection from '../model/websocket/WebSocketConnection';
 
-import { PATH_TO_CREDITS, PATH_TO_HOWTOPLAYPAGE, PATH_TO_GAMEPAGE, PATH_TO_ROOMS } from '../constants/paths';
+import { PATH_TO_CREDITS, PATH_TO_HOWTOPLAYPAGE, PATH_TO_GAMEPAGE, PATH_TO_CREATE_PLAYERS, PATH_TO_ROOMS } from '../constants/paths';
 import rootStore from '../stores/RootStore';
 import { observer } from 'mobx-react-lite';
 import Technologies from '../constants/technologies';
@@ -14,11 +15,16 @@ import GameMode from '../model/GameMode';
 const HomePage: React.FunctionComponent = observer((): ReactElement => {
   const navigate = useNavigate();
   const views: { name: string; url: string }[] = [
-    { name: 'Play game', url: PATH_TO_ROOMS },
+    { name: 'Play Local Game', url: PATH_TO_CREATE_PLAYERS },
+    { name: 'Play Multiplayer', url: PATH_TO_ROOMS },
     { name: 'Scoreboard', url: 'TODO' },
     { name: 'How to play', url: PATH_TO_HOWTOPLAYPAGE },
     { name: 'Credits', url: PATH_TO_CREDITS },
   ];
+
+  useEffect(() => {
+    if (!!rootStore.websocket) rootStore.websocket = undefined;
+  }, []);
 
   return (
     <div className="flex justify-center mt-30 pt-10">
@@ -31,11 +37,22 @@ const HomePage: React.FunctionComponent = observer((): ReactElement => {
                 if (view.url === 'TODO') {
                   openWorkInProgressModal();
                 } else {
-                  if (rootStore.isDevelopmentMode && view.url === PATH_TO_ROOMS) {
-                    initDevelopmentPreset();
+                  if (rootStore.isDevelopmentMode) {
+                    if (view.url === PATH_TO_CREATE_PLAYERS) {
+                      initDevelopmentPreset();
+                      await rootStore.gameStore.initGameStore();
+                      navigate(PATH_TO_GAMEPAGE);
+                    } else if (view.url === PATH_TO_ROOMS && view.name === 'Play Multiplayer') {
+                      initDevelopmentPreset();
+                      rootStore.websocket = new WebSocketConnection();
+                      await rootStore.gameStore.initGameStore();
+                      navigate(view.url);
+                    }
+                  } else if (view.url === PATH_TO_ROOMS && view.name === 'Play Multiplayer') {
+                    rootStore.websocket = new WebSocketConnection();
                     await rootStore.gameStore.initGameStore();
-                    navigate(PATH_TO_GAMEPAGE);
-                  } else if (view.url === PATH_TO_ROOMS) {
+                    navigate(view.url);
+                  } else if (view.url === PATH_TO_CREATE_PLAYERS) {
                     await rootStore.gameStore.initGameStore();
                     navigate(view.url);
                   } else {

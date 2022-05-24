@@ -1,6 +1,5 @@
 import { Injectable } from '@nestjs/common';
 import WebSocketEvent from './constants/webSocketEvents';
-
 @Injectable()
 export class MassageHandler {
   public messageType: string;

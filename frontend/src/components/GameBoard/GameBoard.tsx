@@ -6,7 +6,7 @@ import TileState from '../../constants/tileState';
 import Tile from '../../model/Tile';
 import TileContainer from '../TileContainer/TileContainer';
 import { GAMEBOARD_LAYOUT_PROPORTION, TILE_SIZE } from '../../constants/gameDefaults';
-import { useTilePlacementReceiver, useTileRotationReceiver, useNextPhaseReceiver } from './GameBoard.hooks';
+import { useTilePlacementReceiver, useTileRotationReceiver, useNextPhaseReceiver, useMeeplePlacementReceiver } from './GameBoard.hooks';
 import rootStore from '../../stores/RootStore';
 import { observer } from 'mobx-react';
 import Meeple from '../../model/Meeple';
@@ -41,9 +41,12 @@ const GameBoard = observer((): ReactElement => {
     rootStore.gameStore.endCurrentTurn();
   }, []);
 
-  useTilePlacementReceiver(onTilePlacement);
-  useTileRotationReceiver();
-  useNextPhaseReceiver();
+  if (!!rootStore.websocket) {
+    useTilePlacementReceiver(onTilePlacement);
+    useTileRotationReceiver();
+    useNextPhaseReceiver();
+    useMeeplePlacementReceiver();
+  }
 
   function gameBoardAutoScale(): number {
     const rowsCount = Object.entries(tilesGroupedByRows).length;

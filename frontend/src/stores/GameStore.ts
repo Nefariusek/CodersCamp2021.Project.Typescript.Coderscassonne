@@ -14,10 +14,10 @@ import { JSONData } from '../mocks/mocksTiles';
 import Tile, { Rotation } from '../model/Tile';
 import rootStore, { RootStore } from './RootStore';
 
-import { socket } from '../constants/socket';
 import WebSocketEvent from '../constants/webSocketEvents';
 import WebsocketMessageParser from '../model/websocket/WebSocketMessageParser';
 import TilePlacementMessage from '../model/websocket/TilePlacementMessage';
+import MeeplePlacementMessage from '../model/websocket/MeeplePlacementMessage';
 
 class GameStore {
   turnNumber: number;
@@ -46,7 +46,7 @@ class GameStore {
       if (validateTilePlacement(row, column)) {
         tileToChange.state = TileState.TAKEN;
         tileToChange.tile = this.tileInHand;
-        if (!fromWebsocket) {
+        if (!!rootStore.websocket && !fromWebsocket) {
           this.emitTilePlacementMessage(this.tileInHand.id, row, column, this.tileInHand.rotation);
         }
 
@@ -57,14 +57,13 @@ class GameStore {
 
         this.recentlyPlacedTile = this.tileInHand;
 
-        if (fromWebsocket) {
+        if (!!rootStore.websocket && fromWebsocket) {
           const indexOfTileInHand = this.drawPile.findIndex((tile) => tile.id === this.tileInHand?.id);
           this.drawPile.splice(indexOfTileInHand, 1);
         }
 
-        this.tileInHand = undefined;
         if (this.boardState.length > 9) {
-          !fromWebsocket && this.setNextPhase();
+          !!rootStore.websocket && !fromWebsocket && this.setNextPhase();
         }
       } else {
         openInvalidMoveModal();
@@ -80,10 +79,10 @@ class GameStore {
     tilePlacementMessage.column = column;
     tilePlacementMessage.rotation = rotation;
 
-    socket.emit(WebSocketEvent.SEND_TILE_PLACED, {
-      room: rootStore.room,
-      tileData: websocketMessageParser.parse(tilePlacementMessage, WebSocketEvent.SEND_TILE_PLACED),
-    });
+    if (!!rootStore.websocket)
+      rootStore.websocket.emitTilePlaced(
+        websocketMessageParser.parse(tilePlacementMessage, WebSocketEvent.SEND_TILE_PLACED),
+      );
   }
 
   setTileInHandFromWebSocket(id: string, rotation: Rotation) {
@@ -94,12 +93,23 @@ class GameStore {
       this.tileInHand = tileFromWebSocket;
       return;
     }
-
-    this.tileInHand = undefined;
   }
 
   setRotationFromWebSocket(rotation: Rotation) {
     this.tileInHand?.setRotation(rotation);
+  }
+
+  emitMeeplePlacementMessage(id: string, row: number, column: number) {
+    const websocketMessageParser = new WebsocketMessageParser();
+    const meeplePlacementMessage = new MeeplePlacementMessage('');
+    meeplePlacementMessage.id = id;
+    meeplePlacementMessage.row = row;
+    meeplePlacementMessage.column = column;
+
+    if (!!rootStore.websocket)
+      rootStore.websocket.emitMeeplPlaced(
+        websocketMessageParser.parse(meeplePlacementMessage, WebSocketEvent.SEND_MEEPLE_PLACED),
+      );
   }
 
   setNextPhase(fromWebsocket: boolean = false) {
@@ -111,7 +121,7 @@ class GameStore {
       this.endCurrentTurn();
       this.currentPhase = GamePhases.TILE_PLACEMENT;
     }
-    !fromWebsocket && socket.emit(WebSocketEvent.SEND_NEXT_PHASE, true);
+    if (!!rootStore.websocket && !fromWebsocket) rootStore.websocket.emitNextPhase(true);
   }
 
   placeMeeple() {

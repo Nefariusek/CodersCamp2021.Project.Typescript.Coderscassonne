@@ -11,11 +11,14 @@ enum WebSocketEvent {
   SEND_NEXT_PHASE = 'sendNextPhase',
   RECEIVE_NEXT_PHASE = 'receiveNextPhase',
 
-  SEND_MESSAGE_TO_ROOM = 'sendMessageToRoom', // 'messageToRoom',
-  RECEIVE_MESSAGE_FROM_ROOM = 'receiveMessageFromRoom', // 'messageToRoom',
+  SEND_MESSAGE_TO_ROOM = 'sendMessageToRoom',
+  RECEIVE_MESSAGE_FROM_ROOM = 'receiveMessageToRoom',
 
   SEND_MESSAGE = 'sendMessage',
   RECEIVE_MESSAGE = 'receiveMessage',
+
+  CLIENT_JOINED = 'clientJoined',
+  YOU_ARE_HOST = 'youAreHost',
 
   CREATE_ROOM = 'createRoom',
   CREATE_ROOM_ERROR = 'createRoomError',

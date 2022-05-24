@@ -5,6 +5,7 @@ import {
   SubscribeMessage,
   WebSocketGateway,
   WsResponse,
+  WebSocketServer,
 } from '@nestjs/websockets';
 import { Server, Socket } from 'socket.io';
 import { MassageHandler } from './app.messagehandler.service';
@@ -14,6 +15,9 @@ import WebSocketEvent from './constants/webSocketEvents';
 export class GameGateway
   implements OnGatewayInit, OnGatewayConnection, OnGatewayDisconnect
 {
+  @WebSocketServer()
+  server: Server;
+
   afterInit(server: Server) {
     console.log('initialized...');
   }
@@ -26,12 +30,6 @@ export class GameGateway
     console.log(`disconnected client ${client.id}`);
   }
 
-  @SubscribeMessage(WebSocketEvent.SEND_MESSAGE)
-  handleMessage(client: Socket, text: string): WsResponse<string> {
-    const message = `Client with id: ${client.id} sent a message: ${text}`;
-    return { event: WebSocketEvent.RECEIVE_MESSAGE, data: message };
-  }
-
   @SubscribeMessage(WebSocketEvent.SEND_NEXT_PHASE)
   handleEndOfTurn(
     client: Socket,
@@ -41,12 +39,27 @@ export class GameGateway
     client.to(rec.room).emit(WebSocketEvent.RECEIVE_NEXT_PHASE, message);
   }
 
-
   @SubscribeMessage(WebSocketEvent.SEND_MEEPLE_PLACED)
-  handleMeeplePlacement(client: Socket, text: string): WsResponse<string> {
+  handleMeeplePlacement(client: Socket, rec: { room: string; text: string }) {
     const msgHandler = new MassageHandler();
     msgHandler.messageType = WebSocketEvent.SEND_MEEPLE_PLACED;
-    msgHandler.createMessage(client.id, text);
-    return msgHandler.sendMassage();
+    msgHandler.createMessage(client.id, rec.text);
+    const { event, data } = msgHandler.sendMassage();
+    client.to(rec.room).emit(event, data);
   }
+
+  @SubscribeMessage(WebSocketEvent.CLIENT_JOINED)
+  async handleClientJoined(): Promise<WsResponse<string>> {
+    const allSockets = await this.server.allSockets();
+    if (allSockets.size === 1) {
+      return { event: WebSocketEvent.YOU_ARE_HOST, data: 'You are the host' };
+    }
+  }
+
+  @SubscribeMessage(WebSocketEvent.SEND_MESSAGE)
+  handleMessage(client: Socket, text: string): WsResponse<string> {
+    const message = `Client with id: ${client.id} send a message: ${text}`;
+    return { event: WebSocketEvent.RECEIVE_MESSAGE, data: message };
+  }
+
 }

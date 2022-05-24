@@ -2,8 +2,8 @@ import Button from '../Button/Button';
 import Tooltip from '../Tooltip/Tooltip';
 import { useEffect, useState } from 'react';
 import { openPasswordModal } from '../Modal/PasswordModal';
-import { socket } from '../../constants/socket';
 import WebSocketEvent from '../../constants/webSocketEvents';
+import rootStore from '../../stores/RootStore';
 
 interface Room {
   name: string;
@@ -35,7 +35,7 @@ const AvailableRooms = ({ rooms }: AvailableRoomsProps) => {
     if (selectedRoom.password) {
       openPasswordModal(selectedRoom.name);
     } else {
-      socket.emit(WebSocketEvent.JOIN_ROOM, { name: selectedRoom?.name, password: '' });
+      rootStore.websocket?.socket.emit(WebSocketEvent.JOIN_ROOM, { name: selectedRoom?.name, password: '' });
     }
     setSelectedRoom(undefined);
     const radio: HTMLInputElement | null = document.querySelector('input[type=radio]:checked');

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { socket } from '../../constants/socket';
+import rootStore from '../../stores/RootStore';
 import WebSocketEvent from '../../constants/webSocketEvents';
 let room: string;
 
@@ -23,7 +23,7 @@ export const PasswordModal: React.FC = () => {
   }, []);
 
   const handleSubmit = () => {
-    socket.emit(WebSocketEvent.JOIN_ROOM, { name: room, password: roomPassword });
+    rootStore.websocket?.socket.emit(WebSocketEvent.JOIN_ROOM, { name: room, password: roomPassword });
     setRoomPassword('');
     setModalOn(false);
   };

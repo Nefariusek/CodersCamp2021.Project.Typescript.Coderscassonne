@@ -3,7 +3,6 @@ import './Dropdown.css';
 import rootStore from '../../stores/RootStore';
 import { observer } from 'mobx-react-lite';
 import Project from '../../model/Project';
-import { placeMeeple } from '../../services/meeplePlacementPhase.functions';
 import { GamePhases } from '../NextPhaseButton/NextPhaseButton';
 
 export const DisabledInfo = () => {
@@ -24,7 +23,7 @@ export const Dropdown: FunctionComponent<DropdownProps> = observer(() => {
   const availableProjects = rootStore.projectStore.availableProjects;
   const currentPhase = rootStore.gameStore.currentPhase;
   const handleOptionClick = (project: Project) => {
-    placeMeeple(project);
+    rootStore.gameStore.placeMeeple(project);
   };
 
   return availableProjects?.length && currentPhase === GamePhases.MEEPLE_PLACEMENT ? (

@@ -16,12 +16,15 @@ export const placeMeeple = (project: Project) => {
   //   console.log('wrong game phase');
   // }
   if (project) {
+    console.log(project);
     const meeple = project.addMeeple();
     const currentContainer = rootStore.gameStore.boardState.find(
       (container) => container.tile === rootStore.gameStore.recentlyPlacedTile,
     );
     if (currentContainer) {
       currentContainer.meeple = meeple;
+      rootStore.gameStore.setNextPhase();
+      rootStore.gameStore.emitMeeplePlacementMessage(project.type, currentContainer.column, currentContainer.column);
     }
   }
 };

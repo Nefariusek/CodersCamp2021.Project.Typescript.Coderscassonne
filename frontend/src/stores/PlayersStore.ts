@@ -11,6 +11,10 @@ class PlayersStore {
     this.players = [];
     this.rootStore = rootStore;
     makeAutoObservable(this);
+    const playerOne: Player = new Player('Tic', Technologies.HTML);
+    const playerTwo: Player = new Player('Tac', Technologies.JS);
+    const playerThree: Player = new Player('Toe', Technologies.TS);
+    this.players.push(playerOne, playerTwo, playerThree);
   }
 
   addPlayer(playerName: string, technology: Technologies) {

@@ -17,6 +17,9 @@ import WebSocketEvent from '../constants/webSocketEvents';
 import WebsocketMessageParser from '../model/websocket/WebSocketMessageParser';
 import TilePlacementMessage from '../model/websocket/TilePlacementMessage';
 import MeeplePlacementMessage from '../model/websocket/MeeplePlacementMessage';
+import { openShowScoreModal } from '../components/Modal/ShowScoreModal';
+import GameModeParser from '../components/GameModeParser';
+import { JSONData } from '../mocks/mocksTiles';
 
 class GameStore {
   turnNumber: number;
@@ -139,8 +142,23 @@ class GameStore {
   }
 
   endCurrentTurn() {
+    if (this.drawPile.length === 0 && this.tileInHand === undefined && this.currentPhase === GamePhases.SCORE_PHASE) {
+      openShowScoreModal();
+    }
     this.increaseTurnNumber();
     this.recentlyPlacedTile = undefined;
+    this.tileInHand = this.drawPile.shift();
+  }
+
+  finishGame() {}
+
+  initGameStore() {
+    console.log('initGameStore');
+    this.boardState.length = 0;
+    this.boardState.push({ row: 0, column: 0, state: TileState.ACTIVE });
+    this.turnNumber = 0;
+    this.currentPhase = GamePhases.TILE_PLACEMENT;
+    this.drawPile = GameModeParser(JSONData);
     this.tileInHand = this.drawPile.shift();
   }
 }

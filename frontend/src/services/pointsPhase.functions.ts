@@ -2,7 +2,7 @@ import { GamePhases } from '../components/NextPhaseButton/NextPhaseButton';
 import Locations from '../constants/locations';
 import rootStore from '../stores/RootStore';
 
-export const evaluatePoints = () => {
+export function evaluateProjects() {
   if (rootStore.gameStore.currentPhase !== GamePhases.SCORE_PHASE) {
     console.log('wrong phase');
   }
@@ -18,7 +18,7 @@ export const evaluatePoints = () => {
     const unfinishedProjects = rootStore.projectStore.allProjects.filter((project) => !project.isFinished);
     unfinishedProjects.forEach((project) => project.scoreUnfinishedProject());
   }
-};
+}
 
 export const evaluateUnfinishedProjects = () => {
   const unfinishedProjects = rootStore.projectStore.allProjects.filter((project) => !project.isFinished);

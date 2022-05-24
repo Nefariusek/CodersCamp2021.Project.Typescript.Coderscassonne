@@ -5,16 +5,17 @@ import PlayersStore from './PlayersStore';
 import { JSONData } from '../mocks/mocksTiles';
 import GameModeParser from '../components/GameModeParser';
 import { BoardState } from '../components/GameBoard/GameBoard';
-
+import WebSocketConnection from '../model/websocket/WebSocketConnection';
 class RootStore {
   gameStore: GameStore;
   playersStore: PlayersStore;
   projectStore: ProjectStore;
+  websocket: WebSocketConnection | undefined;
   isDevelopmentMode = false;
   room: string;
 
   constructor() {
-    this.gameStore = new GameStore(this, GameModeParser(JSONData))
+    this.gameStore = new GameStore(this, GameModeParser(JSONData));
     this.playersStore = new PlayersStore(this);
     this.projectStore = new ProjectStore(this);
 

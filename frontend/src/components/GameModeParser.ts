@@ -1,3 +1,4 @@
+import _ from 'lodash';
 import Locations from '../constants/locations';
 import Tile, { Edges } from '../model/Tile';
 

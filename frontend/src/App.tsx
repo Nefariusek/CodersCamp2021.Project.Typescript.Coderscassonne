@@ -1,4 +1,4 @@
-import { FC, ReactElement, useEffect } from 'react';
+import { FC, ReactElement } from 'react';
 import { Route, Routes, useLocation } from 'react-router-dom';
 import { AppHeaderSection, Castle } from './components/Layout';
 import { WorkInProgressModal } from './components/Modal/WorkInProgressModal';
@@ -12,7 +12,6 @@ import {
   PATH_TO_CUSTOM_MODE_FORM,
   PATH_TO_ROOMS,
 } from './constants/paths';
-import WebSocketEvent from './constants/webSocketEvents';
 import CreatePlayersPage from './views/CreatePlayersPage';
 import CreditsPage from './views/CreditsPage';
 import CustomModePage from './views/CustomModePage';
@@ -21,7 +20,6 @@ import GameModePage from './views/GameModePage';
 import HomePage from './views/HomePage';
 import HowToPlayPage from './views/HowToPlayPage';
 import JoinRoomPage from './views/JoinRoomPage';
-import { socket } from './constants/socket';
 
 const paths = [
   { element: <HomePage />, url: PATH_TO_HOMEPAGE },
@@ -38,21 +36,6 @@ const pathsWithoutHeader = [PATH_TO_GAMEPAGE];
 const App: FC = (): ReactElement => {
   const { pathname } = useLocation();
   const pageValidation = pathsWithoutHeader.includes(pathname);
-
-  useEffect(() => {
-    console.log('emit');
-    socket.emit(WebSocketEvent.SEND_MEEPLE_PLACED, 'Meeple placed');
-    socket.emit(WebSocketEvent.SEND_MESSAGE, 'Hello from Client');
-  }, []);
-
-  useEffect(() => {
-    socket.on(WebSocketEvent.RECEIVE_MESSAGE, (data) => {
-      console.log(data);
-    });
-    socket.on(WebSocketEvent.RECEIVE_MEEPLE_PLACED, (data) => {
-      console.log(data);
-    });
-  }, []);
 
   return (
     <div className="h-full min-h-screen bg-DARKTHEME_BACKGROUND_COLOR ">

@@ -54,7 +54,6 @@ const GamePage: React.FunctionComponent = observer((): ReactElement => {
         className="flex justify-center items-center"
         style={{ height: gamebordLayoutProportion, maxHeight: gamebordLayoutProportion, overflow: 'auto' }}
       >
-        <ProjectList />
         <MapInteractionCSS minScale={0.5} maxScale={3}>
           <div className={`flex justify-center items-center w-screen`} style={{ height: gamebordLayoutProportion }}>
             <GameBoard />

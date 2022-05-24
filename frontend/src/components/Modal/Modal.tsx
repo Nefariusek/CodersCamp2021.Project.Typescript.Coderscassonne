@@ -11,6 +11,7 @@ export enum ModalEvents {
   SETTINGS_ON = 'settingsOn',
   SHOW_SCORE = 'showScore',
   WORK_IN_PROGRESS = 'workInProgress',
+  WAITING_FOR_PLAYERS = 'waitingForPayers',
   DEFAULT = 'default',
 }
 
@@ -21,6 +22,7 @@ const MODAL_EVENT_MESSAGES = {
   [ModalEvents.SETTINGS_ON]: ['Settings', 'Close'],
   [ModalEvents.SHOW_SCORE]: ['Game score', 'Close'],
   [ModalEvents.WORK_IN_PROGRESS]: ['Work in progress', 'Cancel'],
+  [ModalEvents.WAITING_FOR_PLAYERS]: ['Waiting for other players..', 'Close'],
   [ModalEvents.DEFAULT]: ['', 'Cancel'],
 };
 

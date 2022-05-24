@@ -44,9 +44,9 @@ export const Modal = observer((props: ModalProps): React.ReactElement => {
   const closeText = MODAL_EVENT_MESSAGES[eventType][1];
 
   const handleClose = () => {
-    if (eventType === ModalEvents.END_GAME || ModalEvents.SHOW_SCORE) {
+    if (eventType === ModalEvents.END_GAME || eventType === ModalEvents.SHOW_SCORE) {
       navigate(PATH_TO_HOMEPAGE);
-      localStorage.clear();
+      setModalOn(false);
     } else {
       setModalOn(false);
     }

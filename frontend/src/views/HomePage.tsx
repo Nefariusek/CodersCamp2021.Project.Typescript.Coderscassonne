@@ -23,7 +23,8 @@ import startGameWithTilesRetrieval from '../service/startGameWithTilesRetrieval'
 const HomePage: React.FunctionComponent = observer((): ReactElement => {
   const navigate = useNavigate();
   const views: { name: string; url: string }[] = [
-    { name: 'Play game', url: PATH_TO_CREATE_PLAYERS },
+    { name: 'Play Local Game', url: PATH_TO_CREATE_PLAYERS },
+    { name: 'Play Multiplayer', url: PATH_TO_ROOMS },
     { name: 'Scoreboard', url: 'Scoreboard modal' },
     { name: 'How to play', url: PATH_TO_HOWTOPLAYPAGE },
     { name: 'Credits', url: PATH_TO_CREDITS },

@@ -1,7 +1,6 @@
 import { makeAutoObservable } from 'mobx';
 import Technologies from '../constants/technologies';
 import Player from '../model/Player';
-import { initDevelopmentPreset } from '../views/HomePage';
 import { RootStore } from './RootStore';
 
 class PlayersStore {

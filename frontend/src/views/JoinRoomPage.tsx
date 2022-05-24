@@ -3,7 +3,6 @@ import { useEffect, useState } from 'react';
 
 import CreateRoom from '../components/Rooms/CreateRoom';
 import { PasswordModal } from '../components/Modal/PasswordModal';
-import { socket } from '../constants/socket';
 import { useNavigate } from 'react-router-dom';
 import { PATH_TO_CREATE_PLAYERS } from '../constants/paths';
 import WebSocketEvent from '../constants/webSocketEvents';

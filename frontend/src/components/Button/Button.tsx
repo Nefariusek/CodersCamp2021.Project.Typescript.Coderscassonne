@@ -16,7 +16,7 @@ const Button = ({
   disabled = false,
 }: ButtonProps): ReactElement => {
   const commonClassName =
-    'border border-DARKTHEME_LIGHT_GREEN_COLOR font-ALMENDRA font-bold sm:text-3xl sm:w-60 sm:py-2 sm:px-4 sm:my-2 text-2xl w-40 py-1 px-2 my-1 select-none';
+    'border border-DARKTHEME_LIGHT_GREEN_COLOR font-ALMENDRA font-bold text-2xl sm:w-60 sm:py-2 sm:px-4 sm:my-2 w-40 py-1 px-2 my-1 select-none';
   const darkVariant = `bg-DARKTHEME_BACKGROUND_COLOR hover:bg-DARKTHEME_DARK_GREEN_COLOR text-DARKTHEME_LIGHT_GREEN_COLOR ${commonClassName}`;
   const lightVariant = `bg-DARKTHEME_LIGHT_GREEN_COLOR hover:bg-opacity-90 text-DARKTHEME_BACKGROUND_COLOR ${commonClassName}`;
 

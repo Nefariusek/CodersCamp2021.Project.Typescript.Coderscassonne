@@ -15,7 +15,7 @@ import GameMode from '../model/GameMode';
 const HomePage: React.FunctionComponent = observer((): ReactElement => {
   const navigate = useNavigate();
   const views: { name: string; url: string }[] = [
-    { name: 'Play Local game', url: PATH_TO_CREATE_PLAYERS },
+    { name: 'Play Local Game', url: PATH_TO_CREATE_PLAYERS },
     { name: 'Play Mutliplayer', url: PATH_TO_CREATE_PLAYERS },
     { name: 'Scoreboard', url: 'TODO' },
     { name: 'How to play', url: PATH_TO_HOWTOPLAYPAGE },

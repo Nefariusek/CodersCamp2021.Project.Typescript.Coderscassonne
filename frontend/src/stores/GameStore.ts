@@ -14,7 +14,6 @@ import { JSONData } from '../mocks/mocksTiles';
 import Tile, { Rotation } from '../model/Tile';
 import rootStore from './RootStore';
 
-// import { socket } from '../App';
 import WebSocketEvent from '../constants/webSocketEvents';
 import WebsocketMessageParser from '../model/websocket/WebSocketMessageParser';
 import TilePlacementMessage from '../model/websocket/TilePlacementMessage';
@@ -59,7 +58,6 @@ class GameStore {
           this.drawPile.splice(indexOfTileInHand, 1);
         }
 
-        this.tileInHand = undefined;
         if (this.boardState.length > 9) {
           !!rootStore.websocket && !fromWebsocket && this.setNextPhase();
         }

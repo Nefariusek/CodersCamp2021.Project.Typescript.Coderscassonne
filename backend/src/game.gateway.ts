@@ -1,14 +1,13 @@
 import {
-  SubscribeMessage,
-  WebSocketGateway,
-  OnGatewayInit,
   OnGatewayConnection,
   OnGatewayDisconnect,
+  OnGatewayInit,
+  SubscribeMessage,
+  WebSocketGateway,
   WsResponse,
   WebSocketServer,
 } from '@nestjs/websockets';
-
-import { Socket, Server } from 'socket.io';
+import { Server, Socket } from 'socket.io';
 import { MassageHandler } from './app.messagehandler.service';
 import WebSocketEvent from './constants/webSocketEvents';
 
@@ -62,4 +61,5 @@ export class GameGateway
     const message = `Client with id: ${client.id} send a message: ${text}`;
     return { event: WebSocketEvent.RECEIVE_MESSAGE, data: message };
   }
+
 }

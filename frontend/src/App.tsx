@@ -1,9 +1,10 @@
 import { FC, ReactElement } from 'react';
 import { Route, Routes, useLocation } from 'react-router-dom';
 import { AppHeaderSection, Castle } from './components/Layout';
+import { WorkInProgressModal } from './components/Modal/WorkInProgressModal';
 import {
-  PATH_TO_CREDITS,
   PATH_TO_CREATE_PLAYERS,
+  PATH_TO_CREDITS,
   PATH_TO_GAMEPAGE,
   PATH_TO_HOMEPAGE,
   PATH_TO_HOWTOPLAYPAGE,
@@ -11,6 +12,7 @@ import {
   PATH_TO_CUSTOM_MODE_FORM,
   PATH_TO_ROOMS,
 } from './constants/paths';
+import WebSocketEvent from './constants/webSocketEvents';
 import CreatePlayersPage from './views/CreatePlayersPage';
 import CreditsPage from './views/CreditsPage';
 import CustomModePage from './views/CustomModePage';
@@ -18,7 +20,6 @@ import GamePage from './views/Game';
 import GameModePage from './views/GameModePage';
 import HomePage from './views/HomePage';
 import HowToPlayPage from './views/HowToPlayPage';
-import { WorkInProgressModal } from './components/Modal/WorkInProgressModal';
 import JoinRoomPage from './views/JoinRoomPage';
 
 const paths = [

@@ -17,6 +17,7 @@ import rootStore, { RootStore } from './RootStore';
 import WebSocketEvent from '../constants/webSocketEvents';
 import WebsocketMessageParser from '../model/websocket/WebSocketMessageParser';
 import TilePlacementMessage from '../model/websocket/TilePlacementMessage';
+import meeplePlacementMessage from '../model/websocket/MeeplePlacementMessage';
 
 class GameStore {
   turnNumber: number;
@@ -96,6 +97,19 @@ class GameStore {
 
   setRotationFromWebSocket(rotation: Rotation) {
     this.tileInHand?.setRotation(rotation);
+  }
+
+  emitMeeplePlacementMessage(id: string, row: number, column: number) {
+    const websocketMessageParser = new WebsocketMessageParser();
+    const meeplePlacementMessage = new TilePlacementMessage('');
+    meeplePlacementMessage.id = id;
+    meeplePlacementMessage.row = row;
+    meeplePlacementMessage.column = column;
+
+    if (!!rootStore.websocket)
+      rootStore.websocket.emitMeeplPlaced(
+        websocketMessageParser.parse(meeplePlacementMessage, WebSocketEvent.SEND_MEEPLE_PLACED),
+      );
   }
 
   setNextPhase(fromWebsocket: boolean = false) {

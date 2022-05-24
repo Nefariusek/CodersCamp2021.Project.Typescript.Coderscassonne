@@ -1,26 +1,18 @@
 import { Injectable } from '@nestjs/common';
-// import {
-  // defaultMessage,
-  // defaultMessageToCLient,
-  // meeplePlacementEvent,
-  // meeplePlacementReceive,
-// } from './constants';
 import WebSocketEvent from './constants/webSocketEvents';
-
 @Injectable()
 export class MassageHandler {
   public messageType: string;
   private readonly clientId: any;
-  public message: string;
+  public message: any;
 
   createMessage(clientId: any, text: string) {
-    console.log(this.messageType);
     switch (this.messageType) {
       case WebSocketEvent.SEND_MEEPLE_PLACED: {
-        this.message = `Client with id: ${clientId} put a meeple: ${text}`;
+        this.message = { client: clientId, text: text };
       }
       case WebSocketEvent.SEND_MESSAGE: {
-        this.message = `${clientId} sent a message: ${text}`;
+        this.message = { client: clientId, text: text };
       }
     }
   }

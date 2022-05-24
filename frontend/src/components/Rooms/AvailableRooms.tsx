@@ -30,7 +30,6 @@ const AvailableRooms = ({ rooms }: AvailableRoomsProps) => {
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log(selectedRoom);
     if (!selectedRoom) return;
     if (selectedRoom.password) {
       openPasswordModal(selectedRoom.name);

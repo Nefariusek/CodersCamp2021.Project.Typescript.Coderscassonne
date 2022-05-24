@@ -44,6 +44,8 @@ enum WebSocketEvent {
 
   GET_TECH = 'getTechnologies',
   SEND_TECH = 'sendTechnologies',
+
+  CHANGE_ORDER = 'changeOrder',
 }
 
 export default WebSocketEvent;

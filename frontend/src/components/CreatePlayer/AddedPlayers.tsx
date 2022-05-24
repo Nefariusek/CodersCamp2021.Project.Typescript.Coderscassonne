@@ -18,7 +18,14 @@ interface AddedPlayersItemProps {
 
 const AddedPlayersItem = observer(({ player, number, last }: AddedPlayersItemProps) => {
   const playerImage = `./Elements/Meeple/${player.technology}_meeple.png`;
-  const changeOrderOfPlayers = (num: number) => rootStore.playersStore.changeOrderOfPlayers(num);
+  const changeOrderOfPlayers = (num: number) => {
+    if (rootStore.room) {
+      rootStore.websocket?.emitChangeOrderOfPlayers(num);
+      console.log('emituje!');
+    } else {
+      rootStore.playersStore.changeOrderOfPlayers(num);
+    }
+  };
 
   return (
     <div className="flex items-center justify-between w-80">
@@ -71,7 +78,7 @@ const AddedPlayers = observer(({ players }: AddedPlayersProps) => {
           <AddedPlayersItem key={player.name} player={player} number={i + 1} last={i + 1 === players.length} />
         ))}
       </div>
-      {players.length > 1 ? (
+      {players.length > 1 && (!rootStore.room || rootStore.clientName) ? (
         <div className="m-10">
           <Button text="Continue" onClick={handleContinueButton} colorVariant="light" />
         </div>

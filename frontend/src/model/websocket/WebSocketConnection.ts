@@ -51,4 +51,7 @@ export default class WebSocketConnection {
   public emitContinue() {
     this.socket.emit(WebSocketEvent.CONTINUE, rootStore.room);
   }
+  public emitChangeOrderOfPlayers(number: number) {
+    this.socket.emit(WebSocketEvent.CHANGE_ORDER, { room: rootStore.room, player: number });
+  }
 }

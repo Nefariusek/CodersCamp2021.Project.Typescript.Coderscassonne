@@ -48,13 +48,12 @@ const CreatePlayer = observer(
         //rootStore.playersStore.addPlayer(playerName, playerMeeple);
 
         setAvailableTechnologies([]);
+        rootStore.clientName = playerName;
         rootStore.websocket?.emitCreatePlayer(playerName, playerMeeple);
-        console.log('jeden');
       } else {
         rootStore.playersStore.addPlayer(playerName, playerMeeple);
         setAvailableTechnologies(availableTechnologies.filter((tech) => tech !== playerMeeple));
       }
-      console.log('dwa');
       setPlayerName('');
       const radio: HTMLInputElement | null = document.querySelector('input[type=radio]:checked');
       if (radio) {

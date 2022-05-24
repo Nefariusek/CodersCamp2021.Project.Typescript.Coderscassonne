@@ -89,4 +89,21 @@ export class PlayerGateway {
       this.wss.to(room).emit(WebSocketEvent.READY);
     }
   }
+
+  @SubscribeMessage(WebSocketEvent.CHANGE_ORDER)
+  handleChangeOrder(client: Socket, rec: { room: string; player: number }) {
+    [
+      playersInRooms.find((r) => r.room === rec.room).players[rec.player - 1],
+      playersInRooms.find((r) => r.room === rec.room).players[rec.player],
+    ] = [
+      playersInRooms.find((r) => r.room === rec.room).players[rec.player],
+      playersInRooms.find((r) => r.room === rec.room).players[rec.player - 1],
+    ];
+    this.wss
+      .to(rec.room)
+      .emit(
+        WebSocketEvent.SEND_PLAYERS,
+        playersInRooms.find((r) => r.room === rec.room).players,
+      );
+  }
 }

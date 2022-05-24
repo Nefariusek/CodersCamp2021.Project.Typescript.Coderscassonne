@@ -27,33 +27,28 @@ const CreatePlayersPage = observer(() => {
   useEffect(() => {
     rootStore.websocket?.emitGetPlayers();
     rootStore.websocket?.emitGetTechnologies();
-    console.log('pierwszy');
   }, []);
 
   useEffect(() => {
     setErrorMessage('');
     rootStore.websocket?.socket.on(WebSocketEvent.SEND_PLAYERS, (data) => {
       if (data) {
-        setPlayers(
-          data.map((p: { playerName: string; playerMeeple: Technologies }) => new Player(p.playerName, p.playerMeeple)),
+        rootStore.playersStore.players = data.map(
+          (p: { playerName: string; playerMeeple: Technologies }) => new Player(p.playerName, p.playerMeeple),
         );
-        rootStore.playersStore.players = players;
+        setPlayers(rootStore.playersStore.players);
       }
     });
     rootStore.websocket?.socket.on(WebSocketEvent.SEND_TECH, (data) => {
-      console.log(data);
-      console.log(availableTechnologies.indexOf('TS' as Technologies));
       if (data) {
         let tmp = availableTechnologies;
         data.forEach((tech: Technologies) => {
-          console.log(availableTechnologies.indexOf(tech as Technologies));
           tmp = tmp.filter((t) => t !== tech);
-          console.log(tmp);
         });
-        console.log(tmp);
         setAvailableTechnologies(tmp);
       }
     });
+
     rootStore.websocket?.socket.on(WebSocketEvent.READY, () => {
       rootStore.playersStore.players = players;
       navigate(PATH_TO_GAME_MODE_PAGE);

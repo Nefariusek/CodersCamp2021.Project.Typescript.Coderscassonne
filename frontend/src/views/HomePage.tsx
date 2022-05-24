@@ -56,7 +56,7 @@ const HomePage: React.FunctionComponent = observer((): ReactElement => {
   );
 });
 
-function initDevelopmentPreset() {
+export function initDevelopmentPreset() {
   const playerOne: Player = new Player('Tic', Technologies.HTML);
   const playerTwo: Player = new Player('Tac', Technologies.JS);
   const playerThree: Player = new Player('Toe', Technologies.TS);

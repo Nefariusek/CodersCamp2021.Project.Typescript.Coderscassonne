@@ -15,11 +15,11 @@ export enum ModalEvents {
 }
 
 const MODAL_EVENT_MESSAGES = {
-  [ModalEvents.END_GAME]: ['End of the game!', 'Play new game'],
-  [ModalEvents.END_TURN]: ["It's the end of your turn!", 'Play new game'],
+  [ModalEvents.END_GAME]: ['End of the game!', 'Main menu'],
+  [ModalEvents.END_TURN]: ["It's the end of your turn!", 'OK'],
   [ModalEvents.INVALID_MOVE]: ["Sorry, this tile can't be placed here!", 'Cancel'],
   [ModalEvents.SETTINGS_ON]: ['Settings', 'Close'],
-  [ModalEvents.SHOW_SCORE]: ['Game scores', 'Close'],
+  [ModalEvents.SHOW_SCORE]: ['Game scores', 'Main menu'],
   [ModalEvents.WORK_IN_PROGRESS]: ['Work in progress', 'Cancel'],
   [ModalEvents.DEFAULT]: ['', 'Cancel'],
 };
@@ -44,7 +44,7 @@ export const Modal = observer((props: ModalProps): React.ReactElement => {
   const closeText = MODAL_EVENT_MESSAGES[eventType][1];
 
   const handleClose = () => {
-    if (eventType === ModalEvents.END_GAME) {
+    if (eventType === ModalEvents.END_GAME || ModalEvents.SHOW_SCORE) {
       navigate(PATH_TO_HOMEPAGE);
       localStorage.clear();
     } else {

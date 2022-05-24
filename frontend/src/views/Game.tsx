@@ -11,12 +11,12 @@ import { GAMEBOARD_LAYOUT_PROPORTION } from '../constants/gameDefaults';
 import { MENU_TITLE_SOURCE } from '../constants/layoutElements';
 import { Link } from 'react-router-dom';
 import { PATH_TO_HOMEPAGE } from '../constants/paths';
-import { openShowScoreModal, ShowScoreModal } from '../components/Modal/ShowScoreModal';
+import { ShowScoreModal } from '../components/Modal/ShowScoreModal';
 import { InvalidMoveModal } from '../components/Modal/InvalidMoveModal';
 import { EndTurnModal } from '../components/Modal/EndTurnModal';
 import rootStore from '../stores/RootStore';
 import { observer } from 'mobx-react';
-import NextPhaseButton, { GamePhases } from '../components/NextPhaseButton/NextPhaseButton';
+import NextPhaseButton from '../components/NextPhaseButton/NextPhaseButton';
 import ProjectList from '../components/ProjectList/ProjectList';
 
 const GamePage: React.FunctionComponent = observer((): ReactElement => {

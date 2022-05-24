@@ -8,7 +8,7 @@ import WebSocketEvent from './constants/webSocketEvents';
 
 import { Server, Socket } from 'socket.io';
 
-const rooms = [];
+export const rooms = [];
 
 @WebSocketGateway(5001, { cors: true })
 export class RoomGateway {
@@ -31,8 +31,16 @@ export class RoomGateway {
   ) {
     if (!rooms.some((r) => r.room === room.name)) {
       rooms.push({ room: room.name, password: room.password, players: 0 });
+      client.broadcast.emit(
+        WebSocketEvent.SEND_ROOMS,
+        rooms
+          .filter((r) => r.players < 5)
+          .map((r) => {
+            return { name: r.room, password: !!r.password, players: r.players };
+          }),
+      );
     } else {
-      client.emit(
+      this.wss.emit(
         WebSocketEvent.CREATE_ROOM_ERROR,
         `Room ${room.name} already exists!`,
       );
@@ -52,6 +60,18 @@ export class RoomGateway {
         rooms.find((r) => r.room === room.name).players++;
         client.emit(WebSocketEvent.JOINED_ROOM, room.name);
         console.log(`client: ${client.id} joins room: ${room.name}`);
+        client.broadcast.emit(
+          WebSocketEvent.SEND_ROOMS,
+          rooms
+            .filter((r) => r.players < 5)
+            .map((r) => {
+              return {
+                name: r.room,
+                password: !!r.password,
+                players: r.players,
+              };
+            }),
+        );
       } else {
         client.emit(
           WebSocketEvent.JOIN_ROOM_ERROR,
@@ -68,6 +88,14 @@ export class RoomGateway {
     client.leave(room);
     rooms.find((r) => r.room === room).players--;
     client.emit(WebSocketEvent.LEFT_ROOM, room);
+    client.broadcast.emit(
+      WebSocketEvent.SEND_ROOMS,
+      rooms
+        .filter((r) => r.players < 5)
+        .map((r) => {
+          return { name: r.room, password: !!r.password, players: r.players };
+        }),
+    );
   }
 
   @SubscribeMessage(WebSocketEvent.GET_ROOMS)

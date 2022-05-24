@@ -32,7 +32,10 @@ const GamePage: React.FunctionComponent = observer((): ReactElement => {
   }
 
   return (
-    <div style={{ height: '97vh' }}>
+    <div
+      className={rootStore.room && !rootStore.playersStore.isMyTurn() ? 'pointer-events-none' : ''}
+      style={{ height: '97vh' }}
+    >
       <div
         className="flex justify-between items-center z-0 border-b-2 border-DARKTHEME_LIGHT_GREEN_COLOR"
         style={{ height: playersInfoLayoutProportion, maxHeight: playersInfoLayoutProportion, minHeight: '128px' }}

@@ -32,6 +32,20 @@ enum WebSocketEvent {
 
   GET_ROOMS = 'getRooms',
   SEND_ROOMS = 'availableRooms',
+
+  GET_PLAYERS = 'getPlayers',
+  SEND_PLAYERS = 'sendPlayers',
+
+  CREATE_PLAYER = 'createPlayer',
+  CREATE_PLAYER_ERROR = 'createPlayerError',
+
+  READY = 'ready',
+  CONTINUE = 'continue',
+
+  GET_TECH = 'getTechnologies',
+  SEND_TECH = 'sendTechnologies',
+
+  CHANGE_ORDER = 'changeOrder',
 }
 
 export default WebSocketEvent;

@@ -29,6 +29,11 @@ class PlayersStore {
       (_player, index) => index === (this.rootStore.gameStore.turnNumber - 1) % this.players.length,
     );
   }
+  isMyTurn() {
+    console.log(this.getCurrentPlayer()?.name);
+    console.log(this.rootStore.clientName);
+    return this.getCurrentPlayer()?.name === this.rootStore.clientName;
+  }
 }
 
 export default PlayersStore;

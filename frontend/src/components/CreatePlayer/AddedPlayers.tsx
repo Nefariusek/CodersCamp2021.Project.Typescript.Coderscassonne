@@ -4,6 +4,8 @@ import { useNavigate } from 'react-router-dom';
 import { PATH_TO_GAME_MODE_PAGE } from '../../constants/paths';
 import { observer } from 'mobx-react';
 import rootStore from '../../stores/RootStore';
+import { openModal } from '../Modal/Modal';
+
 interface AddedPlayersProps {
   players: Player[];
 }
@@ -16,7 +18,13 @@ interface AddedPlayersItemProps {
 
 const AddedPlayersItem = observer(({ player, number, last }: AddedPlayersItemProps) => {
   const playerImage = `./Elements/Meeple/${player.technology}_meeple.png`;
-  const changeOrderOfPlayers = (num: number) => rootStore.playersStore.changeOrderOfPlayers(num);
+  const changeOrderOfPlayers = (num: number) => {
+    if (rootStore.room) {
+      rootStore.websocket?.emitChangeOrderOfPlayers(num);
+    } else {
+      rootStore.playersStore.changeOrderOfPlayers(num);
+    }
+  };
 
   return (
     <div className="flex items-center justify-between w-80">
@@ -54,7 +62,12 @@ const AddedPlayersItem = observer(({ player, number, last }: AddedPlayersItemPro
 const AddedPlayers = observer(({ players }: AddedPlayersProps) => {
   const navigate = useNavigate();
   const handleContinueButton = () => {
-    navigate(PATH_TO_GAME_MODE_PAGE);
+    if (rootStore.room) {
+      openModal('waitingForPayers');
+      rootStore.websocket?.emitContinue();
+    } else {
+      navigate(PATH_TO_GAME_MODE_PAGE);
+    }
   };
   return (
     <div className="flex flex-col items-center justify-between w-96 h-[580px] bg-DARKTHEME_BACKGROUND_COLOR border-4 border-DARKTHEME_LIGHT_GREEN_COLOR">
@@ -64,7 +77,7 @@ const AddedPlayers = observer(({ players }: AddedPlayersProps) => {
           <AddedPlayersItem key={player.name} player={player} number={i + 1} last={i + 1 === players.length} />
         ))}
       </div>
-      {players.length > 1 ? (
+      {players.length > 1 && (!rootStore.room || rootStore.clientName) ? (
         <div className="m-10">
           <Button text="Continue" onClick={handleContinueButton} colorVariant="light" />
         </div>

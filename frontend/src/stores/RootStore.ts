@@ -13,6 +13,7 @@ class RootStore {
   websocket: WebSocketConnection | undefined;
   isDevelopmentMode = false;
   room: string;
+  clientName: string;
 
   constructor() {
     this.gameStore = new GameStore(this, GameModeParser(JSONData));

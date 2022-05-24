@@ -16,7 +16,7 @@ export class GameGateway
   implements OnGatewayInit, OnGatewayConnection, OnGatewayDisconnect
 {
   @WebSocketServer()
-  server: Server;
+  wss: Server;
 
   afterInit(server: Server) {
     console.log('initialized...');
@@ -50,7 +50,7 @@ export class GameGateway
 
   @SubscribeMessage(WebSocketEvent.CLIENT_JOINED)
   async handleClientJoined(): Promise<WsResponse<string>> {
-    const allSockets = await this.server.allSockets();
+    const allSockets = await this.wss.allSockets();
     if (allSockets.size === 1) {
       return { event: WebSocketEvent.YOU_ARE_HOST, data: 'You are the host' };
     }

@@ -11,7 +11,7 @@ interface PlayersInfoItemProps {
   isCurrent: boolean;
 }
 
-const PlayersInfoItem = ({ player, isCurrent }: PlayersInfoItemProps) => {
+const PlayersInfoItem = observer(({ player, isCurrent }: PlayersInfoItemProps) => {
   const playerImage = `./Elements/Meeple/${player.technology}_meeple.png`;
 
   return (
@@ -40,7 +40,7 @@ const PlayersInfoItem = ({ player, isCurrent }: PlayersInfoItemProps) => {
       )}
     </>
   );
-};
+});
 
 const PlayersInfo = observer(({ players }: PlayersInfoProps) => {
   const turnNumber = rootStore.gameStore.turnNumber;

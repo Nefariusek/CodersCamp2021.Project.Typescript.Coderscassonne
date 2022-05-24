@@ -8,8 +8,9 @@ import { useNavigate } from 'react-router-dom';
 import GameMode from '../model/GameMode';
 
 const classicModeText = 'Take your time! Turns are long!';
-const fastModeText = 'Think quickly! Short turns and small board';
-const customModeText = 'Make your own custom game mode!';
+// IN PROGRESS
+//const fastModeText = 'Think quickly! Short turns and small board';
+//const customModeText = 'Make your own custom game mode!';
 
 interface GameModeContainerProps {
   gameMode: 'Classic' | 'Fast' | 'Custom';
@@ -70,8 +71,10 @@ const GameModePage: FC = (): ReactElement => (
   <div className="flex-col justify-center bg-DARKTHEME_BACKGROUND_COLOR w-full">
     <div className="flex justify-around pt-[150px] pb-[20px] whitespace-pre-line">
       <GameModeContainer gameMode="Classic" infoText={classicModeText} />
+      {/* WORK IN PROGRESS 
+      
       <GameModeContainer gameMode="Fast" infoText={fastModeText} />
-      <GameModeContainer gameMode="Custom" infoText={customModeText} />
+      <GameModeContainer gameMode="Custom" infoText={customModeText} /> */}
     </div>
     <SettingsModal />
   </div>

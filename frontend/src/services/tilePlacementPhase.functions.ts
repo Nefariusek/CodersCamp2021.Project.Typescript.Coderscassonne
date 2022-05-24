@@ -6,6 +6,7 @@ import rootStore, { boardState } from '../stores/RootStore';
 import Project from '../model/Project';
 import TileState from '../constants/tileState';
 import { BoardState } from '../components/GameBoard/GameBoard';
+import Meeple from '../model/Meeple';
 
 export const manageProjects = (row: number, column: number) => {
   const existingLocations: Locations[] = [Locations.FIELD];
@@ -90,9 +91,10 @@ function mergeProjects() {
 
 function createMergedProject(type: Locations, projects: Project[]) {
   const joinedProjectOfType = rootStore.projectStore.addNewProject(type);
-  const { tilesToMerge, openEdgesToMerge, closedEdgesToMerge } = getFieldsToMerge(type, projects);
+  const { tilesToMerge, openEdgesToMerge, closedEdgesToMerge, meeplesToMerge } = getFieldsToMerge(type, projects);
 
   joinedProjectOfType.tiles.push(...tilesToMerge);
+  joinedProjectOfType.meeples.push(...meeplesToMerge);
 
   if (type === Locations.CITY) {
     joinedProjectOfType.openEdgesSet = openEdgesToMerge;
@@ -103,6 +105,7 @@ function createMergedProject(type: Locations, projects: Project[]) {
 function getFieldsToMerge(type: Locations, projects: Project[]) {
   const projectsOfType = getProjectsOfType(type, projects);
   const arrayOfTiles: Tile[] = [];
+  const meeples: Meeple[] = [];
   const openEdges: string[] = [];
   const closedEdges: string[] = [];
 
@@ -110,13 +113,15 @@ function getFieldsToMerge(type: Locations, projects: Project[]) {
     arrayOfTiles.push(...project.tiles);
     openEdges.push(...project.openEdgesSet);
     closedEdges.push(...project.closedEdgesSet);
+    meeples.push(...project.meeples);
   });
 
   const tilesToMerge = new Set<Tile>(arrayOfTiles).values();
   const openEdgesToMerge = new Set<string>(openEdges);
   const closedEdgesToMerge = new Set<string>(closedEdges);
+  const meeplesToMerge = new Set<Meeple>(meeples).values();
 
-  return { tilesToMerge, openEdgesToMerge, closedEdgesToMerge };
+  return { tilesToMerge, openEdgesToMerge, closedEdgesToMerge, meeplesToMerge };
 }
 
 function getProjectsOfType(type: Locations, projects: Project[]) {

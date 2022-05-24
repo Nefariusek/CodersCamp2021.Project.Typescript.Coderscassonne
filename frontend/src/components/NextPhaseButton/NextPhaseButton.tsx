@@ -34,7 +34,7 @@ export const NextPhaseButton = observer(() => {
           ))}
         </div>
       </div>
-      <Dropdown />
+      {currentPhase === GamePhases.MEEPLE_PLACEMENT ? <Dropdown /> : <></>}
     </div>
   );
 });

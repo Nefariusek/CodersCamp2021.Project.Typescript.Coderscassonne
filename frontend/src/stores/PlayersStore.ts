@@ -30,6 +30,8 @@ class PlayersStore {
     );
   }
   isMyTurn() {
+    console.log(this.getCurrentPlayer()?.name);
+    console.log(this.rootStore.clientName);
     return this.getCurrentPlayer()?.name === this.rootStore.clientName;
   }
 }

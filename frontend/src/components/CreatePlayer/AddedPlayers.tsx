@@ -21,7 +21,6 @@ const AddedPlayersItem = observer(({ player, number, last }: AddedPlayersItemPro
   const changeOrderOfPlayers = (num: number) => {
     if (rootStore.room) {
       rootStore.websocket?.emitChangeOrderOfPlayers(num);
-      console.log('emituje!');
     } else {
       rootStore.playersStore.changeOrderOfPlayers(num);
     }

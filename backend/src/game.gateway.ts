@@ -36,7 +36,7 @@ export class GameGateway
     rec: { room: string; nextPhase: boolean },
   ): void {
     const message = { nextPhase: rec.nextPhase, clientId: client.id };
-    this.wss.to(rec.room).emit(WebSocketEvent.RECEIVE_NEXT_PHASE, message);
+    client.to(rec.room).emit(WebSocketEvent.RECEIVE_NEXT_PHASE, message);
   }
 
   @SubscribeMessage(WebSocketEvent.SEND_MEEPLE_PLACED)
@@ -45,7 +45,7 @@ export class GameGateway
     msgHandler.messageType = WebSocketEvent.SEND_MEEPLE_PLACED;
     msgHandler.createMessage(client.id, rec.text);
     const { event, data } = msgHandler.sendMassage();
-    this.wss.to(rec.room).emit(event, data);
+    client.to(rec.room).emit(event, data);
   }
 
   @SubscribeMessage(WebSocketEvent.CLIENT_JOINED)

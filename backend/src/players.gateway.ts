@@ -87,6 +87,7 @@ export class PlayerGateway {
       rooms.find((r) => r.room === room).players > 1
     ) {
       this.wss.to(room).emit(WebSocketEvent.READY);
+      rooms.find((r) => r.room === room).players = 10;
     }
   }
 

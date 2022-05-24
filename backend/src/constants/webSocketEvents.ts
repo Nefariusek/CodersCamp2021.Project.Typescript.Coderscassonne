@@ -18,7 +18,17 @@ enum WebSocketEvent {
   RECEIVE_MESSAGE = 'receiveMessage',
 
   CREATE_ROOM = 'createRoom',
+  CREATE_ROOM_ERROR = 'createRoomError',
+
+  JOIN_ROOM = 'joinRoom',
   JOINED_ROOM = 'joinedRoom',
+  JOIN_ROOM_ERROR = 'joinRoomError',
+
+  LEAVE_ROOM = 'leaveRoom',
+  LEFT_ROOM = 'leftRoom',
+
+  GET_ROOMS = 'getRooms',
+  SEND_ROOMS = 'availableRooms',
 }
 
 export default WebSocketEvent;

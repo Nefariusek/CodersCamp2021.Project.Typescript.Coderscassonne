@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 
 import { Rotation } from '../../model/Tile';
 import rootStore from '../../stores/RootStore';
-import { socket } from '../../App';
+import { socket } from '../../constants/socket';
 import WebSocketEvent from '../../constants/webSocketEvents';
 import WebsocketMessageParser from '../../model/websocket/WebSocketMessageParser';
 

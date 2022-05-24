@@ -1,16 +1,16 @@
 import { FC, ReactElement, useEffect } from 'react';
 import { Route, Routes, useLocation } from 'react-router-dom';
-import io from 'socket.io-client';
 import { AppHeaderSection, Castle } from './components/Layout';
 import { WorkInProgressModal } from './components/Modal/WorkInProgressModal';
 import {
   PATH_TO_CREATE_PLAYERS,
   PATH_TO_CREDITS,
-  PATH_TO_CUSTOM_MODE_FORM,
   PATH_TO_GAMEPAGE,
-  PATH_TO_GAME_MODE_PAGE,
   PATH_TO_HOMEPAGE,
   PATH_TO_HOWTOPLAYPAGE,
+  PATH_TO_GAME_MODE_PAGE,
+  PATH_TO_CUSTOM_MODE_FORM,
+  PATH_TO_ROOMS,
 } from './constants/paths';
 import WebSocketEvent from './constants/webSocketEvents';
 import CreatePlayersPage from './views/CreatePlayersPage';
@@ -20,6 +20,9 @@ import GamePage from './views/Game';
 import GameModePage from './views/GameModePage';
 import HomePage from './views/HomePage';
 import HowToPlayPage from './views/HowToPlayPage';
+import { WorkInProgressModal } from './components/Modal/WorkInProgressModal';
+import JoinRoomPage from './views/JoinRoomPage';
+import { socket } from './constants/socket';
 
 export const socket = io('http://localhost:5001');
 
@@ -31,6 +34,7 @@ const paths = [
   { element: <CreditsPage />, url: PATH_TO_CREDITS },
   { element: <GameModePage />, url: PATH_TO_GAME_MODE_PAGE },
   { element: <CustomModePage />, url: PATH_TO_CUSTOM_MODE_FORM },
+  { element: <JoinRoomPage />, url: PATH_TO_ROOMS },
 ];
 const pathsWithoutHeader = [PATH_TO_GAMEPAGE];
 

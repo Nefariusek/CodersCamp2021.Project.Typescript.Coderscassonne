@@ -8,9 +8,10 @@ class RootStore {
   playersStore: PlayersStore;
   projectStore: ProjectStore;
   isDevelopmentMode = false;
+  room: string;
 
   constructor() {
-    this.gameStore = new GameStore();
+    this.gameStore = new GameStore(this);
     this.playersStore = new PlayersStore(this);
     this.projectStore = new ProjectStore(this);
 
@@ -19,6 +20,10 @@ class RootStore {
 
   setIsDevelopmentMode() {
     this.isDevelopmentMode = !this.isDevelopmentMode;
+  }
+
+  setRoom(roomName: string) {
+    this.room = roomName;
   }
 }
 

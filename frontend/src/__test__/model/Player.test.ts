@@ -61,7 +61,7 @@ describe('Player model', () => {
       testPlayer.getMeeple();
     }
     const meeple = testPlayer.getMeeple();
-    expect(meeple).toBeNull();
+    expect(meeple).toBeUndefined();
     expect(testPlayer.getMeepleCount()).toBe(0);
   });
 

@@ -4,7 +4,7 @@ import { openWorkInProgressModal } from '../components/Modal/WorkInProgressModal
 import { SettingsModal } from '../components/Modal/SettingsModal';
 import Button from '../components/Button/Button';
 
-import { PATH_TO_CREDITS, PATH_TO_HOWTOPLAYPAGE, PATH_TO_CREATE_PLAYERS, PATH_TO_GAMEPAGE } from '../constants/paths';
+import { PATH_TO_CREDITS, PATH_TO_HOWTOPLAYPAGE, PATH_TO_GAMEPAGE, PATH_TO_ROOMS } from '../constants/paths';
 import rootStore from '../stores/RootStore';
 import { observer } from 'mobx-react-lite';
 import Technologies from '../constants/technologies';
@@ -14,7 +14,7 @@ import GameMode from '../model/GameMode';
 const HomePage: React.FunctionComponent = observer((): ReactElement => {
   const navigate = useNavigate();
   const views: { name: string; url: string }[] = [
-    { name: 'Play game', url: PATH_TO_CREATE_PLAYERS },
+    { name: 'Play game', url: PATH_TO_ROOMS },
     { name: 'Scoreboard', url: 'TODO' },
     { name: 'How to play', url: PATH_TO_HOWTOPLAYPAGE },
     { name: 'Credits', url: PATH_TO_CREDITS },
@@ -31,11 +31,11 @@ const HomePage: React.FunctionComponent = observer((): ReactElement => {
                 if (view.url === 'TODO') {
                   openWorkInProgressModal();
                 } else {
-                  if (rootStore.isDevelopmentMode && view.url === PATH_TO_CREATE_PLAYERS) {
+                  if (rootStore.isDevelopmentMode && view.url === PATH_TO_ROOMS) {
                     initDevelopmentPreset();
                     await rootStore.gameStore.initGameStore();
                     navigate(PATH_TO_GAMEPAGE);
-                  } else if (view.url === PATH_TO_CREATE_PLAYERS) {
+                  } else if (view.url === PATH_TO_ROOMS) {
                     await rootStore.gameStore.initGameStore();
                     navigate(view.url);
                   } else {

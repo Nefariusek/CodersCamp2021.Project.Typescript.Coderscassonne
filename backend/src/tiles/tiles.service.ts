@@ -10,6 +10,7 @@ export class TilesService {
       return shuffledTiles;
     }
     return undefined;
+    // return tilesData;
   }
 
   getSingleTile(id: string) {

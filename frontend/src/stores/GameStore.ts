@@ -32,7 +32,12 @@ class GameStore {
     this.turnNumber = 0;
     this.currentPhase = GamePhases.TILE_PLACEMENT;
     this.drawPile = allTiles;
-    this.tileInHand = this.drawPile.find((tile) => tile.id === '001_1');
+
+    const index = this.drawPile.findIndex((tile) => tile.id === '001_1');
+    this.tileInHand = this.drawPile[index];
+    if (index !== -1) this.drawPile.splice(index, 1);
+    // this.tileInHand = this.drawPile.shift();
+
     this.recentlyPlacedTile = undefined;
     makeAutoObservable(this);
   }

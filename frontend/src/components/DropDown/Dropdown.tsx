@@ -4,17 +4,28 @@ import rootStore from '../../stores/RootStore';
 import { observer } from 'mobx-react-lite';
 import Project from '../../model/Project';
 import { placeMeeple } from '../../services/meeplePlacementPhase.functions';
-import { GamePhases } from '../NextPhaseButton/NextPhaseButton';
+
+export const DisabledInfo = () => {
+  return (
+    <div className="p-10">
+      <div className="group inline-block z-50">
+        <div className="outline-none focus:outline-none font-ALMENDRA  px-3 py-1 bg-DARKTHEME_LIGHT_GREEN_COLOR rounded-sm flex items-center min-w-32">
+          <span className="pr-1 font-semibold flex-1">Meeple can't be place now</span>
+        </div>
+      </div>
+    </div>
+  );
+};
 
 interface DropdownProps {}
 
-const Dropdown: FunctionComponent<DropdownProps> = observer(() => {
+export const Dropdown: FunctionComponent<DropdownProps> = observer(() => {
   const availableProjects = rootStore.projectStore.availableProjects;
   const handleOptionClick = (project: Project) => {
     placeMeeple(project);
   };
 
-  return (
+  return availableProjects?.length ? (
     <div className="p-10">
       <div className="group inline-block z-50">
         <button className="outline-none focus:outline-none font-ALMENDRA  px-3 py-1 bg-DARKTHEME_LIGHT_GREEN_COLOR rounded-sm flex items-center min-w-32">
@@ -45,28 +56,13 @@ const Dropdown: FunctionComponent<DropdownProps> = observer(() => {
         </ul>
       </div>
     </div>
-  );
-});
-
-const DisabledInfo = () => {
-  return (
+  ) : (
     <div className="p-10">
       <div className="group inline-block z-50">
         <div className="outline-none focus:outline-none font-ALMENDRA  px-3 py-1 bg-DARKTHEME_LIGHT_GREEN_COLOR rounded-sm flex items-center min-w-32">
-          <span className="pr-1 font-semibold flex-1">You can't place meeple</span>
+          <span className="pr-1 font-semibold flex-1">Meeple placed</span>
         </div>
       </div>
     </div>
   );
-};
-
-const DropdownVisibility = () => {
-  const currentPhase = rootStore.gameStore.currentPhase;
-  const availableProjects = rootStore.projectStore.availableProjects;
-  if (currentPhase === GamePhases.MEEPLE_PLACEMENT || availableProjects != undefined) {
-    return <Dropdown />;
-  }
-  return <DisabledInfo />;
-};
-
-export default DropdownVisibility;
+});

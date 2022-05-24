@@ -1,7 +1,7 @@
 import rootStore from '../../stores/RootStore';
 import Button from '../Button/Button';
 import { observer } from 'mobx-react';
-import Dropdown from '../DropDown/Dropdown';
+import { Dropdown, DisabledInfo } from '../DropDown/Dropdown';
 
 export enum GamePhases {
   TILE_PLACEMENT = 'Tile placement phase',
@@ -12,6 +12,7 @@ const phases = [GamePhases.TILE_PLACEMENT, GamePhases.MEEPLE_PLACEMENT, GamePhas
 
 export const NextPhaseButton = observer(() => {
   const currentPhase = rootStore.gameStore.currentPhase;
+  const availableProjects = rootStore.projectStore.availableProjects;
   const handleNextPhase = () => {
     rootStore.gameStore.setNextPhase();
   };
@@ -34,8 +35,7 @@ export const NextPhaseButton = observer(() => {
           ))}
         </div>
       </div>
-      {/* {currentPhase === GamePhases.MEEPLE_PLACEMENT ? <Dropdown /> : <></>} */}
-      <Dropdown />
+      {currentPhase === GamePhases.MEEPLE_PLACEMENT || availableProjects?.length ? <Dropdown /> : <DisabledInfo />}
     </div>
   );
 });

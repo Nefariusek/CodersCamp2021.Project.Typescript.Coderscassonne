@@ -11,7 +11,7 @@ import { GAMEBOARD_LAYOUT_PROPORTION } from '../constants/gameDefaults';
 import { MENU_TITLE_SOURCE } from '../constants/layoutElements';
 import { Link } from 'react-router-dom';
 import { PATH_TO_HOMEPAGE } from '../constants/paths';
-import { openEndGameModal, EndGameModal } from '../components/Modal/EndGameModal';
+import { openShowScoreModal, ShowScoreModal } from '../components/Modal/ShowScoreModal';
 import { InvalidMoveModal } from '../components/Modal/InvalidMoveModal';
 import { EndTurnModal } from '../components/Modal/EndTurnModal';
 import rootStore from '../stores/RootStore';
@@ -29,7 +29,7 @@ const GamePage: React.FunctionComponent = observer((): ReactElement => {
   const drawPileLayoutProportion = `${((1 - GAMEBOARD_LAYOUT_PROPORTION * 100) / 2) * 100 - 1}%`;
 
   if (drawPileLength === 1) {
-    openEndGameModal(); //TODO: game summary view
+    openShowScoreModal();
   }
 
   return (
@@ -70,7 +70,7 @@ const GamePage: React.FunctionComponent = observer((): ReactElement => {
       </div>
       <InvalidMoveModal />
       <EndTurnModal />
-      <EndGameModal />
+      <ShowScoreModal />
     </div>
   );
 });

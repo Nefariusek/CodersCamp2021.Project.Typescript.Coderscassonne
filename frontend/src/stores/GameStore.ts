@@ -17,7 +17,7 @@ import rootStore, { RootStore } from './RootStore';
 import WebSocketEvent from '../constants/webSocketEvents';
 import WebsocketMessageParser from '../model/websocket/WebSocketMessageParser';
 import TilePlacementMessage from '../model/websocket/TilePlacementMessage';
-import meeplePlacementMessage from '../model/websocket/MeeplePlacementMessage';
+import MeeplePlacementMessage from '../model/websocket/MeeplePlacementMessage';
 
 class GameStore {
   turnNumber: number;
@@ -101,7 +101,7 @@ class GameStore {
 
   emitMeeplePlacementMessage(id: string, row: number, column: number) {
     const websocketMessageParser = new WebsocketMessageParser();
-    const meeplePlacementMessage = new TilePlacementMessage('');
+    const meeplePlacementMessage = new MeeplePlacementMessage('');
     meeplePlacementMessage.id = id;
     meeplePlacementMessage.row = row;
     meeplePlacementMessage.column = column;

@@ -45,8 +45,8 @@ export const Modal = observer((props: ModalProps): React.ReactElement => {
 
   const handleClose = () => {
     if (eventType === ModalEvents.END_GAME || eventType === ModalEvents.SHOW_SCORE) {
-      navigate(PATH_TO_HOMEPAGE);
       setModalOn(false);
+      navigate(PATH_TO_HOMEPAGE);
     } else {
       setModalOn(false);
     }

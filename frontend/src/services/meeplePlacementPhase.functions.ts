@@ -11,7 +11,7 @@ export const placeMeeple = (project: Project, onWebSocket: boolean = false) => {
       currentContainer.meeple = meeple;
       rootStore.gameStore.setNextPhase();
       if (!onWebSocket) {
-        rootStore.gameStore.emitMeeplePlacementMessage(project.type, currentContainer.column, currentContainer.column);
+        rootStore.gameStore.emitMeeplePlacementMessage(project.type, currentContainer.row, currentContainer.column);
       }
     }
   }

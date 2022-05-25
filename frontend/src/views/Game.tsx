@@ -17,7 +17,6 @@ import { EndTurnModal } from '../components/Modal/EndTurnModal';
 import rootStore from '../stores/RootStore';
 import { observer } from 'mobx-react';
 import NextPhaseButton from '../components/NextPhaseButton/NextPhaseButton';
-import ProjectList from '../components/ProjectList/ProjectList';
 
 const GamePage: React.FunctionComponent = observer((): ReactElement => {
   const players = rootStore.playersStore.players;

@@ -48,6 +48,7 @@ export const Dropdown: FunctionComponent<DropdownProps> = observer(() => {
         >
           {availableProjects?.map((project) => (
             <li
+              key={project.type}
               onClick={() => handleOptionClick(project)}
               className="rounded-sm relative px-3 py-1 hover:bg-DARKTHEME_DARK_GREEN_COLOR hover:text-white"
             >

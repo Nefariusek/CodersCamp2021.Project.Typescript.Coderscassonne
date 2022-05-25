@@ -178,17 +178,17 @@ export const JSONData: TileType[] = [
     id: '002_4',
     middle: [Locations.ROAD],
   },
-  {
-    edges: {
-      bottom: Locations.ROAD,
-      left: Locations.ROAD,
-      right: Locations.ROAD,
-      top: Locations.FIELD,
-    },
-    isSpecial: false,
-    id: '003_2',
-    middle: [Locations.TAVERN],
-  },
+  // {
+  //   edges: {
+  //     bottom: Locations.ROAD,
+  //     left: Locations.ROAD,
+  //     right: Locations.ROAD,
+  //     top: Locations.FIELD,
+  //   },
+  //   isSpecial: false,
+  //   id: '003_2',
+  //   middle: [Locations.TAVERN],
+  // },
   {
     edges: {
       bottom: Locations.FIELD,

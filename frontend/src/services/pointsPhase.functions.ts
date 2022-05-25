@@ -4,7 +4,7 @@ import rootStore from '../stores/RootStore';
 
 export function evaluateProjects() {
   if (rootStore.gameStore.currentPhase !== GamePhases.SCORE_PHASE) {
-    console.log('wrong phase');
+    // console.log('wrong phase');
   }
   const finishableProjects = rootStore.projectStore.allProjects.filter(
     (project) => !project.isFinished && project.isFinishable,

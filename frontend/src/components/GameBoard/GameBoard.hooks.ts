@@ -40,7 +40,6 @@ export function useMeeplePlacementReceiver() {
       const container = rootStore.gameStore.boardState.find(
         (container) => container.row === +row && container.column === +column,
       );
-      console.log(container);
       if (container && container.tile) {
         const project = rootStore.projectStore.allProjects.find(
           (project) => project.tiles.includes(container!.tile!) && project.type === id,
@@ -50,28 +49,6 @@ export function useMeeplePlacementReceiver() {
         }
       }
     });
-
-    //// POWYŻSZE MOŻNA ZAMIENIĆ NA TO (uwzględnia przesyłanie informacji o id, row i kolumnie położonego meepla)
-    //// ale trzeba dopisać w GameBoard.tsx funkcję onMeeplPlacement(row: number, column: number, fromWebsocket: boolean) na wzór onTilePlacement()
-    // rootStore.websocket?.socket.on(
-    //   WebSocketEvent.RECEIVE_MEEPLE_PLACED,
-    //   (data: { client: number, text: string }) => {
-    //     const websocketMessageParser = new WebsocketMessageParser();
-    //     const { text, client } = data;
-    //     const { id, row, column } = websocketMessageParser.parse(
-    //       text,
-    //       WebSocketEvent.RECEIVE_MEEPLE_PLACED,
-    //     );
-
-    //     if (row !== 0 || column !== 0) {
-    //       onMeeplePlacement(row, column, true);   // czy mamy analogiczną do onTilePlacement() potrzebną tutaj funkcję onMeeplPlacement(row: number, column: number, fromWebsocket: boolean) ?
-    //     }
-
-    //     console.log(
-    //       `Meeple with id ${id} is placed in ${row} row and ${column} column by client with id ${client}`,
-    //     );
-    //   },
-    // );
   }, []);
 }
 

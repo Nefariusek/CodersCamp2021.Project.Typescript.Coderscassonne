@@ -6,7 +6,7 @@ import ReactDOM from 'react-dom';
 import { HashRouter } from 'react-router-dom';
 
 import App from './App';
-import { DataStoreProvider } from './components/DataStoreContext/DataStoreContext';
+
 import reportWebVitals from './reportWebVitals';
 
 const AppWrapper: React.FC = (): React.ReactElement => <App />;
@@ -14,9 +14,7 @@ const AppWrapper: React.FC = (): React.ReactElement => <App />;
 ReactDOM.render(
   <React.StrictMode>
     <HashRouter>
-      <DataStoreProvider>
-        <AppWrapper />
-      </DataStoreProvider>
+      <AppWrapper />
     </HashRouter>
   </React.StrictMode>,
   document.getElementById('root'),

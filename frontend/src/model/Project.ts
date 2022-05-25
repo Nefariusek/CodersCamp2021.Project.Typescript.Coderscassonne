@@ -83,7 +83,11 @@ class Project {
   }
 
   public scoreUnfinishedProject() {
-    this.owner.updateScore(this.currentScore);
+    if (this.owner) {
+      this.owner.updateScore(this.currentScore);
+      this.meeples.forEach((meeple) => meeple.player.returnMeeple(meeple));
+      this.meeples.length = 0;
+    }
   }
 
   public get isFinishable(): boolean {

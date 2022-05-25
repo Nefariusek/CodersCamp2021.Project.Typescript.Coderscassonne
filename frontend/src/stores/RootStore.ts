@@ -20,6 +20,12 @@ class RootStore {
   setIsDevelopmentMode() {
     this.isDevelopmentMode = !this.isDevelopmentMode;
   }
+
+  resetStores() {
+    this.gameStore.initGameStore();
+    this.playersStore.initPlayersStore();
+    this.projectStore.initProjectStore();
+  }
 }
 
 const rootStore = new RootStore();

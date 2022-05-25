@@ -45,7 +45,6 @@ class GameStore {
 
   placeTile(row: number, column: number, fromWebsocket: boolean) {
     const tileToChange = this.boardState.find((tile) => tile.row === row && tile.column === column);
-    console.log(`tile to change: `, tileToChange);
     if (tileToChange && this.tileInHand) {
       if (validateTilePlacement(row, column)) {
         tileToChange.state = TileState.TAKEN;
@@ -57,7 +56,6 @@ class GameStore {
         extendBoard(row, column);
         activateAdjacentTiles(row, column);
         manageProjects(row, column);
-        console.log(rootStore.projectStore.allProjects);
 
         this.recentlyPlacedTile = this.tileInHand;
 
@@ -154,7 +152,6 @@ class GameStore {
   }
 
   initGameStore() {
-    console.log('initGameStore');
     this.boardState.length = 0;
     this.boardState.push({ row: 0, column: 0, state: TileState.ACTIVE });
     this.turnNumber = 0;

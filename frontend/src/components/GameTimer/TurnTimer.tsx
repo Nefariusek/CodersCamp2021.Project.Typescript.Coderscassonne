@@ -11,7 +11,6 @@ const TurnTimer = ({ turnLength }: TurnTimerProps) => {
 
   useEffect(() => {
     if (counter === 0) {
-      console.log("Time's up!");
       setCounter(turnLength);
     } else setTimeout(() => setCounter(counter - 1), 1000);
   }, [counter, turnLength]);

@@ -47,12 +47,10 @@ class GameStore {
     const index = this.drawPile.findIndex((tile) => tile.id === FIRST_TILE_ID);
     this.tileInHand = this.drawPile[index];
     if (index !== -1) this.drawPile.splice(index, 1);
-    // this.tileInHand = this.drawPile.shift();
   }
 
   placeTile(row: number, column: number, fromWebsocket: boolean) {
     const tileToChange = this.boardState.find((tile) => tile.row === row && tile.column === column);
-    console.log(`tile to change: `, tileToChange);
     if (tileToChange && this.tileInHand) {
       if (validateTilePlacement(row, column)) {
         tileToChange.state = TileState.TAKEN;
@@ -64,7 +62,6 @@ class GameStore {
         extendBoard(row, column);
         activateAdjacentTiles(row, column);
         manageProjects(row, column);
-        console.log(rootStore.projectStore.allProjects);
 
         this.recentlyPlacedTile = this.tileInHand;
 
@@ -139,9 +136,7 @@ class GameStore {
     if (!!rootStore.websocket && !fromWebsocket) rootStore.websocket.emitNextPhase(true);
   }
 
-  placeMeeple() {
-    console.log('placeMeeple');
-  }
+  placeMeeple() {}
 
   increaseTurnNumber() {
     this.turnNumber++;
@@ -159,7 +154,6 @@ class GameStore {
   finishGame() {}
 
   initGameStore() {
-    console.log('initGameStore');
     this.boardState.length = 0;
     this.boardState.push({ row: 0, column: 0, state: TileState.ACTIVE });
     this.turnNumber = 0;

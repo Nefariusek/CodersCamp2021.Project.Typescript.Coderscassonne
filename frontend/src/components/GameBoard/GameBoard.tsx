@@ -31,7 +31,6 @@ const GameBoard = observer((): ReactElement => {
   const tilesGroupedByRows = _.groupBy(sortedBoardState, 'row');
 
   const onTilePlacement = (row: number, column: number, fromWebsocket: boolean) => {
-    console.log(`tile placement`);
     rootStore.gameStore.placeTile(row, column, fromWebsocket);
   };
 

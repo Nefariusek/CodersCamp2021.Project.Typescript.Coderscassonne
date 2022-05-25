@@ -6,7 +6,7 @@ import { SettingsModal } from '../components/Modal/SettingsModal';
 import { useNavigate } from 'react-router-dom';
 
 import GameMode from '../model/GameMode';
-import startGameWithTilesRetrieval from '../service/startGameWithTilesRetrieval';
+import startGameWithTilesRetrieval from '../services/startGameWithTilesRetrieval';
 
 const classicModeText = 'Take your time! Turns are long!';
 // IN PROGRESS

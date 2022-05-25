@@ -18,7 +18,7 @@ import { observer } from 'mobx-react-lite';
 import Technologies from '../constants/technologies';
 import Player from '../model/Player';
 import GameMode from '../model/GameMode';
-import startGameWithTilesRetrieval from '../service/startGameWithTilesRetrieval';
+import startGameWithTilesRetrieval from '../services/startGameWithTilesRetrieval';
 
 const HomePage: React.FunctionComponent = observer((): ReactElement => {
   const navigate = useNavigate();

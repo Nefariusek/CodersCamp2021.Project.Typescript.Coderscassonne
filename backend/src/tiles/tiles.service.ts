@@ -1,16 +1,16 @@
 import { Injectable } from '@nestjs/common';
 import { tilesData } from '../constants/tilesData';
-import { shuffleArray } from '../service/shuffleArray'
+import { shuffleArray } from '../service/shuffleArray';
 
 @Injectable()
 export class TilesService {
   getTiles() {
-    const shuffledTiles = shuffleArray(tilesData);
-    if (!!shuffledTiles) { 
-      return shuffledTiles;
+    let tiles = tilesData;
+    tiles = shuffleArray(tilesData);
+    if (!!tiles) {
+      return tiles;
     }
     return undefined;
-    // return tilesData;
   }
 
   getSingleTile(id: string) {

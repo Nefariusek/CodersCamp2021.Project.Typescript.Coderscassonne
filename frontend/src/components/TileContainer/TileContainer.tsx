@@ -28,7 +28,6 @@ const TileContainer = observer((props: TileInterface): ReactElement => {
   let edgeForMeeple;
   if (meeple && tile) {
     edgeForMeeple = Object.entries(tile.edges).find(([_edge, location]) => location === meeple.placedAt);
-    console.log(edgeForMeeple);
   }
 
   function handleActiveTileClick(event: MouseEvent<HTMLImageElement>): void {

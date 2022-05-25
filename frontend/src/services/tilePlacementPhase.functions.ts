@@ -21,10 +21,7 @@ function updateExistingProjects(existingLocations: Locations[], row: number, col
     if (adjacentTile) {
       const adjacentTileProject = adjacentProjectOfType(adjacentTile, edge);
       if (adjacentTileProject) {
-        console.log(edge);
         adjacentTileProject.addTileOnUpdate(rootStore.gameStore.tileInHand!, edge, adjacentTile);
-        console.log(adjacentTileProject.tiles.length);
-        console.log(adjacentTileProject.type);
         existingLocations.push(adjacentTileProject.type);
       }
     }

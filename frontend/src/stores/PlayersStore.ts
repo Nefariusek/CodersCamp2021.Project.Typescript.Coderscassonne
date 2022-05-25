@@ -34,6 +34,10 @@ class PlayersStore {
       (_player, index) => index === (this.rootStore.gameStore.turnNumber - 1) % this.players.length,
     );
   }
+
+  initPlayerStore() {
+    this.players = [];
+  }
 }
 
 export default PlayersStore;

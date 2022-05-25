@@ -75,6 +75,9 @@ class GameStore {
 
         if (this.boardState.length > 9) {
           !!rootStore.websocket && !fromWebsocket && this.setNextPhase();
+          if (!rootStore.room) {
+            this.setNextPhase();
+          }
         }
       } else {
         openInvalidMoveModal();

@@ -29,7 +29,7 @@ export const SettingsModal = observer((): React.ReactElement => {
           onClick={handleDevelopmentModeButtonClick}
           colorVariant="light"
         /> */}
-        <Button text="Reset gama data" onClick={handleClearLocalStorageClick} colorVariant="light" />
+        <Button text="Reset data" onClick={handleClearLocalStorageClick} colorVariant="light" />
       </div>
     </Modal>
   );
